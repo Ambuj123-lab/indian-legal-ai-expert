@@ -90,12 +90,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- Session Middleware (for OAuth state) ---
+# https_only=True ensures Secure flag is set (Critical for OAuth)
+app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY, https_only=True)
+
 # --- Proxy Headers Middleware (for Koyeb SSL termination) ---
+# MUST be added LAST so it runs FIRST (Outer-most), fixing the scheme before Session sees it.
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
-
-# --- Session Middleware (for OAuth state) ---
-app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
 # --- Include Routers ---
 from app.auth.routes import router as auth_router
