@@ -154,3 +154,11 @@ if os.path.exists(frontend_dist):
             content=open(os.path.join(frontend_dist, "index.html"), "rb").read(),
             media_type="text/html"
         )
+
+@app.get("/api/debug-config")
+async def debug_config():
+    return {
+        "FRONTEND_URL": settings.FRONTEND_URL,
+        "GOOGLE_REDIRECT_URI": settings.GOOGLE_REDIRECT_URI,
+        "ENV_VARS": {k: v for k, v in os.environ.items() if k in ["FRONTEND_URL", "GOOGLE_REDIRECT_URI"]}
+    }
