@@ -30,7 +30,11 @@ async def login(request: Request):
 async def auth_callback(request: Request):
     """Handle Google OAuth callback — issue JWT and redirect to frontend"""
     try:
-        token = await oauth.google.authorize_access_token(request)
+        # Explicitly pass redirect_uri to avoid HTTP/HTTPS mismatch behind proxy
+        token = await oauth.google.authorize_access_token(
+            request, 
+            redirect_uri=settings.GOOGLE_REDIRECT_URI
+        )
         user_info = token.get('userinfo')
 
         if not user_info:

@@ -90,6 +90,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- Proxy Headers Middleware (for Koyeb SSL termination) ---
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
+
 # --- Session Middleware (for OAuth state) ---
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
