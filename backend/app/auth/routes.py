@@ -61,7 +61,7 @@ async def auth_callback(request: Request):
     except OAuthError as error:
         logger.error(f"OAuth Error: {error}")
         return RedirectResponse(
-            url=f"{settings.FRONTEND_URL}/login?error=oauth_failed"
+            url=f"{settings.FRONTEND_URL}/login?error={error}"
         )
     except Exception as e:
         logger.error(f"Auth Callback Error: {e}")
