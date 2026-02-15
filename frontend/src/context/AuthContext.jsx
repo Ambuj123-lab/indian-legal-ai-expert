@@ -57,6 +57,7 @@ export function AuthProvider({ children }) {
             name: decoded.name,
             picture: decoded.picture,
         });
+        setLoading(false);
         fetchAdminStatus(token);
     }
 
