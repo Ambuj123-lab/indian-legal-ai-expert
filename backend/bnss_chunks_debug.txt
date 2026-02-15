@@ -1,0 +1,34 @@
+Found Candidate:
+Page: 168
+Text: punishment or, as the case may be, the most severe punishment. 
+Explanation.—For the purpose of computing the period of limitation, the relevant date shall be the date 
+of filing complaint under section 223 or the date of recording of information under section 173. 
+515. Commencement of period of li...
+
+--------------------
+Found Candidate:
+Page: 66
+Text: 173. Information in cognizable cases.—(1) Every information relating to the commission of a 
+cognizable offence, irrespective of the area where the offence is committed, may be given orally or by 
+electronic communication to an officer in charge of a police station, and if given— 
+(i) orally, it sha...
+
+--------------------
+Found Candidate:
+Page: 5
+Text: CHAPTER XIII 
+INFORMATION TO THE POLICE AND THEIR POWERS TO INVESTIGATE 
+173. Information in cognizable cases. 
+174. Information as to non-cognizable cases and investigation of such cases. 
+175. Police officer’s power to investigate cognizable case. 
+176. Procedure for investigation. 
+177. Report ho...
+
+--------------------
+Found Candidate:
+Page: 87
+Text: proceeding has been instituted on a police report, the Magistrate shall without delay, and in no case beyond 
+fourteen days from the date of production or appearance of the accused, furnish to the accused and the 
+victim (if represented by an advocate) free of cost, a copy of each of the following:—...
+
+--------------------

@@ -1,0 +1,55 @@
+Testing retrieval for query: 'how to file a FIR'
+
+Found 5 results:
+--- Result 1 ---
+Source: Consumer_Protection_Act_2019.pdf
+Page: 35
+Score: 0.7824867
+Child Text Preview: (p) the manner of electronically filing complaint under the proviso to sub-section (1)
+of section 35...
+Parent Text Preview: (p) the manner of electronically filing complaint under the proviso to sub-section (1)
+of section 35...
+------------------
+--- Result 2 ---
+Source: Bharatiya_Nagarik_Suraksha_Sanhita_2023.pdf
+Page: 132
+Score: 0.7747065
+Child Text Preview: (a) record a finding to that effect; 
+(b) make a complaint thereof in writing; 
+(c) send it to a Mag...
+Parent Text Preview: CHAPTER XXVIII 
+PROVISIONS AS TO OFFENCES AFFECTING THE ADMINISTRATION OF JUSTICE 
+379. Procedure in...
+------------------
+--- Result 3 ---
+Source: Bharatiya_Nagarik_Suraksha_Sanhita_2023.pdf
+Page: 82
+Score: 0.7689278
+Child Text Preview: 83 
+ 
+216. Procedure for witnesses in case of threatening, etc.—A witness or any other person may fi...
+Parent Text Preview: 83 
+ 
+216. Procedure for witnesses in case of threatening, etc.—A witness or any other person may fi...
+------------------
+--- Result 4 ---
+Source: Bharatiya_Nagarik_Suraksha_Sanhita_2023.pdf
+Page: 66
+Score: 0.7682034
+Child Text Preview: (ii) proceed with investigation when there exists a prima facie case. 
+(4) Any person aggrieved by a...
+Parent Text Preview: section 78, section 79 or section 124 of the Bharatiya Nyaya Sanhita, 2023 is alleged to have been 
+...
+------------------
+--- Result 5 ---
+Source: Constitution_of_India_2024.pdf
+Page: 93
+Score: 0.767499
+Child Text Preview: in clause (1) of article 132 or clause (1) of article 133, or clause (1) of article 
+134,— 
+(a) may,...
+Parent Text Preview: THE CONSTITUTION OF  INDIA
+(Part V.—The Union)
+63
+Provided that an appeal under sub-clause (c) shall...
+------------------
