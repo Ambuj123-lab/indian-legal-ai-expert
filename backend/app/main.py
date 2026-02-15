@@ -116,6 +116,17 @@ async def health_check():
 # --- Root ---
 @app.get("/")
 async def root():
+    # If running in Docker/Production, serve Frontend
+    frontend_dist = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")
+    index_path = os.path.join(frontend_dist, "index.html")
+    
+    if os.path.exists(index_path):
+        return Response(
+            content=open(index_path, "rb").read(),
+            media_type="text/html"
+        )
+    
+    # Fallback for local backend-only dev
     return {
         "message": f"{settings.APP_NAME} API",
         "docs": "/docs",
