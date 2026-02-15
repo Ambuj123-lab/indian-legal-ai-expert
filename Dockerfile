@@ -44,6 +44,8 @@ ENV PORT=8000
 # Expose port (Koyeb uses 8000 by default for web services)
 EXPOSE 8000
 
-# Command to run the application from root
-# Ensure main.py mounts the static 'frontend/dist' correctly
-CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Set working directory to backend so "app" package is found
+WORKDIR /app/backend
+
+# Command to run the application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
