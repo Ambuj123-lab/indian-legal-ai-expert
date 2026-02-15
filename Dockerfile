@@ -12,6 +12,7 @@ RUN npm ci
 
 # Build the project
 COPY frontend/ ./
+ENV VITE_API_URL=""
 RUN npm run build
 
 
