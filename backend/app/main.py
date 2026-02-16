@@ -108,7 +108,7 @@ app.include_router(rag_router)
 
 
 # --- Health Check ---
-@app.get("/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
 async def health_check():
     """Health check for deployment monitoring"""
     return {
