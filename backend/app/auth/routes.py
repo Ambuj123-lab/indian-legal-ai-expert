@@ -51,8 +51,9 @@ async def auth_callback(request: Request):
         }))
 
         # Redirect to frontend with JWT token
+        # NOTE: Uses /auth-callback (NOT /auth/callback) to avoid collision with this backend route
         return RedirectResponse(
-            url=f"{settings.FRONTEND_URL}/auth/callback?token={access_token}"
+            url=f"{settings.FRONTEND_URL}/auth-callback?token={access_token}"
         )
 
     except OAuthError as error:
