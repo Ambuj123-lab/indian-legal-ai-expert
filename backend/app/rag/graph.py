@@ -95,7 +95,7 @@ def greet_node(state: RAGState) -> dict:
     start = time.time()
 
     llm = ChatOpenAI(
-        model="arcee-ai/trinity-large-preview:free",
+        model="qwen/qwen3-235b-a22b-thinking-2507",
         openai_api_key=settings.OPENROUTER_API_KEY,
         openai_api_base="https://openrouter.ai/api/v1",
         temperature=0.7,

@@ -1047,13 +1047,12 @@ async def generate_response_stream(
     from langchain_core.output_parsers import StrOutputParser
 
     llm = ChatOpenAI(
-        model="arcee-ai/trinity-large-preview:free",
+        model="qwen/qwen3-235b-a22b-thinking-2507",
         openai_api_key=settings.OPENROUTER_API_KEY,
         openai_api_base="https://openrouter.ai/api/v1",
         temperature=0.3,
         max_tokens=3000,
         streaming=True,
-        # model_kwargs={"extra_body": {"include_reasoning": False}}, # Not needed for standard models
         request_timeout=60
     )
 

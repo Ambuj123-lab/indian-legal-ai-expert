@@ -69,10 +69,9 @@ def save_message(
     pii_entities: Optional[List[dict]] = None
 ):
     """Save chat message to MongoDB"""
-    print(f"📝 DEBUG: Saving Message - User: {user_email}, Role: {role}")
     collection = get_chat_collection()
     if collection is None:
-        print("❌ DEBUG: Chat Collection is None (MongoDB not connected?)")
+        logger.warning("Chat collection is None — MongoDB not connected")
         return
 
     try:
@@ -95,9 +94,7 @@ def save_message(
             },
             upsert=True
         )
-        print("✅ DEBUG: Message Saved to MongoDB")
     except Exception as e:
-        print(f"❌ DEBUG: Save message error: {e}")
         logger.error(f"Save message error: {e}")
 
 
