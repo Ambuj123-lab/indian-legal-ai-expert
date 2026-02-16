@@ -13,6 +13,7 @@ export default function AuthCallback() {
 
         if (token) {
             login(token);
+            window.location.href = '/';
         } else if (error) {
             navigate('/login?error=' + error);
         } else {
