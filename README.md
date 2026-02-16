@@ -21,29 +21,29 @@ The system is built on a modular **Monolith-over-Microservices** architecture, l
 
 ```mermaid
 graph TD
-    User((User)) -->|Frontend| React[React SPA]
-    React -->|HTTPS| FastAPI[FastAPI Server]
+    User(("User")) -->|Frontend| React["React SPA"]
+    React -->|HTTPS| FastAPI["FastAPI Server"]
     
-    subgraph RAG Orchestration (LangGraph)
-        FastAPI --> Classify[Query Classification]
-        Classify -->|Legal| Retrieve[Parent-Child Retrieval]
-        Classify -->|General| Greet[Personalized Greeting]
-        Classify -->|Abusive| Reject[Safety Guardrail]
+    subgraph Orchestration ["RAG Orchestration (LangGraph)"]
+        FastAPI --> Classify["Query Classification"]
+        Classify -->|Legal| Retrieve["Parent-Child Retrieval"]
+        Classify -->|General| Greet["Personalized Greeting"]
+        Classify -->|Abusive| Reject["Safety Guardrail"]
         
-        Retrieve --> PII[Presidio PII Masking]
-        PII --> Qdrant[(Qdrant Cloud)]
+        Retrieve --> PII["Presidio PII Masking"]
+        PII --> Qdrant[("Qdrant Cloud")]
         
-        Qdrant --> Generate[LLM Generation - Qwen 3 235B]
-        Generate --> PostProcess[History Storage]
+        Qdrant --> Generate["LLM Generation - Qwen 3 235B"]
+        Generate --> PostProcess["History Storage"]
     end
     
-    PostProcess --> Mongo[(MongoDB Atlas)]
-    PostProcess --> Redis[(Upstash Redis)]
+    PostProcess --> Mongo[("MongoDB Atlas")]
+    PostProcess --> Redis[("Upstash Redis")]
     
-    subgraph Storage & Sync
-        Admin[Admin UI] -->|Trigger| Sync[Sync Engine]
-        Sync --> SupaStorage[Supabase Object Storage]
-        Sync --> SupaDB[(PostgreSQL Registry)]
+    subgraph StorageSync ["Storage & Sync"]
+        Admin["Admin UI"] -->|Trigger| Sync["Sync Engine"]
+        Sync --> SupaStorage["Supabase Object Storage"]
+        Sync --> SupaDB[("PostgreSQL Registry")]
     end
 ```
 
