@@ -91,8 +91,8 @@ app.add_middleware(
 )
 
 # --- Session Middleware (for OAuth state) ---
-# https_only=True ensures Secure flag is set (Critical for OAuth)
-app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY, https_only=True)
+# same_site="none" + https_only=True needed for OAuth cross-site redirect from Google
+app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY, https_only=True, same_site="none")
 
 # --- Proxy Headers Middleware (for Koyeb SSL termination) ---
 # MUST be added LAST so it runs FIRST (Outer-most), fixing the scheme before Session sees it.
