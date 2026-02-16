@@ -13,7 +13,6 @@ export default function AuthCallback() {
 
         if (token) {
             login(token);
-            navigate('/');
         } else if (error) {
             navigate('/login?error=' + error);
         } else {

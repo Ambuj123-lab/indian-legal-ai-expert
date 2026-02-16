@@ -59,6 +59,7 @@ export function AuthProvider({ children }) {
         });
         setLoading(false);
         fetchAdminStatus(token);
+        navigate('/');
     }
 
     function logout() {
