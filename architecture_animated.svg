@@ -1,0 +1,296 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%" style="background-color: #0B0F19; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <!-- Arrowheads -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4A5B7B" />
+    </marker>
+    <marker id="arrowhead-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#F59E0B" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10B981" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444" />
+    </marker>
+    
+    <!-- Filters & Gradients -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <filter id="drop-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <linearGradient id="node-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" stroke-width="0.5" />
+    </pattern>
+
+    <!-- Professional Icons -->
+    <g id="icon-user" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </g>
+    <g id="icon-monitor" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+    </g>
+    <g id="icon-server" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+    </g>
+    <g id="icon-db" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+    </g>
+    <g id="icon-cpu" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/>
+    </g>
+    <g id="icon-shield" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </g>
+    <g id="icon-search" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </g>
+    <g id="icon-bot" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/>
+    </g>
+    <g id="icon-activity" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+    </g>
+    <g id="icon-alert" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </g>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Header / Title -->
+  <g transform="translate(40, 50)">
+    <text fill="#F8FAFC" font-size="28" font-weight="800" letter-spacing="-0.5">System Architecture</text>
+    <text y="24" fill="#94A3B8" font-size="14" font-weight="500">Stateful Memory, GDPR Compliant &amp; Observable</text>
+  </g>
+
+  <!-- Watermark (Ambuj Kumar Tripathi) -->
+  <g transform="translate(1160, 850)">
+    <text text-anchor="end" fill="#64748B" font-size="14" letter-spacing="0.5">
+      Architected by <tspan fill="#38BDF8" font-weight="bold">Ambuj Kumar Tripathi</tspan>
+    </text>
+    <text text-anchor="end" y="20" fill="#334155" font-size="11" font-family="monospace">© 2024 All Rights Reserved</text>
+  </g>
+
+  <!-- Group Boxes -->
+  <g id="persistence-box">
+    <rect x="60" y="380" width="580" height="120" rx="8" fill="#0F172A" fill-opacity="0.6" stroke="#334155" stroke-width="2" stroke-dasharray="6,4" />
+    <text x="75" y="405" fill="#94A3B8" font-size="12" font-weight="bold" letter-spacing="1">PERSISTENCE &amp; VECTOR DB</text>
+  </g>
+
+  <g id="langgraph-box">
+    <rect x="750" y="290" width="320" height="360" rx="8" fill="#0F172A" fill-opacity="0.6" stroke="#334155" stroke-width="2" stroke-dasharray="6,4" />
+    <text x="765" y="315" fill="#94A3B8" font-size="12" font-weight="bold" letter-spacing="1">LANGGRAPH ORCHESTRATION</text>
+  </g>
+
+  <g id="observability-box">
+    <rect x="650" y="720" width="420" height="120" rx="8" fill="#0F172A" fill-opacity="0.6" stroke="#334155" stroke-width="2" stroke-dasharray="6,4" />
+    <text x="665" y="745" fill="#94A3B8" font-size="12" font-weight="bold" letter-spacing="1">OBSERVABILITY &amp; RELIABILITY</text>
+  </g>
+
+  <!-- Animated Paths -->
+  <g>
+    <path id="p-user-spa" d="M 600 70 C 600 100, 600 100, 600 130" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="2.1s" repeatCount="indefinite"><mpath href="#p-user-spa" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-spa-api" d="M 600 170 C 600 200, 600 200, 600 230" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#p-spa-api" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-api-qdrant" d="M 540 270 C 540 350, 140 350, 140 430" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#p-api-qdrant" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-api-mongo" d="M 580 270 C 580 350, 280 350, 280 430" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="2.9s" repeatCount="indefinite"><mpath href="#p-api-mongo" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-api-pg" d="M 620 270 C 620 350, 420 350, 420 430" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="3.1s" repeatCount="indefinite"><mpath href="#p-api-pg" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-api-redis" d="M 660 270 C 660 350, 560 350, 560 430" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="2.7s" repeatCount="indefinite"><mpath href="#p-api-redis" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-api-intent" d="M 680 270 C 680 300, 910 300, 910 330" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="3.5s" repeatCount="indefinite"><mpath href="#p-api-intent" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-intent-pii" d="M 910 370 C 910 390, 910 390, 910 410" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#p-intent-pii" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-pii-retrieval" d="M 910 450 C 910 470, 910 470, 910 490" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p-pii-retrieval" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-retrieval-qwen" d="M 910 530 C 910 550, 910 550, 910 570" fill="none" stroke="#4A5B7B" stroke-width="2" marker-end="url(#arrowhead)" />
+    <circle r="4" fill="#60A5FA" filter="url(#glow)"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#p-retrieval-qwen" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-retrieval-qdrant" d="M 790 510 C 690 510, 140 550, 140 470" fill="none" stroke="#F59E0B" stroke-width="2" marker-end="url(#arrowhead-orange)" />
+    <circle r="4" fill="#FBBF24" filter="url(#glow)"><animateMotion dur="3.8s" repeatCount="indefinite"><mpath href="#p-retrieval-qdrant" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-retrieval-pg" d="M 790 510 C 690 510, 420 550, 420 470" fill="none" stroke="#F59E0B" stroke-width="2" marker-end="url(#arrowhead-orange)" />
+    <circle r="4" fill="#FBBF24" filter="url(#glow)"><animateMotion dur="3.4s" repeatCount="indefinite"><mpath href="#p-retrieval-pg" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-api-langfuse" d="M 640 270 C 690 400, 690 600, 760 770" fill="none" stroke="#10B981" stroke-width="2" marker-end="url(#arrowhead-green)" />
+    <circle r="4" fill="#34D399" filter="url(#glow)"><animateMotion dur="4s" repeatCount="indefinite"><mpath href="#p-api-langfuse" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-qwen-langfuse" d="M 910 610 C 910 690, 760 690, 760 770" fill="none" stroke="#10B981" stroke-width="2" marker-end="url(#arrowhead-green)" />
+    <circle r="4" fill="#34D399" filter="url(#glow)"><animateMotion dur="3.3s" repeatCount="indefinite"><mpath href="#p-qwen-langfuse" /></animateMotion></circle>
+  </g>
+
+  <g>
+    <path id="p-api-circuit" d="M 660 270 C 720 400, 960 600, 960 770" fill="none" stroke="#EF4444" stroke-width="2" marker-end="url(#arrowhead-red)" />
+    <circle r="4" fill="#F87171" filter="url(#glow)"><animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#p-api-circuit" /></animateMotion></circle>
+  </g>
+
+  <!-- Nodes (Boxes with Icons) -->
+  
+  <!-- End User -->
+  <g transform="translate(540, 30)">
+    <rect width="120" height="40" rx="6" fill="url(#node-grad)" stroke="#3B82F6" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-user" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">End User</text>
+  </g>
+
+  <!-- React SPA -->
+  <g transform="translate(500, 130)">
+    <rect width="200" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-monitor" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">React SPA (Tailwind UI)</text>
+  </g>
+
+  <!-- FastAPI -->
+  <g transform="translate(500, 230)">
+    <rect width="200" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-server" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">FastAPI (Async Backend)</text>
+  </g>
+
+  <!-- Qdrant -->
+  <g transform="translate(75, 430)">
+    <rect width="130" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-db" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">Qdrant (Vector)</text>
+  </g>
+
+  <!-- MongoDB -->
+  <g transform="translate(215, 430)">
+    <rect width="130" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-db" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">MongoDB (Chat)</text>
+  </g>
+
+  <!-- Postgres -->
+  <g transform="translate(355, 430)">
+    <rect width="130" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-db" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">Postgres (Docs)</text>
+  </g>
+
+  <!-- Redis -->
+  <g transform="translate(495, 430)">
+    <rect width="130" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-db" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">Upstash Redis</text>
+  </g>
+
+  <!-- Intent Classifier -->
+  <g transform="translate(790, 330)">
+    <rect width="240" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-cpu" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">Intent Classifier</text>
+  </g>
+
+  <!-- PII Masking -->
+  <g transform="translate(790, 410)">
+    <rect width="240" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-shield" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">PII Masking (Presidio)</text>
+  </g>
+
+  <!-- Parent-Child Retrieval -->
+  <g transform="translate(790, 490)">
+    <rect width="240" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-search" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">Parent-Child Retrieval</text>
+  </g>
+
+  <!-- Qwen -->
+  <g transform="translate(790, 570)">
+    <rect width="240" height="40" rx="6" fill="url(#node-grad)" stroke="#4A5B7B" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-bot" x="12" y="10" width="20" height="20" color="#94A3B8" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">Qwen-3 (2.5B) via OpenRouter</text>
+  </g>
+
+  <!-- Langfuse -->
+  <g transform="translate(670, 770)">
+    <rect width="190" height="40" rx="6" fill="url(#node-grad)" stroke="#10B981" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-activity" x="12" y="10" width="20" height="20" color="#34D399" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">Langfuse (Traces &amp; Eval)</text>
+  </g>
+
+  <!-- Circuit Breaker -->
+  <g transform="translate(880, 770)">
+    <rect width="160" height="40" rx="6" fill="url(#node-grad)" stroke="#EF4444" stroke-width="1.5" filter="url(#drop-shadow)" />
+    <use href="#icon-alert" x="12" y="10" width="20" height="20" color="#F87171" />
+    <text x="40" y="25" fill="#F8FAFC" font-size="13" font-weight="500">Circuit Breaker</text>
+  </g>
+
+  <!-- Path Labels -->
+  <g transform="translate(550, 90)">
+    <rect width="100" height="20" rx="4" fill="#0F172A" stroke="#4A5B7B" stroke-width="1" />
+    <text x="50" y="14" fill="#94A3B8" font-size="10" text-anchor="middle" font-weight="bold">HTTPS / proxy</text>
+  </g>
+
+  <g transform="translate(540, 190)">
+    <rect width="120" height="20" rx="4" fill="#0F172A" stroke="#4A5B7B" stroke-width="1" />
+    <text x="60" y="14" fill="#94A3B8" font-size="10" text-anchor="middle" font-weight="bold">REST / WebSockets</text>
+  </g>
+
+  <g transform="translate(300, 520)">
+    <rect width="100" height="20" rx="4" fill="#0F172A" stroke="#F59E0B" stroke-width="1" />
+    <text x="50" y="14" fill="#FBBF24" font-size="10" text-anchor="middle" font-weight="bold">Retrieval Traces</text>
+  </g>
+
+  <g transform="translate(640, 640)">
+    <rect width="80" height="20" rx="4" fill="#0F172A" stroke="#10B981" stroke-width="1" />
+    <text x="40" y="14" fill="#34D399" font-size="10" text-anchor="middle" font-weight="bold">Telemetry</text>
+  </g>
+
+  <g transform="translate(800, 670)">
+    <rect width="100" height="20" rx="4" fill="#0F172A" stroke="#EF4444" stroke-width="1" />
+    <text x="50" y="14" fill="#F87171" font-size="10" text-anchor="middle" font-weight="bold">Latency/Errors</text>
+  </g>
+</svg>
