@@ -164,20 +164,23 @@ export default function Login() {
                         zIndex: 1
                     }} />
 
-                    {/* Architecture Image */}
-                    <img
-                        src="/branding/architecture.png"
-                        alt="RAG Architecture"
+                    {/* Architecture Animated SVG */}
+                    <object
+                        type="image/svg+xml"
+                        data="/branding/architecture_animated.svg"
+                        aria-label="RAG Architecture"
                         style={{
                             position: 'relative',
                             zIndex: 2,
-                            maxWidth: isMobile ? '95%' : '90%',
+                            width: isMobile ? '95%' : '90%',
                             maxHeight: isMobile ? '280px' : '90%',
-                            objectFit: 'contain',
                             borderRadius: '12px',
-                            filter: 'drop-shadow(0 8px 40px rgba(0,0,0,0.6))'
+                            filter: 'drop-shadow(0 8px 40px rgba(0,0,0,0.6))',
+                            pointerEvents: 'none'
                         }}
-                    />
+                    >
+                        Architecture Diagram
+                    </object>
                 </div>
             </div>
 

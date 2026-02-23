@@ -1,0 +1,434 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%" style="background-color: #060B16; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;">
+  <defs>
+    <!-- Arrow Markers -->
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3B82F6" />
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#F59E0B" />
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#10B981" />
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444" />
+    </marker>
+
+    <!-- Glow Filters -->
+    <filter id="glow-blue" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-orange" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-green" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="node-shadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="header-glow" x="-5%" y="-30%" width="110%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Node Gradients -->
+    <linearGradient id="grad-main" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0D1625"/>
+    </linearGradient>
+    <linearGradient id="grad-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A5F"/>
+      <stop offset="100%" stop-color="#0D1F35"/>
+    </linearGradient>
+    <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B22"/>
+      <stop offset="100%" stop-color="#071510"/>
+    </linearGradient>
+    <linearGradient id="grad-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D1F0A"/>
+      <stop offset="100%" stop-color="#160E02"/>
+    </linearGradient>
+    <linearGradient id="grad-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D0D0D"/>
+      <stop offset="100%" stop-color="#150404"/>
+    </linearGradient>
+    <linearGradient id="grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1C1040"/>
+      <stop offset="100%" stop-color="#0D0820"/>
+    </linearGradient>
+
+    <!-- Background subtle grid -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0F1929" stroke-width="0.8"/>
+    </pattern>
+
+    <!-- Radial ambient -->
+    <radialGradient id="ambient" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0D2040" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#060B16" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Icon Symbols -->
+    <g id="icon-user" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </g>
+    <g id="icon-monitor" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <line x1="8" y1="21" x2="16" y2="21"/>
+      <line x1="12" y1="17" x2="12" y2="21"/>
+    </g>
+    <g id="icon-server" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="8" rx="2"/>
+      <rect x="2" y="14" width="20" height="8" rx="2"/>
+      <line x1="6" y1="6" x2="6.01" y2="6"/>
+      <line x1="6" y1="18" x2="6.01" y2="18"/>
+    </g>
+    <g id="icon-db" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/>
+      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+    </g>
+    <g id="icon-cpu" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="16" height="16" rx="2"/>
+      <path d="M9 9h6v6H9z"/>
+      <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/>
+    </g>
+    <g id="icon-shield" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </g>
+    <g id="icon-search" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </g>
+    <g id="icon-bot" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="10" rx="2"/>
+      <circle cx="12" cy="5" r="2"/>
+      <path d="M12 7v4"/>
+      <line x1="8" y1="16" x2="8.01" y2="16"/>
+      <line x1="16" y1="16" x2="16.01" y2="16"/>
+    </g>
+    <g id="icon-activity" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+    </g>
+    <g id="icon-alert" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </g>
+  </defs>
+
+  <style>
+    /* Node pulse animations */
+    .node-blue { animation: nb 3s ease-in-out infinite; }
+    .node-green { animation: ng 3.5s ease-in-out infinite; }
+    .node-orange { animation: no 2.8s ease-in-out infinite; }
+    .node-red { animation: nr 3.2s ease-in-out infinite; }
+    .node-purple { animation: np 3s ease-in-out infinite; }
+
+    @keyframes nb {
+      0%,100% { filter: drop-shadow(0 0 3px #3B82F6) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+      50% { filter: drop-shadow(0 0 10px #3B82F6) drop-shadow(0 0 20px rgba(59,130,246,0.3)) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+    }
+    @keyframes ng {
+      0%,100% { filter: drop-shadow(0 0 3px #10B981) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+      50% { filter: drop-shadow(0 0 10px #10B981) drop-shadow(0 0 20px rgba(16,185,129,0.3)) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+    }
+    @keyframes no {
+      0%,100% { filter: drop-shadow(0 0 3px #F59E0B) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+      50% { filter: drop-shadow(0 0 10px #F59E0B) drop-shadow(0 0 20px rgba(245,158,11,0.3)) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+    }
+    @keyframes nr {
+      0%,100% { filter: drop-shadow(0 0 3px #EF4444) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+      50% { filter: drop-shadow(0 0 10px #EF4444) drop-shadow(0 0 20px rgba(239,68,68,0.3)) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+    }
+    @keyframes np {
+      0%,100% { filter: drop-shadow(0 0 3px #8B5CF6) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+      50% { filter: drop-shadow(0 0 10px #8B5CF6) drop-shadow(0 0 20px rgba(139,92,246,0.3)) drop-shadow(0 6px 6px rgba(0,0,0,0.5)); }
+    }
+
+    /* Dot travel glow */
+    .dot-b { animation: db 1.5s ease-in-out infinite; }
+    .dot-o { animation: do 1.5s ease-in-out infinite; }
+    .dot-g { animation: dg 1.5s ease-in-out infinite; }
+    .dot-r { animation: dr 1.5s ease-in-out infinite; }
+
+    @keyframes db { 0%,100%{opacity:0.7} 50%{opacity:1; filter:drop-shadow(0 0 6px #60A5FA);} }
+    @keyframes do { 0%,100%{opacity:0.7} 50%{opacity:1; filter:drop-shadow(0 0 6px #FBBF24);} }
+    @keyframes dg { 0%,100%{opacity:0.7} 50%{opacity:1; filter:drop-shadow(0 0 6px #34D399);} }
+    @keyframes dr { 0%,100%{opacity:0.7} 50%{opacity:1; filter:drop-shadow(0 0 6px #F87171);} }
+
+    /* Title shimmer */
+    .title-main { animation: ts 4s ease-in-out infinite; }
+    @keyframes ts {
+      0%,100% { filter: drop-shadow(0 0 8px rgba(56,189,248,0.4)); }
+      50% { filter: drop-shadow(0 0 18px rgba(56,189,248,0.7)); }
+    }
+
+    /* User node pulse */
+    .user-node { animation: un 2s ease-in-out infinite; }
+    @keyframes un {
+      0%,100% { filter: drop-shadow(0 0 6px #3B82F6); }
+      50% { filter: drop-shadow(0 0 18px #3B82F6) drop-shadow(0 0 30px rgba(59,130,246,0.4)); }
+    }
+
+    /* Box border animation */
+    .box-persist { animation: bp 4s ease-in-out infinite; }
+    .box-lang { animation: bl 3.5s ease-in-out infinite; }
+    .box-obs { animation: bo 4.5s ease-in-out infinite; }
+
+    @keyframes bp {
+      0%,100% { stroke: #334155; }
+      50% { stroke: #4A90D9; filter: drop-shadow(0 0 8px rgba(74,144,217,0.3)); }
+    }
+    @keyframes bl {
+      0%,100% { stroke: #334155; }
+      50% { stroke: #F59E0B; filter: drop-shadow(0 0 8px rgba(245,158,11,0.3)); }
+    }
+    @keyframes bo {
+      0%,100% { stroke: #334155; }
+      50% { stroke: #10B981; filter: drop-shadow(0 0 8px rgba(16,185,129,0.3)); }
+    }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#060B16"/>
+  <rect width="1200" height="900" fill="url(#grid)"/>
+  <rect width="1200" height="900" fill="url(#ambient)"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 40)">
+    <text fill="#F8FAFC" font-size="26" font-weight="800" letter-spacing="-0.5" class="title-main">System Architecture</text>
+    <text y="26" fill="#64748B" font-size="13" font-weight="400" letter-spacing="0.3">Production-Grade · Stateful Memory · GDPR Compliant · Observable</text>
+    <!-- Accent line -->
+    <rect y="35" width="260" height="2" rx="1" fill="url(#grad-blue)" opacity="0.6"/>
+  </g>
+
+  <!-- Year badge top right -->
+  <g transform="translate(1080, 40)">
+    <rect width="88" height="28" rx="14" fill="#0F1929" stroke="#3B82F6" stroke-width="1.2"/>
+    <text x="44" y="18" text-anchor="middle" fill="#60A5FA" font-size="12" font-weight="700" letter-spacing="1">2026</text>
+  </g>
+
+  <!-- Watermark -->
+  <g transform="translate(1160, 858)">
+    <text text-anchor="end" fill="#475569" font-size="12" letter-spacing="0.3">Architected by <tspan fill="#38BDF8" font-weight="700">Ambuj Kumar Tripathi</tspan></text>
+    <text text-anchor="end" y="16" fill="#1E293B" font-size="10" font-family="monospace">© 2026 All Rights Reserved</text>
+  </g>
+
+  <!-- ===== GROUP BOXES ===== -->
+
+  <!-- Persistence Box -->
+  <rect x="55" y="375" width="590" height="128" rx="10" fill="#060D1A" fill-opacity="0.85"
+        stroke="#334155" stroke-width="1.5" stroke-dasharray="7,4" class="box-persist"/>
+  <rect x="55" y="375" width="148" height="22" rx="4" fill="#0F1929"/>
+  <text x="70" y="391" fill="#64748B" font-size="10" font-weight="700" letter-spacing="1.5">PERSISTENCE &amp; VECTOR DB</text>
+
+  <!-- LangGraph Box -->
+  <rect x="740" y="280" width="340" height="375" rx="10" fill="#060D1A" fill-opacity="0.85"
+        stroke="#334155" stroke-width="1.5" stroke-dasharray="7,4" class="box-lang"/>
+  <rect x="740" y="280" width="168" height="22" rx="4" fill="#0F1929"/>
+  <text x="755" y="296" fill="#64748B" font-size="10" font-weight="700" letter-spacing="1.5">LANGGRAPH ORCHESTRATION</text>
+
+  <!-- Observability Box -->
+  <rect x="640" y="715" width="435" height="128" rx="10" fill="#060D1A" fill-opacity="0.85"
+        stroke="#334155" stroke-width="1.5" stroke-dasharray="7,4" class="box-obs"/>
+  <rect x="640" y="715" width="175" height="22" rx="4" fill="#0F1929"/>
+  <text x="655" y="731" fill="#64748B" font-size="10" font-weight="700" letter-spacing="1.5">OBSERVABILITY &amp; RELIABILITY</text>
+
+  <!-- ===== FLOW PATHS ===== -->
+
+  <!-- User -> SPA -->
+  <path id="p1" d="M 600 78 L 600 125" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arr-blue)"/>
+  <circle r="4" fill="#60A5FA" class="dot-b"><animateMotion dur="2.1s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
+
+  <!-- SPA -> FastAPI -->
+  <path id="p2" d="M 600 167 L 600 222" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arr-blue)"/>
+  <circle r="4" fill="#60A5FA" class="dot-b"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
+
+  <!-- FastAPI -> Qdrant -->
+  <path id="p3" d="M 540 262 C 540 340, 140 340, 140 418" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-blue)"/>
+  <circle r="3.5" fill="#60A5FA" class="dot-b"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
+
+  <!-- FastAPI -> MongoDB -->
+  <path id="p4" d="M 575 262 C 575 340, 280 340, 280 418" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-blue)"/>
+  <circle r="3.5" fill="#60A5FA" class="dot-b"><animateMotion dur="2.9s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion></circle>
+
+  <!-- FastAPI -> Postgres -->
+  <path id="p5" d="M 615 262 C 615 340, 420 340, 420 418" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-blue)"/>
+  <circle r="3.5" fill="#60A5FA" class="dot-b"><animateMotion dur="3.1s" repeatCount="indefinite"><mpath href="#p5"/></animateMotion></circle>
+
+  <!-- FastAPI -> Redis -->
+  <path id="p6" d="M 655 262 C 655 340, 560 340, 560 418" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-blue)"/>
+  <circle r="3.5" fill="#60A5FA" class="dot-b"><animateMotion dur="2.7s" repeatCount="indefinite"><mpath href="#p6"/></animateMotion></circle>
+
+  <!-- FastAPI -> Intent Classifier -->
+  <path id="p7" d="M 685 242 C 720 242, 760 318, 800 318" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arr-blue)"/>
+  <circle r="4" fill="#60A5FA" class="dot-b"><animateMotion dur="3.5s" repeatCount="indefinite"><mpath href="#p7"/></animateMotion></circle>
+
+  <!-- Intent -> PII -->
+  <path id="p8" d="M 910 360 L 910 400" fill="none" stroke="#F59E0B" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arr-orange)"/>
+  <circle r="4" fill="#FBBF24" class="dot-o"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#p8"/></animateMotion></circle>
+
+  <!-- PII -> Retrieval -->
+  <path id="p9" d="M 910 440 L 910 480" fill="none" stroke="#F59E0B" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arr-orange)"/>
+  <circle r="4" fill="#FBBF24" class="dot-o"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p9"/></animateMotion></circle>
+
+  <!-- Retrieval -> Qwen -->
+  <path id="p10" d="M 910 520 L 910 560" fill="none" stroke="#F59E0B" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arr-orange)"/>
+  <circle r="4" fill="#FBBF24" class="dot-o"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#p10"/></animateMotion></circle>
+
+  <!-- Retrieval -> Qdrant (Retrieval Traces) -->
+  <path id="p11" d="M 800 500 C 600 500, 200 520, 140 463" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
+  <circle r="3.5" fill="#FBBF24" class="dot-o"><animateMotion dur="3.8s" repeatCount="indefinite"><mpath href="#p11"/></animateMotion></circle>
+
+  <!-- Retrieval -> Postgres -->
+  <path id="p12" d="M 800 500 C 650 500, 460 520, 420 463" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-orange)"/>
+  <circle r="3.5" fill="#FBBF24" class="dot-o"><animateMotion dur="3.4s" repeatCount="indefinite"><mpath href="#p12"/></animateMotion></circle>
+
+  <!-- FastAPI -> Langfuse (Telemetry) -->
+  <path id="p13" d="M 640 252 C 690 380, 700 580, 750 758" fill="none" stroke="#10B981" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-green)"/>
+  <circle r="3.5" fill="#34D399" class="dot-g"><animateMotion dur="4s" repeatCount="indefinite"><mpath href="#p13"/></animateMotion></circle>
+
+  <!-- Qwen -> Langfuse (Telemetry) -->
+  <path id="p14" d="M 910 600 C 910 680, 800 680, 758 758" fill="none" stroke="#10B981" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-green)"/>
+  <circle r="3.5" fill="#34D399" class="dot-g"><animateMotion dur="3.3s" repeatCount="indefinite"><mpath href="#p14"/></animateMotion></circle>
+
+  <!-- FastAPI -> Circuit Breaker -->
+  <path id="p15" d="M 660 252 C 730 380, 980 580, 970 758" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
+  <circle r="3.5" fill="#F87171" class="dot-r"><animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#p15"/></animateMotion></circle>
+
+  <!-- ===== NODES ===== -->
+
+  <!-- End User -->
+  <g class="user-node">
+    <rect x="540" y="32" width="120" height="46" rx="8" fill="url(#grad-blue)" stroke="#3B82F6" stroke-width="1.8"/>
+    <use href="#icon-user" x="554" y="44" width="18" height="18" color="#60A5FA"/>
+    <text x="600" y="60" fill="#F1F5F9" font-size="13" font-weight="600" text-anchor="middle">End User</text>
+  </g>
+
+  <!-- React SPA -->
+  <g class="node-blue">
+    <rect x="485" y="125" width="230" height="46" rx="8" fill="url(#grad-blue)" stroke="#3B82F6" stroke-width="1.8" filter="url(#node-shadow)"/>
+    <use href="#icon-monitor" x="500" y="137" width="18" height="18" color="#60A5FA"/>
+    <text x="527" y="153" fill="#F1F5F9" font-size="12.5" font-weight="600">React SPA (Tailwind UI)</text>
+  </g>
+
+  <!-- FastAPI -->
+  <g class="node-green">
+    <rect x="480" y="222" width="240" height="46" rx="8" fill="url(#grad-green)" stroke="#10B981" stroke-width="2" filter="url(#node-shadow)"/>
+    <use href="#icon-server" x="495" y="234" width="18" height="18" color="#34D399"/>
+    <text x="522" y="250" fill="#F1F5F9" font-size="12.5" font-weight="600">FastAPI (Async Backend)</text>
+  </g>
+
+  <!-- Qdrant -->
+  <g class="node-blue">
+    <rect x="70" y="418" width="140" height="46" rx="8" fill="url(#grad-blue)" stroke="#3B82F6" stroke-width="1.5" filter="url(#node-shadow)"/>
+    <use href="#icon-db" x="84" y="430" width="16" height="16" color="#60A5FA"/>
+    <text x="108" y="446" fill="#F1F5F9" font-size="12" font-weight="600">Qdrant (Vector)</text>
+  </g>
+
+  <!-- MongoDB -->
+  <g class="node-green">
+    <rect x="218" y="418" width="140" height="46" rx="8" fill="url(#grad-green)" stroke="#10B981" stroke-width="1.5" filter="url(#node-shadow)"/>
+    <use href="#icon-db" x="232" y="430" width="16" height="16" color="#34D399"/>
+    <text x="256" y="446" fill="#F1F5F9" font-size="12" font-weight="600">MongoDB (Chat)</text>
+  </g>
+
+  <!-- Postgres -->
+  <g class="node-blue">
+    <rect x="366" y="418" width="140" height="46" rx="8" fill="url(#grad-blue)" stroke="#3B82F6" stroke-width="1.5" filter="url(#node-shadow)"/>
+    <use href="#icon-db" x="380" y="430" width="16" height="16" color="#60A5FA"/>
+    <text x="404" y="446" fill="#F1F5F9" font-size="12" font-weight="600">Postgres (Docs)</text>
+  </g>
+
+  <!-- Redis -->
+  <g class="node-orange">
+    <rect x="514" y="418" width="118" height="46" rx="8" fill="url(#grad-orange)" stroke="#F59E0B" stroke-width="1.5" filter="url(#node-shadow)"/>
+    <use href="#icon-db" x="527" y="430" width="16" height="16" color="#FBBF24"/>
+    <text x="551" y="446" fill="#F1F5F9" font-size="12" font-weight="600">Upstash Redis</text>
+  </g>
+
+  <!-- Intent Classifier -->
+  <g class="node-purple">
+    <rect x="758" y="306" width="304" height="46" rx="8" fill="url(#grad-purple)" stroke="#8B5CF6" stroke-width="1.8" filter="url(#node-shadow)"/>
+    <use href="#icon-cpu" x="772" y="318" width="18" height="18" color="#A78BFA"/>
+    <text x="800" y="334" fill="#F1F5F9" font-size="12.5" font-weight="600">Intent Classifier</text>
+  </g>
+
+  <!-- PII Masking -->
+  <g class="node-orange">
+    <rect x="758" y="400" width="304" height="46" rx="8" fill="url(#grad-orange)" stroke="#F59E0B" stroke-width="1.8" filter="url(#node-shadow)"/>
+    <use href="#icon-shield" x="772" y="412" width="18" height="18" color="#FBBF24"/>
+    <text x="800" y="428" fill="#F1F5F9" font-size="12.5" font-weight="600">PII Masking (Presidio)</text>
+  </g>
+
+  <!-- Parent-Child Retrieval -->
+  <g class="node-orange">
+    <rect x="758" y="480" width="304" height="46" rx="8" fill="url(#grad-orange)" stroke="#F59E0B" stroke-width="1.8" filter="url(#node-shadow)"/>
+    <use href="#icon-search" x="772" y="492" width="18" height="18" color="#FBBF24"/>
+    <text x="800" y="508" fill="#F1F5F9" font-size="12.5" font-weight="600">Parent-Child Retrieval</text>
+  </g>
+
+  <!-- Qwen -->
+  <g class="node-purple">
+    <rect x="758" y="560" width="304" height="46" rx="8" fill="url(#grad-purple)" stroke="#8B5CF6" stroke-width="1.8" filter="url(#node-shadow)"/>
+    <use href="#icon-bot" x="772" y="572" width="18" height="18" color="#A78BFA"/>
+    <text x="800" y="588" fill="#F1F5F9" font-size="12.5" font-weight="600">Qwen-3 (235B) via OpenRouter</text>
+  </g>
+
+  <!-- Langfuse -->
+  <g class="node-green">
+    <rect x="656" y="758" width="220" height="46" rx="8" fill="url(#grad-green)" stroke="#10B981" stroke-width="1.8" filter="url(#node-shadow)"/>
+    <use href="#icon-activity" x="670" y="770" width="18" height="18" color="#34D399"/>
+    <text x="698" y="786" fill="#F1F5F9" font-size="12.5" font-weight="600">Langfuse (Traces &amp; Eval)</text>
+  </g>
+
+  <!-- Circuit Breaker -->
+  <g class="node-red">
+    <rect x="892" y="758" width="168" height="46" rx="8" fill="url(#grad-red)" stroke="#EF4444" stroke-width="1.8" filter="url(#node-shadow)"/>
+    <use href="#icon-alert" x="906" y="770" width="18" height="18" color="#F87171"/>
+    <text x="934" y="786" fill="#F1F5F9" font-size="12.5" font-weight="600">Circuit Breaker</text>
+  </g>
+
+  <!-- ===== EDGE LABELS ===== -->
+
+  <!-- HTTPS label -->
+  <g transform="translate(614, 96)">
+    <rect width="90" height="20" rx="10" fill="#0F1929" stroke="#1E3A5F" stroke-width="1"/>
+    <text x="45" y="14" text-anchor="middle" fill="#60A5FA" font-size="9.5" font-weight="600" letter-spacing="0.5">HTTPS / proxy</text>
+  </g>
+
+  <!-- REST label -->
+  <g transform="translate(608, 190)">
+    <rect width="100" height="20" rx="10" fill="#0F1929" stroke="#1E3A5F" stroke-width="1"/>
+    <text x="50" y="14" text-anchor="middle" fill="#60A5FA" font-size="9.5" font-weight="600" letter-spacing="0.5">REST / WebSocket</text>
+  </g>
+
+  <!-- Retrieval Traces label -->
+  <g transform="translate(295, 530)">
+    <rect width="108" height="20" rx="10" fill="#1A0F02" stroke="#92400E" stroke-width="1"/>
+    <text x="54" y="14" text-anchor="middle" fill="#FBBF24" font-size="9.5" font-weight="600" letter-spacing="0.5">Retrieval Traces</text>
+  </g>
+
+  <!-- Telemetry label -->
+  <g transform="translate(651, 648)">
+    <rect width="80" height="20" rx="10" fill="#071A12" stroke="#065F46" stroke-width="1"/>
+    <text x="40" y="14" text-anchor="middle" fill="#34D399" font-size="9.5" font-weight="600" letter-spacing="0.5">Telemetry</text>
+  </g>
+
+  <!-- Latency/Errors label -->
+  <g transform="translate(800, 685)">
+    <rect width="102" height="20" rx="10" fill="#1A0505" stroke="#7F1D1D" stroke-width="1"/>
+    <text x="51" y="14" text-anchor="middle" fill="#F87171" font-size="9.5" font-weight="600" letter-spacing="0.5">Latency / Errors</text>
+  </g>
+
+</svg>
