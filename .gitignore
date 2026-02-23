@@ -6,11 +6,21 @@ Thumbs.db
 
 # Backend (Python)
 backend/__pycache__/
+backend/**/__pycache__/
 backend/*.pyc
+backend/**/*.pyc
 backend/venv/
 backend/.env
 backend/.pytest_cache/
 backend/requirements.txt.bak
+
+# Backend — Debug / Check scripts (local dev only)
+backend/check_*.py
+backend/debug_*.py
+
+# Backend — Debug output files
+backend/*_debug.txt
+backend/retrieval_results*.txt
 
 # Frontend (Node)
 frontend/node_modules/
@@ -21,6 +31,16 @@ frontend/.env.local
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+
+# Frontend — accidental venv
+frontend/venv/
+
+# Virtual environments (catch-all)
+**/venv/
+
+# Python bytecode (catch-all)
+**/__pycache__/
+**/*.pyc
 
 # IDEs
 .vscode/

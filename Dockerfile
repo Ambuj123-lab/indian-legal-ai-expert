@@ -40,13 +40,12 @@ COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 
 # Environment variables
 ENV PYTHONUNBUFFERED=1
-ENV PORT=8000
 
-# Expose port (Koyeb uses 8000 by default for web services)
+# Expose port (default 8000, Render overrides via $PORT)
 EXPOSE 8000
 
 # Set working directory to backend so "app" package is found
 WORKDIR /app/backend
 
-# Command to run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Command to run the application (shell form to support dynamic $PORT from Render)
+CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
