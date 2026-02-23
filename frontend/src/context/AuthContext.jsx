@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
         setLoading(false);
     }, []);
 
-    function login(token) {
+    const login = useCallback((token) => {
         localStorage.setItem('token', token);
         const decoded = jwtDecode(token);
         setUser({
@@ -59,14 +59,14 @@ export function AuthProvider({ children }) {
         });
         setLoading(false);
         fetchAdminStatus(token);
-    }
+    }, []);
 
-    function logout() {
+    const logout = useCallback(() => {
         localStorage.removeItem('token');
         setUser(null);
         setIsAdmin(false);
         navigate('/login');
-    }
+    }, [navigate]);
 
     return (
         <AuthContext.Provider value={{ user, isAdmin, login, logout, loading }}>
