@@ -12,7 +12,7 @@
 ---
 
 ## 📺 Live Demo
-🚀 **[Access the Expert Advisor](https://competitive-elaine-ambuj-ragai-f52aa725.koyeb.app)**
+🚀 **[Access the Expert Advisor](https://indian-legal-ai-expert.onrender.com)**
 
 ---
 
@@ -54,7 +54,7 @@ The system is built on a modular **Monolith-over-Microservices** architecture, l
 - **Frontend**: React 18, Tailwind CSS (Glassmorphism UI), Lucide Icons
 - **Backend**: FastAPI, Uvicorn, LangChain, LangGraph, Pydantic
 - **AI Models**: Qwen 3 235B (via OpenRouter), Jina AI Embeddings v2
-- **Infrastructure**: Docker, Koyeb (Compute), Qdrant Cloud (Vector Store), MongoDB Atlas (NoSQL), Supabase (Postgres + Object Storage), Upstash (Redis)
+- **Infrastructure**: Docker, Render (Compute), Qdrant Cloud (Vector Store), MongoDB Atlas (NoSQL), Supabase (Postgres + Object Storage), Upstash (Redis)
 
 ---
 
