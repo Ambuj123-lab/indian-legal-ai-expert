@@ -110,9 +110,25 @@ app.include_router(rag_router)
 # --- Health Check ---
 @app.api_route("/health", methods=["GET", "HEAD"])
 async def health_check():
-    """Health check for deployment monitoring"""
+    """Health check for deployment monitoring and Supabase keep-alive"""
+    db_status = "unknown"
+    
+    try:
+        from app.db.supabase_client import get_supabase
+        client = get_supabase()
+        if client:
+            # Lightweight query to keep Supabase free tier project active (prevents 7-day pause)
+            client.table("document_registry").select("file_name").limit(1).execute()
+            db_status = "connected"
+        else:
+            db_status = "client_not_initialized"
+    except Exception as e:
+        logger.warning(f"Supabase keep-alive ping failed: {e}")
+        db_status = "error"
+
     return {
         "status": "healthy",
+        "database": db_status,
         "app": settings.APP_NAME,
         "version": "2.0.0",
         "timestamp": datetime.now().isoformat()
