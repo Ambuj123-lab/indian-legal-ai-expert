@@ -61,7 +61,19 @@ export function AuthProvider({ children }) {
         fetchAdminStatus(token);
     }, []);
 
-    const logout = useCallback(() => {
+    const logout = useCallback(async () => {
+        // Call backend to cleanup temp vectors from Qdrant before clearing local state
+        try {
+            const token = localStorage.getItem('token');
+            if (token) {
+                await fetch(`${API_BASE}/auth/logout`, {
+                    method: 'POST',
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+            }
+        } catch {
+            // Non-critical — proceed with local logout even if backend call fails
+        }
         localStorage.removeItem('token');
         setUser(null);
         setIsAdmin(false);

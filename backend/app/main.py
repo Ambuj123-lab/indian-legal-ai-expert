@@ -9,7 +9,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 
 import os
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -102,6 +102,7 @@ app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 # --- Include Routers ---
 from app.auth.routes import router as auth_router
 from app.rag.routes import router as rag_router
+from app.auth.jwt import get_admin_user  # For admin-only endpoints
 
 app.include_router(auth_router)
 app.include_router(rag_router)
@@ -143,10 +144,8 @@ async def root():
     index_path = os.path.join(frontend_dist, "index.html")
     
     if os.path.exists(index_path):
-        return Response(
-            content=open(index_path, "rb").read(),
-            media_type="text/html"
-        )
+        with open(index_path, "rb") as f:
+            return Response(content=f.read(), media_type="text/html")
     
     # Fallback for local backend-only dev
     return {
@@ -157,7 +156,8 @@ async def root():
 
 
 @app.get("/api/debug-config")
-async def debug_config():
+async def debug_config(user: dict = Depends(get_admin_user)):
+    """Debug config — admin only (secured)"""
     return {
         "FRONTEND_URL": settings.FRONTEND_URL,
         "GOOGLE_REDIRECT_URI": settings.GOOGLE_REDIRECT_URI,
@@ -180,7 +180,5 @@ if os.path.exists(frontend_dist):
     async def serve_frontend(full_path: str):
         if full_path.startswith("api") or full_path.startswith("docs") or full_path.startswith("openapi.json"):
             return Response(status_code=404)
-        return Response(
-            content=open(os.path.join(frontend_dist, "index.html"), "rb").read(),
-            media_type="text/html"
-        )
+        with open(os.path.join(frontend_dist, "index.html"), "rb") as f:
+            return Response(content=f.read(), media_type="text/html")
