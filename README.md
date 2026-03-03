@@ -58,6 +58,45 @@ The system is built on a modular **Monolith-over-Microservices** architecture, l
 
 ---
 
+## 📂 Enterprise Folder Structure (Backend)
+
+The backend follows a Domain-Driven Design (DDD) architecture to ensure scalability, security, and separation of concerns.
+
+```text
+backend/
+├── app/
+│   ├── auth/          # Authentication, JWT, and Google OAuth
+│   │   ├── __init__.py
+│   │   ├── jwt.py
+│   │   ├── oauth.py
+│   │   ├── routes.py
+│   │   └── schemas.py # Auth-specific Pydantic models
+│   ├── core/          # Application Brain (Logging, Config, Rate Limiting)
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   ├── limiter.py
+│   │   └── logger.py
+│   ├── db/            # Database Clients (MongoDB, Supabase)
+│   │   ├── __init__.py
+│   │   ├── database.py
+│   │   └── supabase_client.py
+│   ├── rag/           # Retrieval-Augmented Generation Logic
+│   │   ├── __init__.py
+│   │   ├── graph.py   # LangGraph State Machine
+│   │   ├── pipeline.py# Processing, Qdrant, Presidio PII
+│   │   ├── routes.py  # Endpoints for RAG Chat
+│   │   └── schemas.py # RAG-specific Pydantic models
+│   ├── utils/         # Generic Helper Functions
+│   │   ├── __init__.py
+│   │   └── helpers.py # e.g., calculate_sha256
+│   └── main.py        # FastAPI Entry Point
+├── .env.example       # Example Environment Variables
+├── requirements.txt   # Python Dependencies
+└── Dockerfile         # Multi-stage production build
+```
+
+---
+
 ## 💻 Local Development
 
 1. **Clone the repository**:
