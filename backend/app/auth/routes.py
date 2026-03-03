@@ -10,7 +10,7 @@ from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import RedirectResponse
 from authlib.integrations.starlette_client import OAuthError
 
-from app.config import get_settings
+from app.core.config import get_settings
 from app.auth.jwt import create_access_token
 from app.auth.oauth import oauth
 

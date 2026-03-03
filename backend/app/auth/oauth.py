@@ -3,7 +3,7 @@ Google OAuth 2.0 Configuration using Authlib
 """
 
 from authlib.integrations.starlette_client import OAuth
-from app.config import get_settings
+from app.core.config import get_settings
 
 settings = get_settings()
 

@@ -16,7 +16,7 @@ from app.rag.pipeline import (
     search_similar, generate_response,
     get_langfuse_handler
 )
-from app.config import get_settings
+from app.core.config import get_settings
 
 settings = get_settings()
 logger = logging.getLogger(__name__)

@@ -12,7 +12,7 @@ from jose import jwt, JWTError
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from app.config import get_settings
+from app.core.config import get_settings
 
 settings = get_settings()
 security = HTTPBearer()

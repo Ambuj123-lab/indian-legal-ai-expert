@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from typing import Optional, List
 
 from app.auth.jwt import get_current_user, get_admin_user
-from app.config import get_settings
+from app.core.config import get_settings
 from app.db.database import get_chat_history, save_feedback, save_message
 from app.rag.graph import get_rag_graph
 from app.rag.pipeline import (
@@ -46,19 +46,10 @@ def get_redis():
 
 
 # --- Pydantic Models ---
-
-class ChatRequest(BaseModel):
-    question: str
-    use_streaming: bool = False
+from app.rag.schemas import ChatRequest, FeedbackRequest
 
 
-class FeedbackRequest(BaseModel):
-    question: str
-    response: str
-    rating: str  # "up" or "down"
-
-
-from app.limiter import limiter  # Rate limiter
+from app.core.limiter import limiter  # Rate limiter
 
 @router.post("/chat")
 @limiter.limit("5/minute")

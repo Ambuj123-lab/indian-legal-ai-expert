@@ -9,7 +9,7 @@ from datetime import datetime
 from typing import List, Optional
 
 import pymongo
-from app.config import get_settings
+from app.core.config import get_settings
 
 settings = get_settings()
 logger = logging.getLogger(__name__)

@@ -5,7 +5,11 @@ Loads from .env file, centralizes all config.
 
 from pydantic_settings import BaseSettings
 from functools import lru_cache
+import os
+from pathlib import Path
 
+# Getting the absolute path to the backend directory (two levels up from core)
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 class Settings(BaseSettings):
     # --- App ---
@@ -59,7 +63,8 @@ class Settings(BaseSettings):
     ADMIN_EMAIL: str = ""  # Only this email can sync/delete documents
 
     class Config:
-        env_file = ".env"
+        # Resolve to backend/.env
+        env_file = str(BASE_DIR / ".env")
         case_sensitive = True
 
 

@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import Optional
 
 from supabase import create_client, Client
-from app.config import get_settings
+from app.core.config import get_settings
 
 settings = get_settings()
 logger = logging.getLogger(__name__)
@@ -36,10 +36,7 @@ def get_supabase() -> Optional[Client]:
             logger.error(f"Supabase init failed: {e}")
     return _supabase
 
-
-def calculate_sha256(file_bytes: bytes) -> str:
-    """Calculate SHA-256 hash of file content"""
-    return hashlib.sha256(file_bytes).hexdigest()
+from app.utils.helpers import calculate_sha256
 
 
 # --- Storage Operations ---

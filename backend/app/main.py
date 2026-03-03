@@ -16,18 +16,14 @@ from starlette.middleware.sessions import SessionMiddleware
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
-from app.config import get_settings
-from app.limiter import limiter  # Import shared limiter instance
+from app.core.config import get_settings
+from app.core.limiter import limiter  # Import shared limiter instance
 
 settings = get_settings()
 
-# --- Structured Logging ---
-logging.basicConfig(
-    level=logging.DEBUG if settings.DEBUG else logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S"
-)
-logger = logging.getLogger(__name__)
+from app.core.logger import setup_logging
+
+logger = setup_logging()
 
 
 # --- Lifespan (Startup / Shutdown) ---
