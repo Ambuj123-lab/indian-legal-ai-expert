@@ -196,6 +196,31 @@ def get_security_engines():
             patterns=[phone_pattern]
         )
         _analyzer.registry.add_recognizer(phone_recognizer)
+        
+        # Custom Indian Aadhaar recognizer (12 digits with optional spaces)
+        aadhaar_pattern = Pattern(
+            name="aadhaar_regex",
+            regex=r"\b\d{4}\s?\d{4}\s?\d{4}\b",
+            score=0.8
+        )
+        aadhaar_recognizer = PatternRecognizer(
+            supported_entity="IN_AADHAAR",
+            patterns=[aadhaar_pattern]
+        )
+        _analyzer.registry.add_recognizer(aadhaar_recognizer)
+
+        # Custom Indian PAN card recognizer (5 Letters, 4 Digits, 1 Letter)
+        pan_pattern = Pattern(
+            name="pan_regex",
+            regex=r"\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b",
+            score=0.9
+        )
+        pan_recognizer = PatternRecognizer(
+            supported_entity="IN_PAN",
+            patterns=[pan_pattern]
+        )
+        _analyzer.registry.add_recognizer(pan_recognizer)
+
         _anonymizer = AnonymizerEngine()
     return _analyzer, _anonymizer
 
@@ -206,7 +231,7 @@ def mask_pii(text: str) -> tuple:
         analyzer, anonymizer = get_security_engines()
         results = analyzer.analyze(
             text=text,
-            entities=["PHONE_NUMBER", "EMAIL_ADDRESS", "PERSON", "LOCATION"],
+            entities=["PHONE_NUMBER", "EMAIL_ADDRESS", "PERSON", "LOCATION", "IN_AADHAAR", "IN_PAN"],
             language='en'
         )
         results = [r for r in results if r.score >= 0.3]
