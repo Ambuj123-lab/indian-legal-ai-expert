@@ -379,15 +379,37 @@ async def upload_temp_file(file: UploadFile = File(...), user: dict = Depends(ge
     """
     Upload a temporary PDF — indexed for this user's session only.
     On logout, ALL temp vectors are deleted. Core brain UNTOUCHED.
+
+    Security:
+      1. Filename extension check (.pdf only)
+      2. Magic Bytes validation (first 4 bytes must be %PDF)
+      3. Chunked reading with 10MB hard limit (prevents OOM from oversized uploads)
     """
+    # --- Security Layer 1: Filename Extension ---
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are supported")
 
-    if file.size and file.size > 10 * 1024 * 1024:  # 10MB limit
-        raise HTTPException(status_code=400, detail="File too large (max 10MB)")
+    # --- Security Layer 2: Magic Bytes (Real PDF check) ---
+    file_header = await file.read(4)
+    if file_header != b"%PDF":
+        raise HTTPException(status_code=400, detail="Invalid file: not a real PDF")
+    await file.seek(0)  # Reset file pointer
+
+    # --- Security Layer 3: Chunked Read with 10MB Hard Limit (OOM Protection) ---
+    MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
+    chunks = []
+    total_size = 0
+    while True:
+        chunk = await file.read(1024 * 1024)  # Read 1MB at a time
+        if not chunk:
+            break
+        total_size += len(chunk)
+        if total_size > MAX_UPLOAD_SIZE:
+            raise HTTPException(status_code=400, detail="File too large (max 10MB)")
+        chunks.append(chunk)
+    file_bytes = b"".join(chunks)
 
     user_email = user.get("email", "anonymous")
-    file_bytes = await file.read()
 
     try:
         stats = index_temp_file(file.filename, file_bytes, user_email)
