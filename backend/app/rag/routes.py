@@ -387,12 +387,16 @@ async def upload_temp_file(file: UploadFile = File(...), user: dict = Depends(ge
     """
     # --- Security Layer 1: Filename Extension ---
     if not file.filename.endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Only PDF files are supported")
+        user_email = user.get("email", "anonymous")
+        logger.warning(f"🚨 Blocked upload: {file.filename} by {user_email} — unsupported file type")
+        raise HTTPException(status_code=415, detail="Unsupported Media Type: Only PDF files are allowed")
 
     # --- Security Layer 2: Magic Bytes (Real PDF check) ---
     file_header = await file.read(4)
     if file_header != b"%PDF":
-        raise HTTPException(status_code=400, detail="Invalid file: not a real PDF")
+        user_email = user.get("email", "anonymous")
+        logger.warning(f"🚨 Suspicious upload blocked: {file.filename} by {user_email} — invalid PDF header (possible malware)")
+        raise HTTPException(status_code=415, detail="Invalid file: not a real PDF")
     await file.seek(0)  # Reset file pointer
 
     # --- Security Layer 3: Chunked Read with 10MB Hard Limit (OOM Protection) ---
@@ -405,7 +409,9 @@ async def upload_temp_file(file: UploadFile = File(...), user: dict = Depends(ge
             break
         total_size += len(chunk)
         if total_size > MAX_UPLOAD_SIZE:
-            raise HTTPException(status_code=400, detail="File too large (max 10MB)")
+            user_email = user.get("email", "anonymous")
+            logger.warning(f"🚨 Oversized upload blocked: {file.filename} ({total_size} bytes) by {user_email}")
+            raise HTTPException(status_code=413, detail="Payload Too Large: max 10MB allowed")
         chunks.append(chunk)
     file_bytes = b"".join(chunks)
 
