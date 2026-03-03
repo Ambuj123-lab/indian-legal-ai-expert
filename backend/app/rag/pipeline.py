@@ -502,6 +502,12 @@ def index_temp_file(file_name: str, file_bytes: bytes, user_email: str) -> dict:
         if not docs:
             return {"parent_count": 0, "child_count": 0}
 
+        # PDF Bomb Protection: Block oversized documents that could explode in memory
+        MAX_PAGES = 500
+        if len(docs) > MAX_PAGES:
+            logger.warning(f"🚨 PDF Bomb blocked: {file_name} has {len(docs)} pages (max {MAX_PAGES}) — uploaded by {user_email}")
+            raise ValueError(f"PDF too large: {len(docs)} pages (max {MAX_PAGES} allowed)")
+
         parent_chunks, child_chunks = create_parent_child_chunks(docs, file_name, file_hash)
 
         embeddings = get_embeddings()
