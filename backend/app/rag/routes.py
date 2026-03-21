@@ -375,7 +375,8 @@ async def delete_document(file_name: str, user: dict = Depends(get_admin_user)):
 # ========================
 
 @router.post("/upload")
-async def upload_temp_file(file: UploadFile = File(...), user: dict = Depends(get_current_user)):
+@limiter.limit("5/hour")
+async def upload_temp_file(request: Request, file: UploadFile = File(...), user: dict = Depends(get_current_user)):
     """
     Upload a temporary PDF — indexed for this user's session only.
     On logout, ALL temp vectors are deleted. Core brain UNTOUCHED.
@@ -384,17 +385,32 @@ async def upload_temp_file(file: UploadFile = File(...), user: dict = Depends(ge
       1. Filename extension check (.pdf only)
       2. Magic Bytes validation (first 4 bytes must be %PDF)
       3. Chunked reading with 10MB hard limit (prevents OOM from oversized uploads)
+      4. Rate limit: 5 uploads per hour per IP
+      5. Max 3 temp files per user (prevents Jina API quota abuse)
     """
+    user_email = user.get("email", "anonymous")
+
+    # --- Security Layer 0: Max 3 Temp Files Per User ---
+    MAX_TEMP_FILES = 3
+    existing_files = get_user_temp_files(user_email)
+    if len(existing_files) >= MAX_TEMP_FILES:
+        # Allow re-upload of same filename (it will be hash-checked/replaced)
+        existing_names = [f["file_name"] for f in existing_files]
+        if file.filename not in existing_names:
+            logger.warning(f"🚨 Upload limit reached: {user_email} already has {len(existing_files)} temp files")
+            raise HTTPException(
+                status_code=429,
+                detail=f"Upload limit reached: max {MAX_TEMP_FILES} files allowed. Delete an existing file first."
+            )
+
     # --- Security Layer 1: Filename Extension ---
     if not file.filename.endswith(".pdf"):
-        user_email = user.get("email", "anonymous")
         logger.warning(f"🚨 Blocked upload: {file.filename} by {user_email} — unsupported file type")
         raise HTTPException(status_code=415, detail="Unsupported Media Type: Only PDF files are allowed")
 
     # --- Security Layer 2: Magic Bytes (Real PDF check) ---
     file_header = await file.read(4)
     if file_header != b"%PDF":
-        user_email = user.get("email", "anonymous")
         logger.warning(f"🚨 Suspicious upload blocked: {file.filename} by {user_email} — invalid PDF header (possible malware)")
         raise HTTPException(status_code=415, detail="Invalid file: not a real PDF")
     await file.seek(0)  # Reset file pointer
@@ -409,27 +425,38 @@ async def upload_temp_file(file: UploadFile = File(...), user: dict = Depends(ge
             break
         total_size += len(chunk)
         if total_size > MAX_UPLOAD_SIZE:
-            user_email = user.get("email", "anonymous")
             logger.warning(f"🚨 Oversized upload blocked: {file.filename} ({total_size} bytes) by {user_email}")
             raise HTTPException(status_code=413, detail="Payload Too Large: max 10MB allowed")
         chunks.append(chunk)
     file_bytes = b"".join(chunks)
 
-    user_email = user.get("email", "anonymous")
-
     try:
         stats = index_temp_file(file.filename, file_bytes, user_email)
+        
+        if stats.get("skipped"):
+            return {
+                "message": f"Already indexed: {file.filename} (No quota used)",
+                "file_name": file.filename,
+                "parent_chunks": stats["parent_count"],
+                "child_chunks": stats["child_count"],
+                "is_temporary": True,
+                "skipped": True,
+                "note": "This identical file was already temporarily indexed."
+            }
+            
         return {
             "message": f"Uploaded and indexed: {file.filename}",
             "file_name": file.filename,
             "parent_chunks": stats["parent_count"],
             "child_chunks": stats["child_count"],
             "is_temporary": True,
+            "skipped": False,
             "note": "This file will be automatically removed when you logout."
         }
     except Exception as e:
         logger.error(f"Upload error: {e}")
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+
 
 
 @router.get("/uploads")

@@ -467,12 +467,39 @@ def index_temp_file(file_name: str, file_bytes: bytes, user_email: str) -> dict:
     These vectors get deleted on logout — core brain UNTOUCHED.
     """
     import tempfile
-    from qdrant_client.models import PointStruct
+    from qdrant_client.models import PointStruct, Filter, FieldCondition, MatchValue
     from app.db.supabase_client import calculate_sha256
 
     file_hash = calculate_sha256(file_bytes)
 
-    # ⚡ DUPLICATE DETECTION: If same file already uploaded by this user, delete old vectors first
+    # ⚡ NEW OPTIMIZATION: Check if same file is already indexed for this user
+    try:
+        client = get_qdrant_client()
+        collection = settings.QDRANT_COLLECTION_NAME
+        
+        existing = client.scroll(
+            collection_name=collection,
+            scroll_filter=Filter(must=[
+                FieldCondition(key="source_file", match=MatchValue(value=file_name)),
+                FieldCondition(key="uploaded_by", match=MatchValue(value=user_email)),
+                FieldCondition(key="is_temporary", match=MatchValue(value=True)),
+            ]),
+            limit=1,
+            with_payload=["file_hash"]
+        )
+        points = existing[0]
+        if points and points[0].payload.get("file_hash") == file_hash:
+            logger.info(f"Skipping index for {file_name} ({user_email}): identical file already exists.")
+            return {
+                "parent_count": 0,
+                "child_count": 0,
+                "skipped": True,
+                "reason": "Identical file already indexed"
+            }
+    except Exception as e:
+        logger.warning(f"Failed to check existing temp file hash: {e}")
+
+    # ⚡ DUPLICATE DETECTION: If same file name but different hash (or no hash found), delete old vectors first
     try:
         client = get_qdrant_client()
         collection = settings.QDRANT_COLLECTION_NAME
