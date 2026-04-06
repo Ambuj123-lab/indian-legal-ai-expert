@@ -787,25 +787,18 @@ def sync_knowledge_base() -> dict:
 # RETRIEVAL (Search)
 # ========================
 
-def search_similar(query: str, top_k: int = 10, final_top_k: int = 3, threshold: float = 0.45, user_email: str = None) -> list:
+def search_similar(query: str, top_k: int = 15, user_email: str = None) -> list:
     """
-    Search Qdrant for similar child chunks with hybrid precision-first retrieval.
-    Searches BOTH core brain (is_temporary=False) AND user's temp files.
-    Applies vector + lexical hybrid scoring, post-scoring deduplication, and thresholding.
-    Returns up to final_top_k unique parent contexts.
+    Original simple vector search logic using Jina AI embeddings and Qdrant.
+    Searches both core and user temporary files.
     """
     from qdrant_client.models import Filter, FieldCondition, MatchValue
-    import re
-
     try:
         embeddings = get_embeddings()
         query_vector = embeddings.embed_query(query)
         client = get_qdrant_client()
 
-        # Tokenize query for lexical scoring
-        query_tokens = set(re.findall(r'\w+', query.lower()))
-
-        # Search 1: Core brain (is_temporary = False)
+        # Core search
         core_results = client.search(
             collection_name=settings.QDRANT_COLLECTION_NAME,
             query_vector=query_vector,
@@ -819,7 +812,6 @@ def search_similar(query: str, top_k: int = 10, final_top_k: int = 3, threshold:
             with_payload=True
         )
 
-        # Search 2: User's temp files (if logged in)
         user_results = []
         if user_email:
             user_results = client.search(
@@ -838,66 +830,25 @@ def search_similar(query: str, top_k: int = 10, final_top_k: int = 3, threshold:
 
         all_results = list(core_results) + list(user_results)
         
-        if not all_results:
-            return []
-
-        # Vector score normalization (Fixed-Range for Jina Embeddings)
-        scored_results = []
-        for hit in all_results:
-            # Jina cosine scores are usually 0.5+ for relevant hits
-            norm_vs = (hit.score - 0.5) / 0.5
-            norm_vs = max(0.0, min(1.0, norm_vs))
-
-            # Lexical score calculation (Query word overlap)
-            child_text = hit.payload.get("text", "")
-            child_tokens = set(re.findall(r'\w+', child_text.lower()))
-            lexical_score = 0.0
-            if query_tokens and child_tokens:
-                overlap = query_tokens.intersection(child_tokens)
-                lexical_score = len(overlap) / len(query_tokens)
-
-            # Hybrid score formulation
-            final_score = (0.7 * norm_vs) + (0.3 * lexical_score)
-            
-            # Detailed logging to tune the 0.55 threshold safely
-            logger.info(f"Retrieval | Query: '{query}' | File: {hit.payload.get('source_file', 'unknown')} | VS: {hit.score:.3f} (Norm: {norm_vs:.3f}) | LS: {lexical_score:.3f} | FS: {final_score:.3f}")
-
-            # Apply strict precision threshold
-            if final_score >= threshold:
-                scored_results.append({
-                    "hit": hit,
-                    "final_score": final_score
-                })
-
-        # Sort by final hybrid score, descending
-        scored_results.sort(key=lambda x: x["final_score"], reverse=True)
-
-        # Deduplicate by parent_id AFTER scoring, enforcing final_top_k
+        # Simple score-based sort and parent deduplication
+        all_results.sort(key=lambda x: x.score, reverse=True)
         seen_parents = set()
         search_results = []
         
-        for item in scored_results:
-            hit = item["hit"]
+        for hit in all_results:
             parent_id = hit.payload.get("parent_id", "")
-            
-            # Post-scoring deduplication
             if parent_id not in seen_parents:
                 seen_parents.add(parent_id)
                 search_results.append({
                     "parent_text": hit.payload.get("parent_text", ""),
-                    "child_text": hit.payload.get("text", ""),
-                    "score": item["final_score"], # Pass hybrid score downstream
-                    "raw_vector_score": hit.score,
                     "source_file": hit.payload.get("source_file", ""),
                     "page": hit.payload.get("page", 0),
-                    "is_temporary": hit.payload.get("is_temporary", False),
+                    "score": hit.score
                 })
-                
-                # Enforce limit of top 3 parents max to prevent context noise
-                if len(search_results) >= final_top_k:
-                    break
-
         return search_results
+    except Exception as e:
+        logger.error(f"Search error: {e}")
+        return []
 
     except Exception as e:
         logger.error(f"Search error: {e}")
@@ -1185,6 +1136,10 @@ async def generate_response_stream(
     langfuse_handler = get_langfuse_handler()
     if langfuse_handler:
         invoke_config["callbacks"] = [langfuse_handler]
+
+    if not context.strip():
+        yield "I'm sorry, but I couldn't find any relevant information in my verified legal database to answer your specific question. Since I am a specialized Legal AI Expert, I only provide answers based on my official documents. Please try rephrasing your query or asking about a specific legal topic."
+        return
 
     async for chunk in chain.astream(
         {
