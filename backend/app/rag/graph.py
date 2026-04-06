@@ -103,13 +103,13 @@ def greet_node(state: RAGState) -> dict:
     #     max_tokens=150
     # )
 
-    # === GEMINI FLASH CONFIG ===
-    llm = ChatOpenAI(
+    # === GEMINI FLASH NATIVE CONFIG (DIRECT) ===
+    from langchain_google_genai import ChatGoogleGenerativeAI
+    llm = ChatGoogleGenerativeAI(
         model="gemini-3.1-flash-lite-preview",
-        openai_api_key=settings.GEMINI_API_KEY,
-        openai_api_base="https://generativelanguage.googleapis.com/v1beta/openai/",
+        google_api_key=settings.GEMINI_API_KEY,
         temperature=0.7,
-        max_tokens=150
+        max_output_tokens=150
     )
 
     greeting_prompt = """You are Indian Legal AI Expert & Advisor created by Ambuj Kumar Tripathi.

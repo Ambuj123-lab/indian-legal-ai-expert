@@ -1175,15 +1175,15 @@ async def generate_response_stream(
     #     request_timeout=60
     # )
 
-    # === GEMINI FLASH CONFIG ===
-    llm = ChatOpenAI(
+    # === GEMINI FLASH NATIVE CONFIG (DIRECT) ===
+    from langchain_google_genai import ChatGoogleGenerativeAI
+    llm = ChatGoogleGenerativeAI(
         model="gemini-3.1-flash-lite-preview",
-        openai_api_key=settings.GEMINI_API_KEY,
-        openai_api_base="https://generativelanguage.googleapis.com/v1beta/openai/",
+        google_api_key=settings.GEMINI_API_KEY,
         temperature=0.3,
-        max_tokens=3000,
+        max_output_tokens=3000,
         streaming=True,
-        request_timeout=60
+        timeout=60
     )
 
     chain = ChatPromptTemplate.from_template(SYSTEM_PROMPT) | llm | StrOutputParser()
