@@ -2305,12 +2305,15 @@ body {
     right: 0; /* Right-side orientation */
     bottom: 0;
     width: 280px;
-    z-index: 1000;
+    background: var(--bg-secondary) !important;
+    z-index: 2000;
     transform: translateX(100%); /* Slide from Right */
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: -4px 0 20px rgba(0,0,0,0.5);
-    border-right: none;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.8);
     border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(20px);
   }
 
   .dashboard-sidebar.open {
@@ -2321,16 +2324,138 @@ body {
     transform: translateX(100%);
   }
 
+  /* --- New Mobile Sidebar UI --- */
+  .sidebar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-mobile-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .sidebar-close-btn {
+    background: var(--bg-glass);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .sidebar-close-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  .sidebar-user-summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-glass);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--accent-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid var(--accent-primary);
+  }
+
+  .sidebar-user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sidebar-user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sidebar-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebar-email {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebar-scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Custom scrollbar for sidebar */
+  .sidebar-scrollable-content::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .sidebar-scrollable-content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .logout-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.85rem !important;
+    font-weight: 600 !important;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: var(--red);
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+
   .sidebar-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(4px);
-    z-index: 999;
-    animation: fadeIn 0.2s ease;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    z-index: 1999;
+    animation: fadeIn 0.3s ease;
   }
 
   /* Table responsiveness */
@@ -2368,12 +2493,13 @@ body {
     background: var(--bg-glass);
     border: 1px solid var(--border);
     color: var(--text-primary);
-    padding: 0.4rem;
-    border-radius: 8px;
+    padding: 0.5rem;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    order: 2; /* Hamburger stays on the far right */
+    order: 2;
+    box-shadow: var(--shadow-sm);
   }
 
   .user-profile {

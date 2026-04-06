@@ -5,6 +5,7 @@ import Chat from './components/Chat';
 import AdminPanel from './components/AdminPanel';
 import Login from './pages/Login';
 import AuthCallback from './pages/AuthCallback';
+import { FiX, FiUser, FiLogOut } from 'react-icons/fi';
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -41,8 +42,32 @@ function Dashboard() {
 
       {/* Sidebar: always visible on desktop, toggled via CSS on mobile */}
       <div className={`dashboard-sidebar ${isMobile ? (sidebarOpen ? 'open' : 'closed') : ''}`}>
-        <AdminPanel isAdmin={isAdmin} />
-        <button className="logout-btn" onClick={logout}>Sign Out</button>
+        {isMobile && (
+          <div className="sidebar-mobile-header">
+            <span className="sidebar-mobile-title">Menu</span>
+            <button className="sidebar-close-btn" onClick={() => setSidebarOpen(false)}>
+              <FiX size={20} />
+            </button>
+          </div>
+        )}
+
+        <div className="sidebar-user-summary">
+          <div className="sidebar-user-avatar">
+            {user?.picture ? <img src={user.picture} alt="User" /> : <FiUser size={18} />}
+          </div>
+          <div className="sidebar-user-info">
+            <span className="sidebar-name">{user?.name || 'Legal Expert'}</span>
+            <span className="sidebar-email">{user?.email}</span>
+          </div>
+        </div>
+
+        <div className="sidebar-scrollable-content">
+          <AdminPanel isAdmin={isAdmin} />
+        </div>
+
+        <button className="logout-btn" onClick={logout}>
+          <FiLogOut size={16} /> <span>Sign Out</span>
+        </button>
       </div>
     </div>
   );
