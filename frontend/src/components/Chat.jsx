@@ -10,10 +10,15 @@ export default function Chat({ sidebarOpen, setSidebarOpen, isMobile }) {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isStreaming, setIsStreaming] = useState(false);
+    const [imgError, setImgError] = useState(false);
     const [expandedSources, setExpandedSources] = useState({});
     const [toast, setToast] = useState(null);
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
+
+    useEffect(() => {
+        setImgError(false);
+    }, [user]);
 
     useEffect(() => {
         loadHistory();
@@ -147,6 +152,13 @@ export default function Chat({ sidebarOpen, setSidebarOpen, isMobile }) {
                         <div className="logo-text">
                             <h3>AI Legal Expert</h3>
                             <p>Constitution • BNS • BNSS • Consumer • IT Act • Motor Vehicles</p>
+                            <div className="navbar-credit-text">
+                                Built by <span className="credit-author">Ambuj Kumar Tripathi</span> 
+                                <span className="credit-sep"> · </span> 
+                                <span className="credit-role">RAG Systems Architect</span> 
+                                <span className="credit-sep"> · </span> 
+                                <a href="https://ambuj-portfolio-v2.netlify.app" target="_blank" rel="noopener noreferrer" className="credit-link">ambuj-portfolio-v2.netlify.app</a>
+                            </div>
                         </div>
                     </div>
 
@@ -175,10 +187,17 @@ export default function Chat({ sidebarOpen, setSidebarOpen, isMobile }) {
                             </button>
                         )}
                         <div className="user-profile" title={user?.name || 'User'}>
-                            {user?.picture ? (
-                                <img src={user.picture} alt="Avatar" onError={(e) => { e.target.style.display = 'none' }} />
+                            {user?.picture && !imgError ? (
+                                <img 
+                                    src={user.picture} 
+                                    alt="Avatar" 
+                                    referrerPolicy="no-referrer"
+                                    onError={() => setImgError(true)} 
+                                />
                             ) : (
-                                <div className="user-initial">{user?.name?.[0]?.toUpperCase() || 'A'}</div>
+                                <div className="user-initial">
+                                    {user?.name?.[0]?.toUpperCase() || <FiUser size={16} />}
+                                </div>
                             )}
                         </div>
                     </div>

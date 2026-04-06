@@ -1,5 +1,5 @@
 /* ============================================
-   AI Legal Expert — Premium Dark Theme
+   AI Legal Expert â€” Premium Dark Theme
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -292,12 +292,56 @@ body {
 }
 
 .logo-text h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #10b981;
-  line-height: 1;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #fff;
   margin-bottom: 2px;
-  white-space: nowrap;
+}
+
+/* ========================
+   HORIZONTAL BRANDING (Global Parity)
+   ======================== */
+.sidebar-footer-branding {
+  margin-top: auto;
+  padding: 1rem 0.75rem 0.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.footer-name, .credit-author { 
+  color: var(--accent-secondary) !important; 
+  font-weight: 700; 
+  padding: 0 2px;
+}
+
+.footer-sep, .credit-sep { 
+  opacity: 0.3; 
+  padding: 0 3px; 
+}
+
+.footer-role, .credit-role { 
+  font-weight: 500; 
+  font-style: italic; 
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-link, .credit-link { 
+  color: var(--accent-primary); 
+  text-decoration: none; 
+  border-bottom: 1px dotted var(--accent-primary); 
+  transition: var(--transition); 
+  padding-bottom: 1px;
+}
+
+.footer-link:hover, .credit-link:hover { 
+  color: #fff; 
+  border-bottom-style: solid; 
 }
 
 .logo-text p {
@@ -306,6 +350,28 @@ body {
   font-weight: 500;
   white-space: nowrap;
 }
+
+.navbar-credit-text {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+.credit-author { font-weight: 600; color: var(--accent-secondary); }
+.credit-sep { opacity: 0.4; }
+.credit-role { font-weight: 500; font-style: italic; }
+.credit-link { 
+  color: var(--accent-primary); 
+  text-decoration: none; 
+  border-bottom: 1px dotted var(--accent-primary); 
+  transition: var(--transition); 
+}
+.credit-link:hover { color: #fff; border-bottom-style: solid; }
 
 .header-center {
   display: flex;
@@ -2184,6 +2250,7 @@ body {
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
 
+
 .tech-track {
   display: flex;
   gap: 2.5rem;
@@ -2229,13 +2296,8 @@ body {
 }
 
 @keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* --- Right Side --- */
@@ -2248,9 +2310,6 @@ body {
   justify-content: center;
   overflow: hidden;
 }
-
-
-
 
 .architecture-container {
   position: relative;
@@ -2298,16 +2357,22 @@ body {
     align-items: center;
     width: 100%;
   }
+
+  /* --- Global Branding Responsive (Navbar & Sidebar) --- */
+  .credit-role, .credit-sep:last-of-type, .credit-link,
+  .footer-role, .footer-sep:last-of-type, .footer-link { 
+    display: none; 
+  }
   
   .dashboard-sidebar {
     position: fixed;
     top: 0;
-    right: 0; /* Right-side orientation */
+    right: 0;
     bottom: 0;
     width: 280px;
     background: var(--bg-secondary) !important;
     z-index: 2000;
-    transform: translateX(100%); /* Slide from Right */
+    transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: -10px 0 30px rgba(0,0,0,0.8);
     border-left: 1px solid var(--border);
@@ -2324,7 +2389,7 @@ body {
     transform: translateX(100%);
   }
 
-  /* --- New Mobile Sidebar UI --- */
+  /* --- Mobile Sidebar UI --- */
   .sidebar-mobile-header {
     display: flex;
     align-items: center;
@@ -2338,7 +2403,6 @@ body {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--accent-primary);
-    letter-spacing: 1px;
     text-transform: uppercase;
   }
 
@@ -2352,21 +2416,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
-  }
-
-  .sidebar-close-btn:hover {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--red);
-    border-color: var(--red);
   }
 
   .sidebar-user-summary {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem;
+    padding: 1.25rem 1rem;
     background: var(--bg-glass);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -2383,7 +2439,6 @@ body {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    border: 2px solid var(--accent-primary);
   }
 
   .sidebar-user-avatar img {
@@ -2392,10 +2447,23 @@ body {
     object-fit: cover;
   }
 
+  .sidebar-user-initial {
+    width: 100%;
+    height: 100%;
+    background: var(--accent-gradient);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
   .sidebar-user-info {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    gap: 0.15rem;
   }
 
   .sidebar-name {
@@ -2405,30 +2473,23 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
   }
 
   .sidebar-email {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
+    opacity: 0.8;
   }
 
   .sidebar-scrollable-content {
     flex: 1;
     overflow-y: auto;
-    margin-bottom: 1rem;
-    padding-right: 0.5rem;
-  }
-
-  /* Custom scrollbar for sidebar */
-  .sidebar-scrollable-content::-webkit-scrollbar {
-    width: 4px;
-  }
-  
-  .sidebar-scrollable-content::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.05);
+    margin-bottom: 0.5rem;
   }
 
   .logout-btn {
@@ -2438,12 +2499,10 @@ body {
     justify-content: center;
     gap: 0.75rem;
     padding: 0.85rem !important;
-    font-weight: 600 !important;
     background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.2);
     color: var(--red);
-    margin-bottom: constant(safe-area-inset-bottom);
-    margin-bottom: env(safe-area-inset-bottom);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    margin-top: 0.5rem;
   }
 
   .sidebar-overlay {
@@ -2452,41 +2511,33 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
     z-index: 1999;
     animation: fadeIn 0.3s ease;
   }
 
-  /* Table responsiveness */
   .markdown-body table {
     display: block;
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 1rem;
   }
 
-  .infra-label {
-    display: none; /* Hide detailed label on mobile */
-  }
-
-  .infra-status-badge {
-    padding: 0.35rem 0.65rem;
-  }
+  .infra-label { display: none; }
+  .infra-status-badge { padding: 0.4rem 0.6rem; }
   
   @media (max-width: 480px) {
-    .infra-status-badge {
-      display: none; /* Hide entirely on super small phones to prevent header overflow */
-    }
+    .infra-status-badge { display: none; }
+    .logo-text h3 { font-size: 1.05rem; }
+    .logo-text p { font-size: 0.62rem; }
+    .navbar-credit-text { font-size: 0.6rem; margin-top: 2px; }
+    .message-bubble { max-width: 94%; }
   }
 
   .header-actions {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    justify-content: flex-end;
-    flex: 0;
   }
 
   .hamburger-btn {
@@ -2496,41 +2547,23 @@ body {
     padding: 0.5rem;
     border-radius: 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
     order: 2;
-    box-shadow: var(--shadow-sm);
   }
 
-  .user-profile {
-    order: 1;
-  }
+  .user-profile { order: 1; }
 
-  /* Login Responsive Fixes */
-  .login-page {
-    padding: 1rem;
-    height: 100dvh;
-    overflow-y: auto;
-  }
-  .login-card {
-    padding: 1.5rem;
-    width: 100%;
-    margin-top: 1rem;
-  }
-  .login-features {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-  
-  @media (max-width: 480px) {
-    .logo-text h3 {
-      font-size: 1rem;
-    }
-    .logo-text p {
-      font-size: 0.6rem;
-    }
-    .message-bubble {
-      max-width: 92%;
-    }
-  }
+  /* Login Responsive */
+  .login-page { padding: 1rem; height: 100dvh; overflow-y: auto; }
+  .login-card { padding: 1.5rem; width: 100%; margin-top: 1rem; }
+}
+
+/* Header Collision Fix (Small Screens) */
+@media (max-width: 420px) {
+  .logo-text p { display: none; }
+  .status-text { font-size: 0.62rem; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

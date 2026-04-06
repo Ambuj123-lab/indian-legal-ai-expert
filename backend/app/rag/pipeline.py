@@ -1122,9 +1122,10 @@ async def generate_response_stream(
     #     request_timeout=60
     # )
 
-    # === GEMINI FLASH NATIVE CONFIG (DIRECT) ===
+    # === DUAL-MODEL AUTO-FALLBACK CONFIG (Gemini 3.1 -> Gemma 4) ===
     from langchain_google_genai import ChatGoogleGenerativeAI
-    llm = ChatGoogleGenerativeAI(
+    
+    primary_llm = ChatGoogleGenerativeAI(
         model="gemini-3.1-flash-lite-preview",
         google_api_key=settings.GEMINI_API_KEY,
         temperature=0.3,
@@ -1132,6 +1133,17 @@ async def generate_response_stream(
         streaming=True,
         timeout=60
     )
+    
+    fallback_llm = ChatGoogleGenerativeAI(
+        model="gemma-4-31b-it",
+        google_api_key=settings.GEMINI_API_KEY,
+        temperature=0.3,
+        max_output_tokens=3000,
+        streaming=True,
+        timeout=60
+    )
+    
+    llm = primary_llm.with_fallbacks([fallback_llm])
 
     chain = ChatPromptTemplate.from_template(SYSTEM_PROMPT) | llm | StrOutputParser()
 

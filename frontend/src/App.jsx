@@ -5,7 +5,7 @@ import Chat from './components/Chat';
 import AdminPanel from './components/AdminPanel';
 import Login from './pages/Login';
 import AuthCallback from './pages/AuthCallback';
-import { FiX, FiUser, FiLogOut } from 'react-icons/fi';
+import { FiX, FiUser, FiLogOut, FiCode } from 'react-icons/fi';
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -24,54 +24,84 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
-function Dashboard() {
-  const { user, isAdmin, logout } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const isMobile = useIsMobile();
+  const Dashboard = () => {
+    const { user, isAdmin, logout } = useAuth();
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [imgError, setImgError] = useState(false);
+    const isMobile = useIsMobile();
 
-  return (
-    <div className="dashboard">
-      <div className="dashboard-main">
-        <Chat sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} isMobile={isMobile} />
-      </div>
+    // Reset error when user changes
+    useEffect(() => {
+      setImgError(false);
+    }, [user]);
 
-      {/* Overlay to close sidebar on mobile */}
-      {isMobile && sidebarOpen && (
-        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)}></div>
-      )}
+    return (
+      <div className="dashboard">
+        <div className="dashboard-main">
+          <Chat sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} isMobile={isMobile} />
+        </div>
 
-      {/* Sidebar: always visible on desktop, toggled via CSS on mobile */}
-      <div className={`dashboard-sidebar ${isMobile ? (sidebarOpen ? 'open' : 'closed') : ''}`}>
-        {isMobile && (
-          <div className="sidebar-mobile-header">
-            <span className="sidebar-mobile-title">Menu</span>
-            <button className="sidebar-close-btn" onClick={() => setSidebarOpen(false)}>
-              <FiX size={20} />
-            </button>
-          </div>
+        {/* Overlay to close sidebar on mobile */}
+        {isMobile && sidebarOpen && (
+          <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)}></div>
         )}
 
-        <div className="sidebar-user-summary">
-          <div className="sidebar-user-avatar">
-            {user?.picture ? <img src={user.picture} alt="User" /> : <FiUser size={18} />}
-          </div>
-          <div className="sidebar-user-info">
-            <span className="sidebar-name">{user?.name || 'Legal Expert'}</span>
-            <span className="sidebar-email">{user?.email}</span>
-          </div>
-        </div>
+        {/* Sidebar: always visible on desktop, toggled via CSS on mobile */}
+        <div className={`dashboard-sidebar ${isMobile ? (sidebarOpen ? 'open' : 'closed') : ''}`}>
+          {isMobile && (
+            <div className="sidebar-mobile-header">
+              <span className="sidebar-mobile-title">Menu</span>
+              <button className="sidebar-close-btn" onClick={() => setSidebarOpen(false)}>
+                <FiX size={20} />
+              </button>
+            </div>
+          )}
 
-        <div className="sidebar-scrollable-content">
-          <AdminPanel isAdmin={isAdmin} />
-        </div>
+          <div className="sidebar-user-summary">
+            <div className="sidebar-user-avatar">
+              {user?.picture && !imgError ? (
+                <img 
+                  src={user.picture} 
+                  alt="User" 
+                  referrerPolicy="no-referrer"
+                  onError={() => setImgError(true)} 
+                />
+              ) : (
+                <div className="sidebar-user-initial">
+                  {user?.name?.[0]?.toUpperCase() || <FiUser size={18} />}
+                </div>
+              )}
+            </div>
+            <div className="sidebar-user-info">
+              <div className="sidebar-name-row">
+                <span className="sidebar-name">{user?.name || 'Legal Expert'}</span>
+              </div>
+              <div className="sidebar-email-row">
+                <span className="sidebar-email">{user?.email}</span>
+              </div>
+            </div>
+          </div>
 
-        <button className="logout-btn" onClick={logout}>
-          <FiLogOut size={16} /> <span>Sign Out</span>
-        </button>
+          <div className="sidebar-scrollable-content">
+            <AdminPanel isAdmin={isAdmin} />
+          </div>
+
+          {/* Professional Footer Branding — Matching Navbar Aesthetic */}
+          <div className="sidebar-footer-branding">
+            Built by <span className="footer-name">Ambuj Kumar Tripathi</span> 
+            <span className="footer-sep"> · </span> 
+            <span className="footer-role">RAG Systems Architect</span> 
+            <span className="footer-sep"> · </span> 
+            <a href="https://ambuj-portfolio-v2.netlify.app" target="_blank" rel="noopener noreferrer" className="footer-link">ambuj-portfolio-v2.netlify.app</a>
+          </div>
+
+          <button className="logout-btn" onClick={logout}>
+            <FiLogOut size={16} /> <span>Sign Out</span>
+          </button>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  };
 
 function AppRoutes() {
   return (
