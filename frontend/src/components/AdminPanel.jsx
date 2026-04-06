@@ -91,12 +91,23 @@ export default function AdminPanel({ isAdmin = false }) {
 
             // Stage 3: Done
             setUploadState('done');
-            setUploadInfo({
-                name: file.name,
-                size: formatBytes(file.size),
-                parentChunks: result.parent_chunks,
-                childChunks: result.child_chunks,
-            });
+            if (result.skipped) {
+                setUploadInfo({
+                    name: file.name,
+                    size: formatBytes(file.size),
+                    parentChunks: '—',
+                    childChunks: '✅ Already indexed (No quota used)',
+                    skipped: true
+                });
+            } else {
+                setUploadInfo({
+                    name: file.name,
+                    size: formatBytes(file.size),
+                    parentChunks: result.parent_chunks,
+                    childChunks: result.child_chunks,
+                    skipped: false
+                });
+            }
 
             await loadTempFiles();
 
@@ -172,11 +183,23 @@ export default function AdminPanel({ isAdmin = false }) {
                         )}
                         {uploadState === 'done' && (
                             <>
-                                <FiCheckCircle size={14} />
-                                <div className="progress-text">
-                                    <strong>✅ Indexed: {uploadInfo.name}</strong>
-                                    <span>{uploadInfo.parentChunks} parent • {uploadInfo.childChunks} child chunks</span>
-                                </div>
+                                {uploadInfo.skipped ? (
+                                    <>
+                                        <FiCheckCircle size={14} color="#3b82f6" />
+                                        <div className="progress-text">
+                                            <strong style={{color: '#3b82f6'}}>⚡ DUPLICATE DETECTED: {uploadInfo.name}</strong>
+                                            <span style={{color: '#3b82f6', fontWeight: '500'}}>File is already in database. 0 Tokens Used! 💸</span>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FiCheckCircle size={14} />
+                                        <div className="progress-text">
+                                            <strong>✅ Indexed: {uploadInfo.name}</strong>
+                                            <span>{uploadInfo.parentChunks} parent • {uploadInfo.childChunks} child chunks</span>
+                                        </div>
+                                    </>
+                                )}
                             </>
                         )}
                         {uploadState === 'error' && (

@@ -94,10 +94,20 @@ def greet_node(state: RAGState) -> dict:
 
     start = time.time()
 
+    # === OPENROUTER BACKUP (Commented for easy revert) ===
+    # llm = ChatOpenAI(
+    #     model="qwen/qwen3-235b-a22b-thinking-2507",
+    #     openai_api_key=settings.OPENROUTER_API_KEY,
+    #     openai_api_base="https://openrouter.ai/api/v1",
+    #     temperature=0.7,
+    #     max_tokens=150
+    # )
+
+    # === GEMINI FLASH CONFIG ===
     llm = ChatOpenAI(
-        model="qwen/qwen3-235b-a22b-thinking-2507",
-        openai_api_key=settings.OPENROUTER_API_KEY,
-        openai_api_base="https://openrouter.ai/api/v1",
+        model="gemini-1.5-flash-lite-preview",
+        openai_api_key=settings.GEMINI_API_KEY,
+        openai_api_base="https://generativelanguage.googleapis.com/v1beta/openai/",
         temperature=0.7,
         max_tokens=150
     )
@@ -142,8 +152,8 @@ async def retrieve_node(state: RAGState) -> dict:
         if key in safe_query.lower():
             search_query += f" {value}"
 
-    # Search Qdrant
-    results = search_similar(search_query, top_k=15, user_email=state.get("user_email"))
+    # Search Qdrant using the new hybrid precision-first retrieval
+    results = search_similar(search_query, user_email=state.get("user_email"))
 
     if not results:
         return {
@@ -187,10 +197,10 @@ def generate_node(state: RAGState) -> dict:
     """Node 3: Generate LLM response with context"""
     import time
 
-    # Low confidence fallback
-    if state.get("confidence", 0) < 40:
+    # Low confidence fallback (checks empty context from thresholding)
+    if not state.get("context") or state.get("confidence", 0) < 55:
         return {
-            "response": "I don't have specific information about this in my legal documents. Could you rephrase your question or ask about a specific law, act, or legal topic that I cover?\n\n**I can help with:** Constitution of India, BNS 2023, BNSS 2023, Consumer Protection Act, IT Act 2000, Motor Vehicles Act.\n\n> *\"⚠️ Disclaimer: I am an AI assistant. For critical legal matters, please consult a qualified professional.\"*",
+            "response": "I don't have sufficient information about this in my legal documents to provide an accurate answer. Could you rephrase your question or ask about a specific law, act, or legal topic that I cover?\n\n**I can help with:** Constitution of India, BNS 2023, BNSS 2023, Consumer Protection Act, IT Act 2000, Motor Vehicles Act.\n\n> *\"⚠️ Disclaimer: I am an AI assistant. For critical legal matters, please consult a qualified professional.\"*",
             "latency": 0
         }
 

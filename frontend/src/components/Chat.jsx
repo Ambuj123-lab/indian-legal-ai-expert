@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { FiSend, FiThumbsUp, FiThumbsDown, FiChevronDown, FiChevronUp, FiTrash2 } from 'react-icons/fi';
+import { FiSend, FiThumbsUp, FiThumbsDown, FiChevronDown, FiChevronUp, FiTrash2, FiCopy, FiMenu } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 import { streamChat, submitFeedback, getHistory, clearHistory } from '../api';
 
-export default function Chat() {
+export default function Chat({ sidebarOpen, setSidebarOpen, isMobile }) {
     const { user } = useAuth();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
@@ -114,30 +114,74 @@ export default function Chat() {
         setMessages([]);
     }
 
+    async function handleCopy(msg) {
+        const userQ = messages.find((m, i) => m.role === 'user' && messages[i + 1]?.id === msg.id);
+        const questionText = userQ ? userQ.content : 'N/A';
+        
+        const disclaimer = `⚖️ Constitution of India AI Expert | Engineered by Ambuj Kumar Tripathi\n⚠️ Technical Disclaimer: This response was generated dynamically via an Agentic RAG Architecture utilizing Semantic Parent-Child Chunking and Qdrant Vector Retrieval. As with all LLM-driven systems, this output is probabilistic and intended for educational demonstration only. It does NOT constitute professional legal advice. Always consult a qualified advocate for critical legal matters.`;
+        
+        const textToCopy = `Question: ${questionText}\n\nAnswer:\n${msg.content}\n\n---\n${disclaimer}`;
+        
+        try {
+            await navigator.clipboard.writeText(textToCopy);
+            setToast('📋 Copied to clipboard with disclaimer!');
+            setTimeout(() => setToast(null), 2500);
+        } catch (err) {
+            setToast('⚠ Failed to copy');
+            setTimeout(() => setToast(null), 2500);
+        }
+    }
+
     return (
         <div className="chat-container">
             {/* Header */}
             <div className="chat-header">
                 <div className="chat-header-info">
                     <div className="chat-logo">
-                        <img src="/branding/logo.png" alt="Logo" className="chat-logo-img" />
+                        <img 
+                            src="/branding/logo.png" 
+                            alt="Constitution of India" 
+                            className="chat-logo-img"
+                            onError={(e) => { e.target.style.display = 'none' }} 
+                        />
+                        <div className="logo-text">
+                            <h3>AI Legal Expert</h3>
+                            <p>Constitution • BNS • BNSS • Consumer • IT Act • Motor Vehicles</p>
+                        </div>
                     </div>
-                    <div>
-                        <h2>AI Legal Expert</h2>
-                        <span className="chat-subtitle">Constitution • BNS • BNSS • Consumer • IT Act • Motor Vehicles</span>
-                    </div>
-                </div>
-                <div className="chat-header-actions">
 
-                    {user && (
-                        <div className="user-avatar" title={user.name}>
-                            {user.picture ? (
-                                <img src={user.picture} alt={user.name} />
+                    <div className="header-center">
+                        <a 
+                            href="https://stats.uptimerobot.com/4tYmSQnuBE" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="infra-status-badge"
+                            title="Live Infrastructure Status"
+                        >
+                            <span className="pulse-dot"></span>
+                            <span className="status-text">System Live</span>
+                            <span className="infra-label">on Production Infra</span>
+                        </a>
+                    </div>
+
+                    <div className="header-actions">
+                        {isMobile && (
+                            <button
+                                className="hamburger-btn"
+                                onClick={() => setSidebarOpen(!sidebarOpen)}
+                                title="Menu"
+                            >
+                                <FiMenu size={22} />
+                            </button>
+                        )}
+                        <div className="user-profile" title={user?.name || 'User'}>
+                            {user?.picture ? (
+                                <img src={user.picture} alt="Avatar" onError={(e) => { e.target.style.display = 'none' }} />
                             ) : (
-                                <span>{user.name?.[0]?.toUpperCase()}</span>
+                                <div className="user-initial">{user?.name?.[0]?.toUpperCase() || 'A'}</div>
                             )}
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
 
@@ -219,15 +263,21 @@ export default function Chat() {
                                             </div>
                                             <div className="action-right">
                                                 <button
+                                                    onClick={() => handleCopy(msg)}
+                                                    title="Copy Answer"
+                                                    className="copy-btn"
+                                                    style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.8rem' }}
+                                                ><FiCopy size={14} /> <span>Copy</span></button>
+                                                <button
                                                     onClick={() => handleFeedback(msg, 'up')}
-                                                    className={msg.feedbackGiven === 'up' ? 'active-feedback' : ''}
+                                                    className={`feedback-btn ${msg.feedbackGiven === 'up' ? 'active-up' : ''}`}
                                                     title="Helpful"
-                                                ><FiThumbsUp size={14} /></button>
+                                                >👍 <span>Helpful</span></button>
                                                 <button
                                                     onClick={() => handleFeedback(msg, 'down')}
-                                                    className={msg.feedbackGiven === 'down' ? 'active-feedback' : ''}
+                                                    className={`feedback-btn ${msg.feedbackGiven === 'down' ? 'active-down' : ''}`}
                                                     title="Not helpful"
-                                                ><FiThumbsDown size={14} /></button>
+                                                >👎 <span>Not helpful</span></button>
                                             </div>
                                         </div>
                                     )}
@@ -293,14 +343,14 @@ export default function Chat() {
                     bottom: '24px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    background: 'linear-gradient(135deg, #1e1f2e 0%, #252636 100%)',
-                    color: '#e4e5eb',
+                    background: '#1a1a1a',
+                    color: '#ededed',
                     padding: '0.65rem 1.4rem',
                     borderRadius: '12px',
                     fontSize: '0.82rem',
                     fontWeight: 500,
                     zIndex: 1000,
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(108, 92, 231, 0.2)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(16, 185, 129, 0.15)',
                     animation: 'fadeInUp 0.3s ease-out',
                     display: 'flex',
                     alignItems: 'center',

@@ -30,6 +30,9 @@ class Settings(BaseSettings):
     # --- OpenRouter LLM ---
     OPENROUTER_API_KEY: str = ""
 
+    # --- Gemini LLM ---
+    GEMINI_API_KEY: str = ""
+
     # --- Jina AI Embeddings ---
     JINA_API_KEY: str = ""
 

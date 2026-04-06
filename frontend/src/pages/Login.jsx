@@ -36,7 +36,7 @@ export default function Login() {
             width: '100vw',
             height: '100vh',
             overflow: isMobile ? 'auto' : 'hidden',
-            background: '#0a0b0f'
+            background: '#000000'
         }}>
             {/* ============ TOP AREA: LEFT + RIGHT ============ */}
             <div style={{
@@ -50,7 +50,7 @@ export default function Login() {
                 <div style={{
                     width: isMobile ? '100%' : '420px',
                     minWidth: isMobile ? 'auto' : '420px',
-                    background: '#12131a',
+                    background: '#0a0a0a',
                     borderRight: isMobile ? 'none' : '1px solid rgba(255,255,255,0.06)',
                     borderBottom: isMobile ? '1px solid rgba(255,255,255,0.06)' : 'none',
                     display: 'flex',
@@ -83,7 +83,7 @@ export default function Login() {
                         }}>
                             Advanced RAG <br />
                             <span style={{
-                                background: 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)',
+                                background: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent'
                             }}>Recursive Retrieval</span>
@@ -134,8 +134,8 @@ export default function Login() {
                             />
                             <div>
                                 <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '1.5px', color: '#5a5e72', marginBottom: '0.2rem' }}>Created by</p>
-                                <h3 style={{ fontWeight: 600, fontSize: isSmallMobile ? '0.85rem' : '0.95rem', color: '#e4e5eb' }}>Ambuj Kumar Tripathi</h3>
-                                <p style={{ fontSize: '0.75rem', color: '#6c5ce7' }}>AI Engineer &amp; RAG Specialist</p>
+                                <h3 style={{ fontWeight: 600, fontSize: isSmallMobile ? '0.85rem' : '0.95rem', color: '#ededed' }}>Ambuj Kumar Tripathi</h3>
+                                <p style={{ fontSize: '0.75rem', color: '#10b981' }}>AI Engineer &amp; RAG Specialist</p>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@ export default function Login() {
                 {/* ============ RIGHT SIDE — Architecture ============ */}
                 <div style={{
                     flex: 1,
-                    background: '#0f1016',
+                    background: '#050505',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -188,7 +188,7 @@ export default function Login() {
             <div style={{
                 width: '100%',
                 borderTop: '1px solid rgba(255,255,255,0.06)',
-                background: '#12131a',
+                background: '#0a0a0a',
                 padding: isSmallMobile ? '0.6rem 1rem' : '0.8rem 2rem',
                 display: 'flex',
                 alignItems: 'center',

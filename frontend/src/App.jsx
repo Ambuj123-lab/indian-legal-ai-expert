@@ -31,53 +31,19 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="dashboard-main">
-        <Chat />
+        <Chat sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} isMobile={isMobile} />
       </div>
 
-      {/* Mobile sidebar toggle */}
-      {isMobile && (
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          style={{
-            position: 'fixed',
-            bottom: '80px',
-            right: '16px',
-            zIndex: 100,
-            width: '44px',
-            height: '44px',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #6c5ce7, #a29bfe)',
-            border: 'none',
-            color: 'white',
-            fontSize: '1.2rem',
-            cursor: 'pointer',
-            boxShadow: '0 4px 15px rgba(108, 92, 231, 0.4)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-          title="Toggle Admin Panel"
-        >
-          {sidebarOpen ? '✕' : '⚙'}
-        </button>
+      {/* Overlay to close sidebar on mobile */}
+      {isMobile && sidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)}></div>
       )}
 
-      {/* Sidebar: always visible on desktop, toggled on mobile */}
-      {(!isMobile || sidebarOpen) && (
-        <div className="dashboard-sidebar" style={isMobile ? {
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          maxHeight: '60vh',
-          zIndex: 99,
-          borderTop: '1px solid rgba(255,255,255,0.1)',
-          boxShadow: '0 -4px 20px rgba(0,0,0,0.5)'
-        } : {}}>
-          <AdminPanel isAdmin={isAdmin} />
-          <button className="logout-btn" onClick={logout}>Sign Out</button>
-        </div>
-      )}
+      {/* Sidebar: always visible on desktop, toggled via CSS on mobile */}
+      <div className={`dashboard-sidebar ${isMobile ? (sidebarOpen ? 'open' : 'closed') : ''}`}>
+        <AdminPanel isAdmin={isAdmin} />
+        <button className="logout-btn" onClick={logout}>Sign Out</button>
+      </div>
     </div>
   );
 }

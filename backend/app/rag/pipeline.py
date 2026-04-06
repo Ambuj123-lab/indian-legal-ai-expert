@@ -787,22 +787,24 @@ def sync_knowledge_base() -> dict:
 # RETRIEVAL (Search)
 # ========================
 
-def search_similar(query: str, top_k: int = 5, user_email: str = None) -> list:
+def search_similar(query: str, top_k: int = 10, final_top_k: int = 3, threshold: float = 0.55, user_email: str = None) -> list:
     """
-    Search Qdrant for similar child chunks.
+    Search Qdrant for similar child chunks with hybrid precision-first retrieval.
     Searches BOTH core brain (is_temporary=False) AND user's temp files.
-    Returns parent texts (deduplicated) with scores.
+    Applies vector + lexical hybrid scoring, post-scoring deduplication, and thresholding.
+    Returns up to final_top_k unique parent contexts.
     """
     from qdrant_client.models import Filter, FieldCondition, MatchValue
+    import re
 
     try:
         embeddings = get_embeddings()
         query_vector = embeddings.embed_query(query)
         client = get_qdrant_client()
 
-        # Build filter: child chunks that are EITHER core OR belong to this user
-        # Qdrant doesn't support OR in 'must', so we do 2 searches and merge
-        
+        # Tokenize query for lexical scoring
+        query_tokens = set(re.findall(r'\w+', query.lower()))
+
         # Search 1: Core brain (is_temporary = False)
         core_results = client.search(
             collection_name=settings.QDRANT_COLLECTION_NAME,
@@ -834,28 +836,73 @@ def search_similar(query: str, top_k: int = 5, user_email: str = None) -> list:
                 with_payload=True
             )
 
-        # Merge and sort by score (best first)
         all_results = list(core_results) + list(user_results)
-        all_results.sort(key=lambda x: x.score, reverse=True)
-
+        
         if not all_results:
             return []
 
-        # Deduplicate by parent_id — return unique parent contexts
+        # Vector score normalization (Min-Max)
+        vector_scores = [hit.score for hit in all_results]
+        min_vs = min(vector_scores)
+        max_vs = max(vector_scores)
+        
+        scored_results = []
+        for hit in all_results:
+            # Normalize vector score safely
+            norm_vs = 1.0
+            if max_vs > min_vs:
+                norm_vs = (hit.score - min_vs) / (max_vs - min_vs)
+            elif max_vs == 0:
+                norm_vs = 0.0
+
+            # Lexical score calculation (Query word overlap)
+            child_text = hit.payload.get("text", "")
+            child_tokens = set(re.findall(r'\w+', child_text.lower()))
+            lexical_score = 0.0
+            if query_tokens and child_tokens:
+                overlap = query_tokens.intersection(child_tokens)
+                lexical_score = len(overlap) / len(query_tokens)
+
+            # Hybrid score formulation
+            final_score = (0.7 * norm_vs) + (0.3 * lexical_score)
+            
+            # Detailed logging to tune the 0.55 threshold safely
+            logger.info(f"Retrieval | Query: '{query}' | File: {hit.payload.get('source_file', 'unknown')} | VS: {hit.score:.3f} (Norm: {norm_vs:.3f}) | LS: {lexical_score:.3f} | FS: {final_score:.3f}")
+
+            # Apply strict precision threshold
+            if final_score >= threshold:
+                scored_results.append({
+                    "hit": hit,
+                    "final_score": final_score
+                })
+
+        # Sort by final hybrid score, descending
+        scored_results.sort(key=lambda x: x["final_score"], reverse=True)
+
+        # Deduplicate by parent_id AFTER scoring, enforcing final_top_k
         seen_parents = set()
         search_results = []
-        for hit in all_results[:top_k]:
+        
+        for item in scored_results:
+            hit = item["hit"]
             parent_id = hit.payload.get("parent_id", "")
+            
+            # Post-scoring deduplication
             if parent_id not in seen_parents:
                 seen_parents.add(parent_id)
                 search_results.append({
                     "parent_text": hit.payload.get("parent_text", ""),
                     "child_text": hit.payload.get("text", ""),
-                    "score": hit.score,
+                    "score": item["final_score"], # Pass hybrid score downstream
+                    "raw_vector_score": hit.score,
                     "source_file": hit.payload.get("source_file", ""),
                     "page": hit.payload.get("page", 0),
                     "is_temporary": hit.payload.get("is_temporary", False),
                 })
+                
+                # Enforce limit of top 3 parents max to prevent context noise
+                if len(search_results) >= final_top_k:
+                    break
 
         return search_results
 
@@ -907,9 +954,12 @@ When asked "Who created you?" or "Who made you?" or anything about your creator/
 ## 🎭 YOUR ROLE (DUAL MODE):
 
 ### Mode 1 — Legal Expert (When question is about law/legal topics):
-- **STRICT CONTEXT ONLY**: Answer **ONLY** using the provided **Context**. Do NOT use pre-trained knowledge for legal facts/sections.
+- **STRICT CONTEXT ONLY**: Answer **ONLY** from the retrieved Context. Do NOT use pre-trained knowledge for legal facts/sections.
+- **ARTICLE MATCHING**: If the query asks for an article/section, return the exact article text or a faithful summary from the matching chunk only.
+- **IGNORE UNRELATED**: If retrieved chunks refer to different article numbers, ignore them. Do not suggest follow-ups from unrelated articles.
+- **NO MATCH FALLBACK**: If exact article text is not present, say: "Exact text for this article was not found in retrieved context."
 - **NO HALLUCINATION**: If the specific Act/Section/Article is **NOT explicitly mentioned in Context**, do NOT generate it. Do NOT paraphrase or invent section numbers.
-- **MISSING INFO RULE**: If the Context is empty or irrelevant to the query, you **MUST** respond: *"I don't have sufficient information in my knowledge base to answer this accurately based on the provided legal documents."*
+- **MISSING INFO RULE**: If the Context is empty or irrelevant to the query, or if context is weak, partial, or not directly supportive of the answer, you **MUST** say insufficient information and respond: *"I don't have sufficient information in my knowledge base to answer this accurately based on the provided legal documents."*
 - Always cite **Article/Section numbers**, **Act names**, **penalties**, **timelines** EXACTLY as they appear in Context.
 - **NEVER invent or guess** Article numbers, Section numbers, penalties, or legal citations.
 - You have REAL legal data from 6 Acts — use it wisely. Understand the INTENT behind every query. If someone asks about a crime's punishment, that's legal education (OK). If someone asks HOW to commit a crime or escape punishment, that's harmful intent (BLOCK).
@@ -1052,10 +1102,20 @@ def generate_response(
 
     start_time = time.time()
 
+    # === OPENROUTER BACKUP (Commented for easy revert) ===
+    # llm = ChatOpenAI(
+    #     model="qwen/qwen3-235b-a22b-thinking-2507",
+    #     openai_api_key=settings.OPENROUTER_API_KEY,
+    #     openai_api_base="https://openrouter.ai/api/v1",
+    #     temperature=0.3,
+    #     max_tokens=3000
+    # )
+
+    # === GEMINI FLASH CONFIG ===
     llm = ChatOpenAI(
-        model="qwen/qwen3-235b-a22b-thinking-2507",
-        openai_api_key=settings.OPENROUTER_API_KEY,
-        openai_api_base="https://openrouter.ai/api/v1",
+        model="gemini-1.5-flash-lite-preview",
+        openai_api_key=settings.GEMINI_API_KEY,
+        openai_api_base="https://generativelanguage.googleapis.com/v1beta/openai/",
         temperature=0.3,
         max_tokens=3000
     )
@@ -1104,10 +1164,22 @@ async def generate_response_stream(
     from langchain_core.prompts import ChatPromptTemplate
     from langchain_core.output_parsers import StrOutputParser
 
+    # === OPENROUTER BACKUP (Commented for easy revert) ===
+    # llm = ChatOpenAI(
+    #     model="qwen/qwen3-235b-a22b-thinking-2507",
+    #     openai_api_key=settings.OPENROUTER_API_KEY,
+    #     openai_api_base="https://openrouter.ai/api/v1",
+    #     temperature=0.3,
+    #     max_tokens=3000,
+    #     streaming=True,
+    #     request_timeout=60
+    # )
+
+    # === GEMINI FLASH CONFIG ===
     llm = ChatOpenAI(
-        model="qwen/qwen3-235b-a22b-thinking-2507",
-        openai_api_key=settings.OPENROUTER_API_KEY,
-        openai_api_base="https://openrouter.ai/api/v1",
+        model="gemini-1.5-flash-lite-preview",
+        openai_api_key=settings.GEMINI_API_KEY,
+        openai_api_base="https://generativelanguage.googleapis.com/v1beta/openai/",
         temperature=0.3,
         max_tokens=3000,
         streaming=True,
