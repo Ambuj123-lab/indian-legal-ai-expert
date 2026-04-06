@@ -787,7 +787,7 @@ def sync_knowledge_base() -> dict:
 # RETRIEVAL (Search)
 # ========================
 
-def search_similar(query: str, top_k: int = 10, final_top_k: int = 3, threshold: float = 0.55, user_email: str = None) -> list:
+def search_similar(query: str, top_k: int = 10, final_top_k: int = 3, threshold: float = 0.45, user_email: str = None) -> list:
     """
     Search Qdrant for similar child chunks with hybrid precision-first retrieval.
     Searches BOTH core brain (is_temporary=False) AND user's temp files.
@@ -841,19 +841,12 @@ def search_similar(query: str, top_k: int = 10, final_top_k: int = 3, threshold:
         if not all_results:
             return []
 
-        # Vector score normalization (Min-Max)
-        vector_scores = [hit.score for hit in all_results]
-        min_vs = min(vector_scores)
-        max_vs = max(vector_scores)
-        
+        # Vector score normalization (Fixed-Range for Jina Embeddings)
         scored_results = []
         for hit in all_results:
-            # Normalize vector score safely
-            norm_vs = 1.0
-            if max_vs > min_vs:
-                norm_vs = (hit.score - min_vs) / (max_vs - min_vs)
-            elif max_vs == 0:
-                norm_vs = 0.0
+            # Jina cosine scores are usually 0.5+ for relevant hits
+            norm_vs = (hit.score - 0.5) / 0.5
+            norm_vs = max(0.0, min(1.0, norm_vs))
 
             # Lexical score calculation (Query word overlap)
             child_text = hit.payload.get("text", "")
