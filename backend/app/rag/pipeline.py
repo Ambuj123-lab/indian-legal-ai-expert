@@ -1177,7 +1177,7 @@ async def generate_response_stream(
 
     # === GEMINI FLASH CONFIG ===
     llm = ChatOpenAI(
-        model="gemini-1.5-flash-lite-preview",
+        model="gemini-3.1-flash-lite-preview",
         openai_api_key=settings.GEMINI_API_KEY,
         openai_api_base="https://generativelanguage.googleapis.com/v1beta/openai/",
         temperature=0.3,
