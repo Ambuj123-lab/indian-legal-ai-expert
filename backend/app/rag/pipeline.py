@@ -840,10 +840,13 @@ def search_similar(query: str, top_k: int = 15, user_email: str = None) -> list:
             if parent_id not in seen_parents:
                 seen_parents.add(parent_id)
                 search_results.append({
+                    "child_text": hit.payload.get("text", ""),
                     "parent_text": hit.payload.get("parent_text", ""),
+                    "parent_id": hit.payload.get("parent_id", ""),
                     "source_file": hit.payload.get("source_file", ""),
                     "page": hit.payload.get("page", 0),
-                    "score": hit.score
+                    "score": hit.score,
+                    "is_temporary": hit.payload.get("is_temporary", False)
                 })
         return search_results
     except Exception as e:

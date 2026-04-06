@@ -108,7 +108,16 @@ async def chat(request: Request, body: ChatRequest = Body(...), user: dict = Dep
 
     response_data = {
         "response": result.get("response", "No response generated"),
-        "sources": result.get("sources", []),
+        "sources": [
+            {
+                "source_id": i + 1,
+                "file": r.get("source_file", "unknown").replace(".pdf", ""),
+                "page": r.get("page", 0) + 1,
+                "preview": (r.get("child_text") or r.get("parent_text") or "")[:300],
+                "score": round(r.get("score", 0), 3)
+            }
+            for i, r in enumerate(result.get("sources", []))
+        ],
         "confidence": result.get("confidence", 0),
         "latency": result.get("latency", 0),
         "pii_detected": result.get("pii_found", False),
@@ -196,10 +205,10 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
     sources = [
         {
             "source_id": i + 1,
-            "file": r["source_file"].replace(".pdf", ""),
-            "page": r["page"] + 1,
-            "preview": r["child_text"][:300],
-            "score": round(r["score"], 3)
+            "file": r.get("source_file", "unknown").replace(".pdf", ""),
+            "page": r.get("page", 0) + 1,
+            "preview": (r.get("child_text") or r.get("parent_text") or "")[:300],
+            "score": round(r.get("score", 0), 3)
         }
         for i, r in enumerate(results)
     ] if results else []
