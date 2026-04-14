@@ -1043,29 +1043,30 @@ def generate_response(
     user_name: str = "User"
 ) -> tuple:
     """Generate response using LLM with circuit breaker"""
-    from langchain_openai import ChatOpenAI
+    from langchain_google_genai import ChatGoogleGenerativeAI
     from langchain_core.prompts import ChatPromptTemplate
     from langchain_core.output_parsers import StrOutputParser
 
     start_time = time.time()
 
-    # === OPENROUTER BACKUP (Commented for easy revert) ===
-    # llm = ChatOpenAI(
-    #     model="qwen/qwen3-235b-a22b-thinking-2507",
-    #     openai_api_key=settings.OPENROUTER_API_KEY,
-    #     openai_api_base="https://openrouter.ai/api/v1",
-    #     temperature=0.3,
-    #     max_tokens=3000
-    # )
-
-    # === GEMINI FLASH CONFIG ===
-    llm = ChatOpenAI(
-        model="gemini-1.5-flash-lite-preview",
-        openai_api_key=settings.GEMINI_API_KEY,
-        openai_api_base="https://generativelanguage.googleapis.com/v1beta/openai/",
+    # === GEMINI FLASH NATIVE SDK + FALLBACK CONFIG ===
+    primary_llm = ChatGoogleGenerativeAI(
+        model="gemini-3.1-flash-lite-preview",
+        google_api_key=settings.GEMINI_API_KEY,
         temperature=0.3,
-        max_tokens=3000
+        max_output_tokens=3000,
+        timeout=60
     )
+    
+    fallback_llm = ChatGoogleGenerativeAI(
+        model="gemma-4-31b-it",
+        google_api_key=settings.GEMINI_API_KEY,
+        temperature=0.3,
+        max_output_tokens=3000,
+        timeout=60
+    )
+    
+    llm = primary_llm.with_fallbacks([fallback_llm])
 
     chain = ChatPromptTemplate.from_template(SYSTEM_PROMPT) | llm | StrOutputParser()
 
@@ -1107,24 +1108,11 @@ async def generate_response_stream(
     user_name: str = "User"
 ):
     """Generate streaming response using LLM — yields tokens one by one"""
-    from langchain_openai import ChatOpenAI
+    from langchain_google_genai import ChatGoogleGenerativeAI
     from langchain_core.prompts import ChatPromptTemplate
     from langchain_core.output_parsers import StrOutputParser
 
-    # === OPENROUTER BACKUP (Commented for easy revert) ===
-    # llm = ChatOpenAI(
-    #     model="qwen/qwen3-235b-a22b-thinking-2507",
-    #     openai_api_key=settings.OPENROUTER_API_KEY,
-    #     openai_api_base="https://openrouter.ai/api/v1",
-    #     temperature=0.3,
-    #     max_tokens=3000,
-    #     streaming=True,
-    #     request_timeout=60
-    # )
-
-    # === DUAL-MODEL AUTO-FALLBACK CONFIG (Gemini 3.1 -> Gemma 4) ===
-    from langchain_google_genai import ChatGoogleGenerativeAI
-    
+    # === GEMINI FLASH NATIVE SDK + FALLBACK CONFIG ===
     primary_llm = ChatGoogleGenerativeAI(
         model="gemini-3.1-flash-lite-preview",
         google_api_key=settings.GEMINI_API_KEY,
@@ -1144,7 +1132,7 @@ async def generate_response_stream(
     )
     
     llm = primary_llm.with_fallbacks([fallback_llm])
-
+    
     chain = ChatPromptTemplate.from_template(SYSTEM_PROMPT) | llm | StrOutputParser()
 
     invoke_config = {}
