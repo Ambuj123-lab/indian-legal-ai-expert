@@ -33,9 +33,10 @@ export default function Login() {
         <div style={{
             display: 'flex',
             flexDirection: 'column',
-            width: '100vw',
+            width: '100%',
             height: '100vh',
-            overflow: isMobile ? 'auto' : 'hidden',
+            overflowY: isMobile ? 'auto' : 'hidden',
+            overflowX: 'hidden',
             background: '#000000'
         }}>
             <style>{`
