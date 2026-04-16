@@ -38,6 +38,28 @@ export default function Login() {
             overflow: isMobile ? 'auto' : 'hidden',
             background: '#000000'
         }}>
+            <style>{`
+                @keyframes red-heartbeat-glow {
+                    0%   { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                    30%  { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                    40%  { box-shadow: 0 0 25px rgba(185, 28, 28, 0.8), inset 0 0 8px rgba(153, 27, 27, 0.4); border-color: rgba(185, 28, 28, 0.9); }
+                    45%  { box-shadow: 0 0 8px rgba(185, 28, 28, 0.3); border-color: rgba(185, 28, 28, 0.4); }
+                    55%  { box-shadow: 0 0 40px rgba(153, 27, 27, 1), inset 0 0 15px rgba(153, 27, 27, 0.8); border-color: #dc2626; }
+                    70%  { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                    100% { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                }
+                .status-badge {
+                    display: inline-flex; align-items: center; gap: 6px;
+                    padding: 4px 12px;
+                    background: #000000;
+                    animation: red-heartbeat-glow 4s ease-in-out infinite;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 6px; text-decoration: none; color: #ffffff;
+                    font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+                    cursor: pointer; white-space: nowrap;
+                    transition: border-color 0.3s;
+                }
+            `}</style>
             {/* ============ TOP AREA: LEFT + RIGHT ============ */}
             <div style={{
                 display: 'flex',
@@ -59,19 +81,31 @@ export default function Login() {
                     position: 'relative',
                     zIndex: 2
                 }}>
-                    {/* Logo */}
-                    <div style={{ marginBottom: isMobile ? '1rem' : '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <img
-                            src="/branding/logo.png"
-                            alt="Logo"
-                            style={{
-                                width: isSmallMobile ? '44px' : '60px',
-                                height: isSmallMobile ? '44px' : '60px',
-                                objectFit: 'contain',
-                                borderRadius: '8px'
-                            }}
-                            onError={(e) => { e.target.style.display = 'none' }}
-                        />
+                    {/* Logo & Status Badge */}
+                    <div style={{ marginBottom: isMobile ? '1rem' : '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <img
+                                src="/branding/logo.png"
+                                alt="Logo"
+                                style={{
+                                    width: isSmallMobile ? '44px' : '60px',
+                                    height: isSmallMobile ? '44px' : '60px',
+                                    objectFit: 'contain',
+                                    borderRadius: '8px'
+                                }}
+                                onError={(e) => { e.target.style.display = 'none' }}
+                            />
+                        </div>
+                        <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="status-badge">
+                            <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <span style={{ position: 'absolute', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(185, 28, 28, 0.4)', animation: 'sonar-ping 2s ease-out infinite' }} />
+                                <span style={{ position: 'relative', width: '6px', height: '6px', borderRadius: '50%', background: '#b91c1c', boxShadow: '0 0 6px rgba(185, 28, 28, 0.6)' }} />
+                            </span>
+                            <svg width="28" height="12" viewBox="0 0 28 12" style={{ overflow: 'visible', marginLeft: '-2px' }}>
+                                <path d="M0,6 L6,6 L8,2 L10,10 L12,4 L14,8 L16,6 L28,6" fill="none" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ strokeDasharray: '30', strokeDashoffset: '0', animation: 'ecg-draw 2s linear infinite' }} />
+                            </svg>
+                            System Status
+                        </a>
                     </div>
 
                     {/* Title & Content */}
