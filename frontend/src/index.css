@@ -1106,7 +1106,7 @@ body {
   border: none;
   outline: none;
   color: var(--text-primary);
-  font-size: 16px; /* 16px minimum prevents iOS auto-zoom on focus */
+  font-size: 0.95rem;
   font-family: 'Inter', sans-serif;
 }
 
@@ -1875,7 +1875,7 @@ body {
   }
 
   .input-wrapper input {
-    font-size: 16px; /* MUST be 16px to stop mobile zoom */
+    font-size: 0.85rem;
     min-height: 36px;
   }
 
