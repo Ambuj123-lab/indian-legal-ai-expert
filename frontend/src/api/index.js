@@ -132,7 +132,14 @@ export async function uploadTempFile(file) {
         method: 'POST',
         body: formData,
     });
-    return res.json();
+    
+    // Parse response and throw if the backend returned an error (like 500 PDF too large)
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data.detail || 'Upload failed');
+    }
+    
+    return data;
 }
 
 export async function listTempUploads() {
