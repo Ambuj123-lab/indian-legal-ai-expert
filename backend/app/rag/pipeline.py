@@ -1059,7 +1059,7 @@ def generate_response(
     )
     
     fallback_llm = ChatGoogleGenerativeAI(
-        model="gemma-4-31b-it",
+        model="gemini-3.5-flash",
         google_api_key=settings.GEMINI_API_KEY,
         temperature=0.3,
         max_output_tokens=3000,
@@ -1123,7 +1123,7 @@ async def generate_response_stream(
     )
     
     fallback_llm = ChatGoogleGenerativeAI(
-        model="gemma-4-31b-it",
+        model="gemini-3.5-flash",
         google_api_key=settings.GEMINI_API_KEY,
         temperature=0.3,
         max_output_tokens=3000,
