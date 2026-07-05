@@ -80,7 +80,8 @@ export default function Login() {
                     flexDirection: 'column',
                     padding: isSmallMobile ? '1.5rem' : isMobile ? '2rem' : '2.5rem',
                     position: 'relative',
-                    zIndex: 2
+                    zIndex: 2,
+                    overflowY: 'auto'
                 }}>
                     {/* Logo & Status Badge */}
                     <div style={{ marginBottom: isMobile ? '1rem' : '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -172,6 +173,18 @@ export default function Login() {
                                 <h3 style={{ fontWeight: 600, fontSize: isSmallMobile ? '0.85rem' : '0.95rem', color: '#ededed' }}>Ambuj Kumar Tripathi</h3>
                                 <p style={{ fontSize: '0.75rem', color: '#10b981' }}>AI Engineer &amp; RAG Specialist</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div style={{ marginTop: '24px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '24px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                            <span style={{ fontSize: '18px' }}>🐦</span>
+                            <h3 style={{ color: '#fff', fontSize: '14px', fontWeight: '600', letterSpacing: '1px' }}>Recognized by Hugging Face</h3>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                            <blockquote className="twitter-tweet" data-theme="dark">
+                                <p lang="en" dir="ltr">Meet Ambuj-Tripathi-Indian-Legal-Llama-GGUF: a specialized AI model fine-tuned for Indian law. This isn&#39;t just another chatbot. It&#39;s a legal assistant trained to understand the nuances of Indian statutes, case law, and legal language. A game-changer for legal tech in India. <a href="https://t.co/SkLzeaDgpE">pic.twitter.com/SkLzeaDgpE</a></p>&mdash; Hugging Models (@HuggingModels) <a href="https://x.com/HuggingModels/status/2044027666324697451?ref_src=twsrc%5Etfw">April 14, 2026</a>
+                            </blockquote>
                         </div>
                     </div>
                 </div>
