@@ -439,6 +439,23 @@ async def upload_temp_file(request: Request, file: UploadFile = File(...), user:
         chunks.append(chunk)
     file_bytes = b"".join(chunks)
 
+    # --- Security Layer 4: PDF Bomb & Page Count Protection ---
+    try:
+        import fitz
+        pdf = fitz.open(stream=file_bytes, filetype="pdf")
+        page_count = len(pdf)
+        pdf.close()
+        
+        MAX_PDF_PAGES = 30
+        if page_count > MAX_PDF_PAGES:
+            logger.warning(f"🚨 PDF Bomb or excessive pages blocked: {file.filename} ({page_count} pages) by {user_email}")
+            raise HTTPException(status_code=413, detail=f"PDF has {page_count} pages. Maximum {MAX_PDF_PAGES} allowed to prevent quota abuse.")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.warning(f"🚨 Invalid or corrupted PDF blocked: {file.filename}")
+        raise HTTPException(status_code=415, detail="Invalid PDF file or corrupted data.")
+
     try:
         stats = index_temp_file(file.filename, file_bytes, user_email)
         
