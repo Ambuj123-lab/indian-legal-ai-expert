@@ -157,7 +157,7 @@ export default function Chat({ sidebarOpen, setSidebarOpen, isMobile }) {
                                 <span className="credit-sep"> · </span> 
                                 <span className="credit-role">RAG Systems Architect</span> 
                                 <span className="credit-sep"> · </span> 
-                                <a href="https://ambuj-portfolio-v2.netlify.app" target="_blank" rel="noopener noreferrer" className="credit-link">ambuj-portfolio-v2.netlify.app</a>
+                                <a href="https://ambuj-ai-portfolio.vercel.app" target="_blank" rel="noopener noreferrer" className="credit-link">ambuj-ai-portfolio.vercel.app</a>
                             </div>
                         </div>
                     </div>

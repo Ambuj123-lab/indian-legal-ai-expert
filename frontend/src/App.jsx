@@ -92,7 +92,7 @@ function ProtectedRoute({ children }) {
             <span className="footer-sep"> · </span> 
             <span className="footer-role">RAG Systems Architect</span> 
             <span className="footer-sep"> · </span> 
-            <a href="https://ambuj-portfolio-v2.netlify.app" target="_blank" rel="noopener noreferrer" className="footer-link">ambuj-portfolio-v2.netlify.app</a>
+            <a href="https://ambuj-ai-portfolio.vercel.app" target="_blank" rel="noopener noreferrer" className="footer-link">ambuj-ai-portfolio.vercel.app</a>
           </div>
 
           <button className="logout-btn" onClick={logout}>
