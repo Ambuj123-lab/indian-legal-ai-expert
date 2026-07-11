@@ -22,22 +22,26 @@ const features = [
     {
         title: "Agentic Classifier",
         icon: <FaBrain size={24} color="#fbbf24" />,
-        desc: "Intelligently classifies queries into strict legal intents, vague questions, or out-of-scope banter before triggering retrieval."
+        desc: "Intelligently classifies queries into strict legal intents, vague questions, or out-of-scope banter before triggering retrieval.",
+        poweredBy: "LangGraph"
     },
     {
-        title: "Autonomous Web Search",
+        title: "Live Web Intelligence",
         icon: <FaSearch size={24} color="#3B82F6" />,
-        desc: "Fallback Human-in-the-Loop (HITL) system connects to Tavily Search API for real-time web facts when local DB lacks confidence."
+        desc: "Fallback Human-in-the-Loop (HITL) system connects to Tavily Search API for real-time web facts when local DB lacks confidence.",
+        poweredBy: "Tavily"
     },
     {
         title: "Constitutional Guardrails",
         icon: <FaGavel size={24} color="#F59E0B" />,
-        desc: "Strict adherence to 6 core Indian Acts. Graceful degradation for unrelated queries ensures professional legal boundaries."
+        desc: "Strict adherence to 6 core Indian Acts. Graceful degradation for unrelated queries ensures professional legal boundaries.",
+        poweredBy: "FastAPI"
     },
     {
         title: "PII Masking & Privacy",
         icon: <FaShieldAlt size={24} color="#EF4444" />,
-        desc: "Enterprise-grade data protection using Microsoft Presidio to detect and redact Personally Identifiable Information instantly."
+        desc: "Enterprise-grade data protection using Microsoft Presidio to detect and redact Personally Identifiable Information instantly.",
+        poweredBy: "Microsoft Presidio"
     }
 ];
 
@@ -210,7 +214,7 @@ export default function Login() {
                 }
                 .feature-card {
                     background: rgba(17, 24, 39, 0.5);
-                    border: 1px solid rgba(255, 255, 255, 0.05);
+                    border: 1px solid rgba(255,255,255,.08);
                     border-radius: 16px;
                     transition: all 0.3s ease;
                     position: relative;
@@ -225,7 +229,7 @@ export default function Login() {
                     transition: opacity 0.3s ease;
                 }
                 .feature-card:hover {
-                    border-color: rgba(251, 191, 36, 0.6);
+                    border-color: rgba(212,175,55,.25);
                     box-shadow: 0 0 25px rgba(251, 191, 36, 0.2);
                     background: rgba(251, 191, 36, 0.05);
                     animation: jiggle 0.4s ease-in-out;
@@ -481,12 +485,17 @@ export default function Login() {
                 
                 <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '1.5rem' }}>
                     {features.map((feature, idx) => (
-                        <div key={idx} className="feature-card" style={{ padding: '2rem' }}>
+                        <div key={idx} className="feature-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
                             <div style={{ width: '50px', height: '50px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
                                 {feature.icon}
                             </div>
                             <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.8rem', color: '#fff' }}>{feature.title}</h3>
-                            <p style={{ color: '#9ca3af', lineHeight: 1.6, fontSize: '0.95rem' }}>{feature.desc}</p>
+                            <p style={{ color: '#9ca3af', lineHeight: 1.6, fontSize: '0.95rem', flexGrow: 1, marginBottom: '1.5rem' }}>{feature.desc}</p>
+                            <div style={{ marginTop: 'auto' }}>
+                                <span style={{ display: 'inline-flex', padding: '4px 10px', background: 'rgba(251, 191, 36, 0.1)', color: '#fbbf24', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.5px' }}>
+                                    Powered by {feature.poweredBy}
+                                </span>
+                            </div>
                         </div>
                     ))}
                 </div>
