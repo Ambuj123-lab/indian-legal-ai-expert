@@ -21,7 +21,7 @@ const techStack = [
 const features = [
     {
         title: "Agentic Classifier",
-        icon: <FaBrain size={24} color="#d4af37" />,
+        icon: <FaBrain size={24} color="#fbbf24" />,
         desc: "Intelligently classifies queries into strict legal intents, vague questions, or out-of-scope banter before triggering retrieval."
     },
     {
@@ -177,23 +177,29 @@ export default function Login() {
                     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
                 }
                 .btn-primary {
-                    background: linear-gradient(135deg, #d4af37 0%, #b48600 100%);
-                    color: white;
+                    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+                    color: #0f172a;
                     transition: all 0.3s ease;
+                    font-weight: 700;
+                    box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
                 }
                 .btn-primary:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+                    transform: translateY(-2px) scale(1.02);
+                    box-shadow: 0 0 25px rgba(251, 191, 36, 0.6);
+                    opacity: 0.95;
                 }
                 .btn-secondary {
                     background: rgba(255, 255, 255, 0.05);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    color: white;
+                    border: 1px solid rgba(251, 191, 36, 0.3);
+                    color: #fbbf24;
                     transition: all 0.3s ease;
                 }
                 .btn-secondary:hover {
-                    background: rgba(255, 255, 255, 0.1);
-                    border-color: rgba(255, 255, 255, 0.2);
+                    background: rgba(251, 191, 36, 0.1);
+                    border-color: rgba(251, 191, 36, 0.6);
+                    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+                    opacity: 0.95;
+                    transform: translateY(-2px);
                 }
                 .feature-card {
                     background: rgba(17, 24, 39, 0.5);
@@ -207,14 +213,14 @@ export default function Login() {
                     content: '';
                     position: absolute;
                     top: 0; left: 0; right: 0; height: 2px;
-                    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+                    background: linear-gradient(90deg, transparent, #fbbf24, transparent);
                     opacity: 0;
                     transition: opacity 0.3s ease;
                 }
                 .feature-card:hover {
-                    border-color: rgba(212, 175, 55, 0.3);
+                    border-color: rgba(251, 191, 36, 0.3);
                     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-                    background: rgba(212, 175, 55, 0.05);
+                    background: rgba(251, 191, 36, 0.05);
                 }
                 .feature-card:hover::before { opacity: 1; }
                 .nav-uptime-badge {
@@ -234,7 +240,7 @@ export default function Login() {
                     transform: translateY(-1px);
                 }
                 .gradient-text {
-                    background: linear-gradient(135deg, #fbbf24 0%, #d4af37 100%);
+                    background: linear-gradient(135deg, #fbbf24 0%, #fbbf24 100%);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                 }
@@ -242,7 +248,7 @@ export default function Login() {
                     position: absolute;
                     width: 600px;
                     height: 600px;
-                    background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(3,7,18,0) 70%);
+                    background: radial-gradient(circle, rgba(251,191,36,0.15) 0%, rgba(3,7,18,0) 70%);
                     top: -200px;
                     left: 50%;
                     transform: translateX(-50%);
@@ -281,7 +287,7 @@ export default function Login() {
                 .status-badge {
                     display: inline-flex; align-items: center; gap: 6px;
                     padding: 4px 12px;
-                    background: #0b1120;
+                    background: #0f172a;
                     animation: red-heartbeat-glow 4s ease-in-out infinite;
                     border: 1px solid rgba(255, 255, 255, 0.1);
                     border-radius: 6px; text-decoration: none; color: #ffffff;
@@ -302,7 +308,7 @@ export default function Login() {
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <img src="/branding/logo.png" alt="Logo" style={{ height: '36px', borderRadius: '8px' }} />
-                    <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#d4af37' }}>AI</span></span>
+                    <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#fbbf24' }}>AI</span></span>
 
                                         {uptimeData && (
                         <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="nav-uptime-badge" style={{ marginLeft: '12px', fontSize: '0.85rem', padding: '0.5rem 0.9rem', display: 'inline-flex', alignItems: 'center', gap: '8px', letterSpacing: '0.5px' }}>
@@ -324,7 +330,7 @@ export default function Login() {
                         <a href="#features" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Features</a>
                         <a href="#architecture" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Architecture</a>
                         <a href="#about" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>About</a>
-                        <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#d4af37'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Creator Portfolio</a>
+                        <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fbbf24'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Creator Portfolio</a>
                     </div>
                 )}
                 <div>
@@ -338,8 +344,8 @@ export default function Login() {
             <section style={{ position: 'relative', paddingTop: '160px', paddingBottom: '80px', textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem' }}>
                 <div className="hero-glow"></div>
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '800px', margin: '0 auto' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(212, 175, 55, 0.1)', border: '1px solid rgba(212, 175, 55, 0.2)', borderRadius: '20px', fontSize: '0.8rem', color: '#fbbf24', marginBottom: '2rem', fontWeight: 600 }}>
-                        <span style={{ width: '8px', height: '8px', background: '#d4af37', borderRadius: '50%', boxShadow: '0 0 10px #d4af37' }}></span>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(251, 191, 36, 0.1)', border: '1px solid rgba(251, 191, 36, 0.2)', borderRadius: '20px', fontSize: '0.8rem', color: '#fbbf24', marginBottom: '2rem', fontWeight: 600 }}>
+                        <span style={{ width: '8px', height: '8px', background: '#fbbf24', borderRadius: '50%', boxShadow: '0 0 10px #fbbf24' }}></span>
                         Agentic RAG v2.0 Live
                     </div>
                     
@@ -431,7 +437,7 @@ export default function Login() {
             </section>
 
             {/* Architecture Evolution Section */}
-            <section id="architecture" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 2rem', background: '#0f172a', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <section id="architecture" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 2rem', background: '#1e293b', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                         <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>Continuous Evolution</h2>
@@ -440,12 +446,12 @@ export default function Login() {
 
                     <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '2rem', alignItems: 'center' }}>
                         {/* v1.0 Diagram */}
-                        <div style={{ flex: 1, background: '#1e293b', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ flex: 1, background: '#334155', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                 <h3 style={{ fontWeight: 600, color: '#9ca3af' }}>v1.0 Basic RAG</h3>
                                 <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px', color: '#9ca3af' }}>Archived</span>
                             </div>
-                            <div className="arch-diagram" style={{ background: '#0f172a', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated.svg')}>
+                            <div className="arch-diagram" style={{ background: '#1e293b', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated.svg')}>
                                 <img src="/branding/architecture_animated.svg" alt="v1.0 Basic RAG" style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} />
                             </div>
                             <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#9ca3af', lineHeight: 1.5 }}>
@@ -456,15 +462,15 @@ export default function Login() {
                         <FiArrowRight size={32} color="#fbbf24" style={{ transform: isMobile ? 'rotate(90deg)' : 'none', opacity: 0.5 }} />
 
                         {/* v2.0 Diagram */}
-                        <div style={{ flex: 1, background: 'rgba(212, 175, 55, 0.05)', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(212, 175, 55, 0.2)', boxShadow: '0 0 30px rgba(212,175,55,0.05)' }}>
+                        <div style={{ flex: 1, background: 'rgba(251, 191, 36, 0.05)', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(251, 191, 36, 0.2)', boxShadow: '0 0 30px rgba(251,191,36,0.05)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                 <h3 style={{ fontWeight: 600, color: '#fbbf24' }}>v2.0 Agentic RAG</h3>
-                                <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(212, 175, 55, 0.2)', borderRadius: '12px', color: '#d4af37', fontWeight: 600 }}>Active</span>
+                                <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(251, 191, 36, 0.2)', borderRadius: '12px', color: '#fbbf24', fontWeight: 600 }}>Active</span>
                             </div>
-                            <div className="arch-diagram" style={{ background: '#0f172a', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated_v2.svg')}>
+                            <div className="arch-diagram" style={{ background: '#1e293b', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated_v2.svg')}>
                                 <img src="/branding/architecture_animated_v2.svg" alt="v2.0 Agentic RAG" style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} />
                             </div>
-                            <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#d4af37', lineHeight: 1.5 }}>
+                            <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#fbbf24', lineHeight: 1.5 }}>
                                 What improved? Added Agentic query routing, fallback web search via Tavily for out-of-DB queries, and strict constitutional adherence constraints.
                             </p>
                         </div>
@@ -473,7 +479,7 @@ export default function Login() {
             </section>
 
                         {/* Fat Footer (Anthropic Claude Style) */}
-            <footer id="about" style={{ padding: isMobile ? '4rem 1.5rem' : '5rem 4rem 3rem 4rem', background: '#0b1120', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#a1a1aa', fontSize: '0.9rem' }}>
+            <footer id="about" style={{ padding: isMobile ? '4rem 1.5rem' : '5rem 4rem 3rem 4rem', background: '#0f172a', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#a1a1aa', fontSize: '0.9rem' }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', gap: '3rem' }}>
                     
                     {/* Left Column: Logo & Copyright */}
@@ -481,7 +487,7 @@ export default function Login() {
                         <div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem' }}>
                                 <img src="/branding/logo.png" alt="Logo" style={{ height: '40px', borderRadius: '8px' }} />
-                                <span style={{ fontWeight: 700, fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#d4af37' }}>AI</span></span>
+                                <span style={{ fontWeight: 700, fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#fbbf24' }}>AI</span></span>
                             </div>
                         </div>
 
@@ -489,7 +495,7 @@ export default function Login() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '1rem', fontSize: '0.8rem', color: '#6b7280' }}>
                                 <span style={{ color: '#a1a1aa' }}>Version: <span style={{ color: '#fff' }}>v2.0</span></span>
                                 <span style={{ color: '#a1a1aa' }}>Deployment: <span style={{ color: '#fff' }}>Vercel / Render</span></span>
-                                <span style={{ color: '#a1a1aa' }}>API Uptime: <span style={{ color: '#d4af37' }}>99.9%</span></span>
+                                <span style={{ color: '#a1a1aa' }}>API Uptime: <span style={{ color: '#fbbf24' }}>99.9%</span></span>
                                 <span style={{ color: '#a1a1aa' }}>Last Updated: <span style={{ color: '#fff' }}>July 2026</span></span>
                             </div>
                             <p style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>&copy; {new Date().getFullYear()} Ambuj Kumar Tripathi.</p>
@@ -561,9 +567,9 @@ export default function Login() {
             {/* Legal Modals */}
             {legalModal && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', zIndex: 100000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backdropFilter: 'blur(5px)' }}>
-                    <div className="legal-modal-container" style={{ background: '#0b1120', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '0', width: '100%', maxWidth: '800px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', color: '#e5e7eb', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+                    <div className="legal-modal-container" style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '0', width: '100%', maxWidth: '800px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', color: '#e5e7eb', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
                         
-                        <div style={{ position: 'sticky', top: 0, right: 0, display: 'flex', justifyContent: 'flex-end', padding: '1rem', background: 'linear-gradient(to bottom, #0b1120 80%, transparent)', zIndex: 10 }}>
+                        <div style={{ position: 'sticky', top: 0, right: 0, display: 'flex', justifyContent: 'flex-end', padding: '1rem', background: 'linear-gradient(to bottom, #0f172a 80%, transparent)', zIndex: 10 }}>
                             <button onClick={() => setLegalModal(null)} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#9ca3af', width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }} onMouseOver={e=>{e.target.style.background='rgba(255,255,255,0.1)'; e.target.style.color='#fff'}} onMouseOut={e=>{e.target.style.background='rgba(255,255,255,0.05)'; e.target.style.color='#9ca3af'}}>
                                 &times;
                             </button>
@@ -575,24 +581,24 @@ export default function Login() {
                                     <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
                                         <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📜</div>
                                         <h2 style={{ fontSize: '2rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem', letterSpacing: '-0.5px' }}>Terms of Service</h2>
-                                        <p style={{ color: '#d4af37', fontSize: '0.95rem', fontWeight: 600, marginBottom: '1rem' }}>Effective July 2026</p>
+                                        <p style={{ color: '#fbbf24', fontSize: '0.95rem', fontWeight: 600, marginBottom: '1rem' }}>Effective July 2026</p>
                                         <p style={{ color: '#9ca3af', fontSize: '1rem' }}>These terms govern the use of IndianLegalAI.</p>
                                     </div>
                                     
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px', overflow: 'hidden' }}>
-                                        <div style={{ background: '#0f172a', padding: '1.5rem 2rem' }}>
+                                        <div style={{ background: '#1e293b', padding: '1.5rem 2rem' }}>
                                             <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>🎓 Educational Use Only</h3>
                                             <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.6 }}>This platform is provided exclusively for educational and research purposes.</p>
                                         </div>
-                                        <div style={{ background: '#0f172a', padding: '1.5rem 2rem' }}>
+                                        <div style={{ background: '#1e293b', padding: '1.5rem 2rem' }}>
                                             <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>⚖️ No Legal Advice</h3>
                                             <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.6 }}>Responses generated by AI should not be considered legal advice. Users remain responsible for verifying all legal information.</p>
                                         </div>
-                                        <div style={{ background: '#0f172a', padding: '1.5rem 2rem' }}>
+                                        <div style={{ background: '#1e293b', padding: '1.5rem 2rem' }}>
                                             <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>🌐 External Retrieval</h3>
                                             <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.6 }}>The platform may retrieve publicly available legal information through external search providers.</p>
                                         </div>
-                                        <div style={{ background: '#0f172a', padding: '1.5rem 2rem' }}>
+                                        <div style={{ background: '#1e293b', padding: '1.5rem 2rem' }}>
                                             <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>🚫 Prohibited Actions</h3>
                                             <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.6 }}>Misuse, automated abuse, or attempts to compromise the system are strictly prohibited. We reserve the right to suspend access for abusive behavior.</p>
                                         </div>
@@ -605,20 +611,20 @@ export default function Login() {
                                     <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
                                         <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛡️</div>
                                         <h2 style={{ fontSize: '2rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem', letterSpacing: '-0.5px' }}>Privacy Policy</h2>
-                                        <p style={{ color: '#d4af37', fontSize: '0.95rem', fontWeight: 600, marginBottom: '1rem' }}>Effective July 2026</p>
+                                        <p style={{ color: '#fbbf24', fontSize: '0.95rem', fontWeight: 600, marginBottom: '1rem' }}>Effective July 2026</p>
                                         <p style={{ color: '#9ca3af', fontSize: '1rem' }}>How we handle your data with enterprise-grade security.</p>
                                     </div>
                                     
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px', overflow: 'hidden' }}>
-                                        <div style={{ background: '#0f172a', padding: '1.5rem 2rem' }}>
+                                        <div style={{ background: '#1e293b', padding: '1.5rem 2rem' }}>
                                             <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>🔒 Data Privacy</h3>
                                             <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.6 }}>We do not sell personal data. Google OAuth is used strictly and only for authentication.</p>
                                         </div>
-                                        <div style={{ background: '#0f172a', padding: '1.5rem 2rem' }}>
+                                        <div style={{ background: '#1e293b', padding: '1.5rem 2rem' }}>
                                             <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>🛡️ Microsoft Presidio Masking</h3>
                                             <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.6 }}>Sensitive PII (Personally Identifiable Information) is automatically masked using Microsoft Presidio before processing.</p>
                                         </div>
-                                        <div style={{ background: '#0f172a', padding: '1.5rem 2rem' }}>
+                                        <div style={{ background: '#1e293b', padding: '1.5rem 2rem' }}>
                                             <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>⏳ Temporary Storage (TTL)</h3>
                                             <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.6 }}>Conversation history may be temporarily stored to improve user experience as per GDPR compliance Time To Leave (TTL). Users may request deletion at any time.</p>
                                         </div>
@@ -702,23 +708,23 @@ export default function Login() {
                                             
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                                 <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Full Name</label>
-                                                <input type="text" name="name" placeholder="John Doe" required style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'} />
+                                                <input type="text" name="name" placeholder="John Doe" required style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#1e293b', color: '#fff', fontSize: '0.95rem', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#fbbf24'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'} />
                                             </div>
 
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                                 <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Email Address (So we can reply to you)</label>
-                                                <input type="email" name="email" placeholder="you@company.com" required style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'} />
+                                                <input type="email" name="email" placeholder="you@company.com" required style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#1e293b', color: '#fff', fontSize: '0.95rem', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#fbbf24'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'} />
                                             </div>
                                             
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                                 <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Message</label>
-                                                <textarea name="message" placeholder="Please describe how we can assist you..." required rows="5" style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', resize: 'vertical', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'}></textarea>
+                                                <textarea name="message" placeholder="Please describe how we can assist you..." required rows="5" style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#1e293b', color: '#fff', fontSize: '0.95rem', outline: 'none', resize: 'vertical', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#fbbf24'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'}></textarea>
                                             </div>
                                             
-                                            <button type="submit" disabled={isSubmitting} style={{ padding: '1rem', marginTop: '1rem', borderRadius: '8px', background: isSubmitting ? '#9ca3af' : '#d4af37', color: '#0b1120', fontWeight: 700, fontSize: '1rem', border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', transition: 'transform 0.2s, box-shadow 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onMouseOver={e=>{if(!isSubmitting){e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow='0 4px 12px rgba(212,175,55,0.3)'}}} onMouseOut={e=>{if(!isSubmitting){e.target.style.transform='none'; e.target.style.boxShadow='none'}}}>
+                                            <button type="submit" disabled={isSubmitting} style={{ padding: '1rem', marginTop: '1rem', borderRadius: '8px', background: isSubmitting ? '#9ca3af' : '#fbbf24', color: '#0f172a', fontWeight: 700, fontSize: '1rem', border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', transition: 'transform 0.2s, box-shadow 0.2s, opacity 0.2s', boxShadow: '0 0 10px rgba(251,191,36,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onMouseOver={e=>{if(!isSubmitting){e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow='0 0 25px rgba(251,191,36,0.6)'; e.target.style.opacity='0.9'}}} onMouseOut={e=>{if(!isSubmitting){e.target.style.transform='none'; e.target.style.boxShadow='0 0 10px rgba(251,191,36,0.2)'; e.target.style.opacity='1'}}}>
                                                 {isSubmitting ? (
                                                     <>
-                                                        <svg style={{ width: '20px', height: '20px', color: '#0b1120', animation: 'spin 1s linear infinite' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                        <svg style={{ width: '20px', height: '20px', color: '#0f172a', animation: 'spin 1s linear infinite' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" style={{ opacity: 0.25 }}></circle>
                                                             <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" style={{ opacity: 0.75 }}></path>
                                                         </svg>
@@ -774,12 +780,12 @@ export default function Login() {
                     onClick={scrollToTop} 
                     style={{ 
                         position: 'fixed', bottom: '2rem', right: '2rem', 
-                        background: '#d4af37', color: '#fff', 
+                        background: '#fbbf24', color: '#fff', 
                         width: '45px', height: '45px', 
                         borderRadius: '50%', border: 'none', 
                         display: 'flex', alignItems: 'center', justifyContent: 'center', 
                         cursor: 'pointer', zIndex: 1000, 
-                        boxShadow: '0 4px 12px rgba(212, 175, 55, 0.4)',
+                        boxShadow: '0 4px 12px rgba(251, 191, 36, 0.4)',
                         transition: 'all 0.3s ease'
                     }}
                     onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
