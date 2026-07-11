@@ -47,27 +47,34 @@ export default function Login() {
     const [showScrollTop, setShowScrollTop] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-            setShowScrollTop(window.scrollY > 300);
-        };
         const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
         return () => {
-            window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('resize', handleResize);
         };
     }, []);
 
+    const handleContainerScroll = (e) => {
+        setScrolled(e.target.scrollTop > 50);
+        setShowScrollTop(e.target.scrollTop > 300);
+    };
+
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const container = document.getElementById('landing-scroll-container');
+        if (container) {
+            container.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     };
 
     const isMobile = width <= 768;
 
     return (
-        <div className="landing-page" style={{ background: '#030712', color: '#f9fafb', minHeight: '100vh', overflowX: 'hidden', fontFamily: '"Inter", sans-serif' }}>
+        <div 
+            id="landing-scroll-container"
+            className="landing-page" 
+            onScroll={handleContainerScroll}
+            style={{ background: '#030712', color: '#f9fafb', height: '100vh', overflowY: 'auto', overflowX: 'hidden', fontFamily: '"Inter", sans-serif' }}
+        >
             <style>{`
                 html { scroll-behavior: smooth; }
                 .landing-page * { box-sizing: border-box; }
