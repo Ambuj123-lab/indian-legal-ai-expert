@@ -46,6 +46,9 @@ class Settings(BaseSettings):
     SUPABASE_KEY: str = ""  # anon public key
     SUPABASE_SERVICE_ROLE_KEY: str = ""  # service_role key (for storage admin ops)
 
+    # --- Web Search ---
+    TAVILY_API_KEY: str = ""
+
     # --- MongoDB Atlas (Chat History + Feedback) ---
     MONGO_URI: str = ""
     MONGO_DB_NAME: str = "legal_ai_expert"

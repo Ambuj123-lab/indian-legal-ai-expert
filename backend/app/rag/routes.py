@@ -21,7 +21,8 @@ from app.rag.graph import get_rag_graph
 from app.rag.pipeline import (
     search_similar, generate_response_stream, mask_pii,
     is_abusive, is_greeting, sync_knowledge_base,
-    index_temp_file, get_user_temp_files, delete_user_temp_file
+    index_temp_file, get_user_temp_files, delete_user_temp_file,
+    agentic_classifier, web_search_tavily
 )
 from app.db.supabase_client import get_registry_stats, get_all_registry_entries
 
@@ -177,30 +178,80 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
         except Exception as e:
             logger.error(f"❌ Redis cache check failed: {e}")
 
-    # Classify first
+    # 1. Get chat history EARLY (needed for classification & web search)
+    history = get_chat_history(user_email, limit=6)
+    history_text = "No previous history."
+    if history:
+        msgs = history[-6:]
+        formatted = [
+            ("User: " if m.get("role") == "user" else "Assistant: ") + str(m.get("content", ""))
+            for m in msgs
+        ]
+        history_text = "\n".join(formatted)
+
+    # 2. Check for YES/NO HITL Web Search Reply
+    is_web_search_reply = False
+    is_web_search_active = False
+    
+    if history:
+        last_msg = history[-1]
+        if last_msg.get("role") == "assistant" and "ACTION REQUIRED" in str(last_msg.get("content", "")):
+            user_reply = question.strip().lower()
+            positive_replies = {"yes", "haan", "sure", "ok", "y", "do it", "please", "search"}
+            negative_replies = {"no", "nahi", "na", "cancel", "stop", "n"}
+            
+            if user_reply in positive_replies:
+                is_web_search_reply = True
+                is_web_search_active = True
+                logger.info("User confirmed Web Search!")
+                # Get the actual question from the previous turn
+                if len(history) >= 2:
+                    question = history[-2].get("content", question)
+            elif user_reply in negative_replies:
+                logger.info("User cancelled Web Search.")
+                async def fallback_stream():
+                    yield f"data: {json.dumps({'token': 'Web Search cancelled. Please feel free to ask another question.'})}\n\n"
+                    yield f"data: {json.dumps({'done': True})}\n\n"
+                save_message(user_email, "user", user_reply)
+                return StreamingResponse(fallback_stream(), media_type="text/event-stream")
+            else:
+                logger.info("Neither Yes nor No. Proceeding as new query.")
+
+    # 3. Classify first
     if is_abusive(question):
         async def abort_stream():
             yield f"data: {json.dumps({'token': 'I am a Legal AI Assistant. I can only respond to professional and respectful queries.'})}\n\n"
             yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': 0})}\n\n"
         return StreamingResponse(abort_stream(), media_type="text/event-stream")
 
-    # PII mask
+    # 4. Check Out of Scope (OOS) - Skip if user just said 'yes' to a web search
+    is_oos = False
+    if not is_web_search_reply:
+        classification = agentic_classifier(question, history_text)
+        if classification.get("is_out_of_scope", False):
+            is_oos = True
+
+    # 5. PII mask
     safe_query, pii_found, pii_entities = mask_pii(question)
 
-    # Check for greeting
-    if is_greeting(question):
+    # 6. Check for greeting (skip if it's a web search execution)
+    if not is_web_search_active and not is_oos and is_greeting(question):
         async def greet_stream():
             yield f"data: {json.dumps({'token': f'Hello {user_name}! 👋 I am Indian Legal AI Expert. Ask me about Constitution, BNS, Consumer Protection, IT Act, and more!'})}\n\n"
             yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': 100})}\n\n"
-
-        # Save greeting to history
         save_message(user_email, "user", question)
         save_message(user_email, "assistant", f"Hello {user_name}! 👋 I am Indian Legal AI Expert.")
         return StreamingResponse(greet_stream(), media_type="text/event-stream")
 
-    # Retrieve context (searches BOTH core + user's temp files)
-    results = search_similar(safe_query, top_k=5, user_email=user_email)
-    confidence = results[0]["score"] * 100 if results else 0
+    # 7. Retrieve context
+    results = []
+    confidence = 0
+    if is_web_search_active:
+        results = web_search_tavily(safe_query)
+        confidence = 85.0 if results else 0
+    elif not is_oos:
+        results = search_similar(safe_query, top_k=5, user_email=user_email)
+        confidence = results[0]["score"] * 100 if results else 0
 
     sources = [
         {
@@ -215,24 +266,15 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
 
     context = "\n\n---\n\n".join([r["parent_text"] for r in results]) if results else ""
 
-    # Get chat history
-    history = get_chat_history(user_email, limit=6)
-    history_text = "No previous history."
-    if history:
-        msgs = history[-6:]
-        formatted = [
-            ("User: " if m.get("role") == "user" else "Assistant: ") + str(m.get("content", ""))
-            for m in msgs
-        ]
-        history_text = "\n".join(formatted)
-
-    # Low confidence fallback
-    if confidence < 40:
+    # 8. Low confidence or OOS fallback -> triggers HITL
+    if (confidence < 40 or is_oos) and not is_web_search_active:
         async def fallback_stream():
-            msg = "I don't have sufficient information in my knowledge base to answer this accurately based on the provided legal documents."
+            msg = "⚠️ **OUT OF SCOPE / LOW CONFIDENCE ALERT**\nI couldn't find an exact match in my verified legal documents for this query.\n\n> ──────────────────────────────────────────\n> **ACTION REQUIRED:**\n> I am strictly built to provide legal suggestions based on verified documents, but as part of your learning and development, would you like me to switch to **Autonomous Web Search** to fetch real-time information for you?\n> \n> 🟢 **[YES](#action:yes)** (Proceed to Web Search) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)\n> \n> *(Please type your choice below)*"
             yield f"data: {json.dumps({'token': msg})}\n\n"
             yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': round(confidence, 1)})}\n\n"
+            
         save_message(user_email, "user", safe_query, pii_masked=pii_found, pii_entities=pii_entities)
+        save_message(user_email, "assistant", "⚠️ **OUT OF SCOPE / LOW CONFIDENCE ALERT**\nI couldn't find an exact match in my verified legal documents for this query.\n\n> ──────────────────────────────────────────\n> **ACTION REQUIRED:**\n> I am strictly built to provide legal suggestions based on verified documents, but as part of your learning and development, would you like me to switch to **Autonomous Web Search** to fetch real-time information for you?\n> \n> 🟢 **[YES](#action:yes)** (Proceed to Web Search) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)\n> \n> *(Please type your choice below)*", [])
         return StreamingResponse(fallback_stream(), media_type="text/event-stream")
 
     # Stream LLM response

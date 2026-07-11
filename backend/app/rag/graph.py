@@ -69,9 +69,21 @@ def classify_node(state: RAGState) -> dict:
     elif is_greeting(query):
         logger.info(f"Query classified: GREETING")
         return {"query_type": "greeting"}
-    else:
-        logger.info(f"Query classified: RAG")
-        return {"query_type": "rag"}
+        
+    from app.rag.pipeline import agentic_classifier
+    history_text = "No previous history."
+    if state.get("chat_history"):
+        msgs = state["chat_history"][-6:]
+        formatted = [("User: " if m.get("role") == "user" else "Assistant: ") + str(m.get("content", "")) for m in msgs]
+        history_text = "\n".join(formatted)
+        
+    classification = agentic_classifier(query, history_text)
+    if classification.get("is_out_of_scope", False):
+        logger.info(f"Query classified: OUT_OF_SCOPE")
+        return {"query_type": "out_of_scope"}
+        
+    logger.info(f"Query classified: RAG")
+    return {"query_type": "rag"}
 
 
 def reject_node(state: RAGState) -> dict:
@@ -82,6 +94,16 @@ def reject_node(state: RAGState) -> dict:
         "latency": 0,
         "sources": [],
         "error": "abusive_content"
+    }
+
+def oos_node(state: RAGState) -> dict:
+    """Handle out of scope queries"""
+    return {
+        "response": "I specialize strictly in Indian Constitutional and Legal matters. I cannot assist with unrelated topics.",
+        "confidence": 0,
+        "latency": 0,
+        "sources": [],
+        "error": "out_of_scope"
     }
 
 
@@ -281,6 +303,8 @@ def route_after_classify(state: RAGState) -> str:
         return "reject"
     elif query_type == "greeting":
         return "greet"
+    elif query_type == "out_of_scope":
+        return "oos"
     return "retrieve"
 
 
@@ -295,6 +319,7 @@ def build_rag_graph() -> StateGraph:
     # Add nodes
     graph.add_node("classify", classify_node)
     graph.add_node("reject", reject_node)
+    graph.add_node("oos", oos_node)
     graph.add_node("greet", greet_node)
     graph.add_node("retrieve", retrieve_node)
     graph.add_node("generate", generate_node)
@@ -309,6 +334,7 @@ def build_rag_graph() -> StateGraph:
         route_after_classify,
         {
             "reject": "reject",
+            "oos": "oos",
             "greet": "greet",
             "retrieve": "retrieve"
         }

@@ -248,10 +248,12 @@ def mask_pii(text: str) -> tuple:
 
 
 def is_abusive(text: str) -> bool:
-    """Check for abusive language"""
+    """Check for abusive language, dangerous, harmful, or anti-national content."""
     bad_words = [
         "stupid", "idiot", "dumb", "hate", "kill", "shut up",
-        "useless", "nonsense", "pagal", "bevkuf", "chutiya", "madarchod"
+        "useless", "nonsense", "pagal", "bevkuf", "chutiya", "madarchod",
+        "terrorist", "terrorism", "bomb", "attack", "riot", "murder",
+        "anti-national", "deshdrohi", "hack", "illegal weapons", "smuggling", "suicide"
     ]
     for word in bad_words:
         if re.search(r'\b' + re.escape(word) + r'\b', text.lower()):
@@ -1156,5 +1158,67 @@ async def generate_response_stream(
     ):
         yield chunk
 
+# ========================
+# LLM CLASSIFIER & WEB SEARCH
+# ========================
 
+def agentic_classifier(query: str, history_text: str) -> dict:
+    """Uses LLM to classify if the query is out of scope (OOS) for a legal bot."""
+    from langchain_google_genai import ChatGoogleGenerativeAI
+    import json
+    
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-3.1-flash-lite-preview",
+        google_api_key=settings.GEMINI_API_KEY,
+        temperature=0.0
+    )
+    
+    prompt = f"""You are a query classifier for an Indian Legal AI Expert.
+The AI ONLY answers questions related to Indian Law, Constitution, BNS, BNSS, Consumer Protection, IT Act, Motor Vehicles Act, etc.
+Any query UNRELATED to law/finance/legal matters (e.g. cooking, sports, general knowledge, generic chit-chat) MUST be marked as 'is_out_of_scope: true'.
 
+Analyze the user's latest query considering the chat history.
+Chat History:
+{history_text}
+
+User Query: {query}
+
+Return ONLY a valid JSON object:
+{{
+    "is_out_of_scope": boolean (true if totally unrelated to law/legal/finance/current affairs)
+}}"""
+    try:
+        response = llm.invoke(prompt)
+        text = response.content.replace('```json', '').replace('```', '').strip()
+        return json.loads(text)
+    except Exception as e:
+        logger.error(f"Classifier error: {e}")
+        return {"is_out_of_scope": False}
+
+def web_search_tavily(query: str) -> list:
+    """Searches the open web using Tavily API (no domain restrictions)."""
+    from tavily import TavilyClient
+    
+    try:
+        tavily_client = TavilyClient(api_key=os.environ.get("TAVILY_API_KEY"))
+        
+        response = tavily_client.search(
+            query=query,
+            search_depth="advanced",
+            max_results=3,
+            include_answer=False
+        )
+        
+        results = []
+        for i, res in enumerate(response.get("results", [])):
+            results.append({
+                "source_file": res.get("url", "Web Search"),
+                "page": 0,
+                "parent_text": res.get("content", ""),
+                "child_text": res.get("content", ""),
+                "score": res.get("score", 0.9)
+            })
+        return results
+    except Exception as e:
+        logger.error(f"Tavily Search Error: {e}")
+        return []
