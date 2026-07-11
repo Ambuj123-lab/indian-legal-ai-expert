@@ -201,6 +201,13 @@ export default function Login() {
                     opacity: 0.95;
                     transform: translateY(-2px);
                 }
+                @keyframes jiggle {
+                    0% { transform: translateY(-5px) rotate(0deg); }
+                    25% { transform: translateY(-5px) rotate(-1.5deg); }
+                    50% { transform: translateY(-5px) rotate(1.5deg); }
+                    75% { transform: translateY(-5px) rotate(-1.5deg); }
+                    100% { transform: translateY(-5px) rotate(0deg); }
+                }
                 .feature-card {
                     background: rgba(17, 24, 39, 0.5);
                     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -218,9 +225,11 @@ export default function Login() {
                     transition: opacity 0.3s ease;
                 }
                 .feature-card:hover {
-                    border-color: rgba(251, 191, 36, 0.3);
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+                    border-color: rgba(251, 191, 36, 0.6);
+                    box-shadow: 0 0 25px rgba(251, 191, 36, 0.2);
                     background: rgba(251, 191, 36, 0.05);
+                    animation: jiggle 0.4s ease-in-out;
+                    transform: translateY(-5px);
                 }
                 .feature-card:hover::before { opacity: 1; }
                 .nav-uptime-badge {
