@@ -323,7 +323,7 @@ export default function Login() {
                     <img src="/branding/logo.png" alt="Logo" style={{ height: '36px', borderRadius: '8px' }} />
                     <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#fbbf24' }}>AI</span></span>
 
-                                        {uptimeData && (
+                                        {uptimeData && !isMobile && (
                         <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="nav-uptime-badge" style={{ marginLeft: '12px', fontSize: '0.85rem', padding: '0.5rem 0.9rem', display: 'inline-flex', alignItems: 'center', gap: '8px', letterSpacing: '0.5px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                 <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -576,7 +576,7 @@ export default function Login() {
                     </div>
 
                     {/* Columns Container */}
-                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)', gap: '2rem', flex: 3 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(5, 1fr)', gap: '2rem', flex: 3 }}>
                         {/* Column 1 */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Platform</h4>

@@ -250,10 +250,8 @@ def mask_pii(text: str) -> tuple:
 def is_abusive(text: str) -> bool:
     """Check for abusive language, dangerous, harmful, or anti-national content."""
     bad_words = [
-        "stupid", "idiot", "dumb", "hate", "kill", "shut up",
-        "useless", "nonsense", "pagal", "bevkuf", "chutiya", "madarchod",
-        "terrorist", "terrorism", "bomb", "attack", "riot", "murder",
-        "anti-national", "deshdrohi", "hack", "illegal weapons", "smuggling", "suicide"
+        "stupid", "idiot", "dumb", "hate", "shut up",
+        "useless", "nonsense", "pagal", "bevkuf", "chutiya", "madarchod"
     ]
     for word in bad_words:
         if re.search(r'\b' + re.escape(word) + r'\b', text.lower()):
