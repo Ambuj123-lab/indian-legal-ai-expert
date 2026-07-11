@@ -186,11 +186,25 @@ export default function Login() {
                     transition: opacity 0.3s ease;
                 }
                 .feature-card:hover {
-                    transform: translateY(-5px);
                     border-color: rgba(16, 185, 129, 0.3);
-                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+                    background: rgba(16, 185, 129, 0.05);
                 }
                 .feature-card:hover::before { opacity: 1; }
+                .nav-uptime-badge {
+                    transition: all 0.3s ease;
+                    background: rgba(185, 28, 28, 0.05);
+                    border: 1px solid rgba(185, 28, 28, 0.1);
+                    border-radius: 8px;
+                    color: #fff;
+                    text-decoration: none;
+                }
+                .nav-uptime-badge:hover {
+                    background: rgba(185, 28, 28, 0.15);
+                    border-color: rgba(185, 28, 28, 0.5);
+                    box-shadow: 0 0 20px rgba(185, 28, 28, 0.4);
+                    transform: translateY(-1px);
+                }
                 .gradient-text {
                     background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
                     -webkit-background-clip: text;
@@ -259,7 +273,7 @@ export default function Login() {
                     <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#10b981' }}>AI</span></span>
 
                                         {uptimeData && (
-                        <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="status-badge" style={{ marginLeft: '12px', fontSize: '0.85rem', padding: '0.5rem 0.9rem', display: 'inline-flex', alignItems: 'center', gap: '8px', letterSpacing: '0.5px' }}>
+                        <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="nav-uptime-badge" style={{ marginLeft: '12px', fontSize: '0.85rem', padding: '0.5rem 0.9rem', display: 'inline-flex', alignItems: 'center', gap: '8px', letterSpacing: '0.5px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                 <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
                                     <span style={{ position: 'absolute', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(185, 28, 28, 0.4)', animation: 'sonar-ping 2s ease-out infinite' }} />
