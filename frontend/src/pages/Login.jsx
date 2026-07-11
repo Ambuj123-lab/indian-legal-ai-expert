@@ -198,8 +198,10 @@ export default function Login() {
                     border-radius: 8px;
                     color: #fff;
                     text-decoration: none;
+                    animation: red-heartbeat-glow 2s infinite;
                 }
                 .nav-uptime-badge:hover {
+                    animation: none;
                     background: rgba(185, 28, 28, 0.15);
                     border-color: rgba(185, 28, 28, 0.5);
                     box-shadow: 0 0 20px rgba(185, 28, 28, 0.4);
