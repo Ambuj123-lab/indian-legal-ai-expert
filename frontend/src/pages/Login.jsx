@@ -74,14 +74,14 @@ export default function Login() {
                     const monitor = data.monitors[0];
                     setUptimeData({
                         status: monitor.status === 2 ? 'LIVE' : 'DOWN',
-                        uptime: monitor.custom_uptime_ratio ? monitor.custom_uptime_ratio + '%' : '99.9%',
-                        latency: monitor.response_times && monitor.response_times.length > 0 ? monitor.response_times[0].value + 'ms' : '142ms'
+                        uptime: monitor.custom_uptime_ratio ? monitor.custom_uptime_ratio + '%' : '--%',
+                        latency: monitor.response_times && monitor.response_times.length > 0 ? monitor.response_times[0].value + 'ms' : '--ms'
                     });
                 } else {
-                    setUptimeData({ status: 'LIVE', uptime: '99.9%', latency: '142ms' });
+                    setUptimeData(null);
                 }
             } catch (err) {
-                setUptimeData({ status: 'LIVE', uptime: '99.9%', latency: '142ms' });
+                setUptimeData(null);
             }
         };
         fetchUptime();
@@ -560,7 +560,7 @@ export default function Login() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '1rem', fontSize: '0.8rem', color: '#6b7280' }}>
                                 <span style={{ color: '#a1a1aa' }}>Version: <span style={{ color: '#fff' }}>v2.0</span></span>
                                 <span style={{ color: '#a1a1aa' }}>Deployment: <span style={{ color: '#fff' }}>Vercel / Render</span></span>
-                                <span style={{ color: '#a1a1aa' }}>API Uptime: <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" style={{ color: '#fbbf24', textDecoration: 'none' }} onMouseOver={e=>e.target.style.textDecoration='underline'} onMouseOut={e=>e.target.style.textDecoration='none'}>{uptimeData.uptime || '99.9%'}</a></span>
+                                <span style={{ color: '#a1a1aa' }}>API Uptime: <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" style={{ color: '#fbbf24', textDecoration: 'none' }} onMouseOver={e=>e.target.style.textDecoration='underline'} onMouseOut={e=>e.target.style.textDecoration='none'}>{uptimeData ? uptimeData.uptime : '--%'}</a></span>
                                 <span style={{ color: '#a1a1aa' }}>Last Updated: <span style={{ color: '#fff' }}>July 2026</span></span>
                             </div>
                             <p style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>&copy; {new Date().getFullYear()} Ambuj Kumar Tripathi.</p>
