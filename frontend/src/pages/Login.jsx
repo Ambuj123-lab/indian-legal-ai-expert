@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { FaReact, FaPython, FaDatabase, FaShieldAlt, FaSearch, FaBrain, FaGavel, FaGithub } from 'react-icons/fa';
+import { FaReact, FaPython, FaDatabase, FaShieldAlt, FaSearch, FaBrain, FaGavel, FaCogs } from 'react-icons/fa';
+import { FaLinkedin, FaXTwitter, FaYoutube, FaGithub } from 'react-icons/fa6';
 import { SiFastapi, SiMongodb, SiSupabase, SiVite } from 'react-icons/si';
 import { FiActivity, FiCpu, FiArrowRight } from 'react-icons/fi';
 import { getLoginUrl } from '../api';
@@ -332,49 +333,69 @@ export default function Login() {
                 </div>
             </section>
 
-            {/* About / Footer Section */}
-            <footer id="about" style={{ padding: isMobile ? '3rem 1.5rem' : '4rem 2rem', background: '#020408', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+                        {/* Fat Footer (Anthropic Claude Style) */}
+            <footer id="about" style={{ padding: isMobile ? '4rem 1.5rem' : '5rem 4rem 3rem 4rem', background: '#000000', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#a1a1aa', fontSize: '0.9rem' }}>
+                <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', gap: '3rem' }}>
                     
-                    {/* Creator Info */}
-                    <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
-                            <img src="/branding/qr.png" alt="QR" style={{ width: '80px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }} />
-                            <div>
-                                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.2rem' }}>Ambuj Kumar Tripathi</h3>
-                                <p style={{ color: '#10b981', fontWeight: 500 }}>AI Engineer & RAG Specialist</p>
+                    {/* Left Column: Logo & Copyright */}
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: isMobile ? 'auto' : '300px', flex: 1.5 }}>
+                        <div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem' }}>
+                                <img src="/branding/logo.png" alt="Logo" style={{ height: '40px', borderRadius: '8px' }} />
+                                <span style={{ fontWeight: 700, fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#10b981' }}>AI</span></span>
                             </div>
                         </div>
-                        <p style={{ color: '#9ca3af', lineHeight: 1.6, marginBottom: '2rem' }}>
-                            Engineered for high accuracy and compliance. This system utilizes cutting-edge orchestration, semantic vector search, and strict constitutional guardrails.
-                        </p>
-                        <div style={{ display: 'flex', gap: '1rem' }}>
-                            <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" className="btn-secondary" style={{ padding: '0.6rem 1.2rem', borderRadius: '8px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                                View Portfolio <FiArrowRight />
-                            </a>
-                            <a href="https://github.com/Ambuj123-lab" target="_blank" rel="noreferrer" style={{ padding: '0.6rem 1.2rem', borderRadius: '8px', textDecoration: 'none', color: '#fff', display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#111827' }}>
-                                <FaGithub /> GitHub
-                            </a>
+
+                        <div style={{ marginTop: isMobile ? '2rem' : 'auto' }}>
+                            <p style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>&copy; {new Date().getFullYear()} Ambuj Kumar Tripathi.</p>
+                            <div style={{ display: 'flex', gap: '1rem' }}>
+                                <a href="https://www.linkedin.com/in/ambuj-kumar-tripathi-92a084180/" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaLinkedin size={22} /></a>
+                                <a href="https://twitter.com/HuggingModels" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaXTwitter size={22} /></a>
+                                <a href="https://github.com/Ambuj123-lab" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaGithub size={22} /></a>
+                                <a href="https://youtube.com/" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaYoutube size={22} /></a>
+                            </div>
                         </div>
                     </div>
 
-                    {/* HuggingFace Tweet */}
-                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                            <span style={{ fontSize: '20px' }}>??</span>
-                            <h4 style={{ fontWeight: 600, color: '#e5e7eb' }}>Recognized by Hugging Face</h4>
+                    {/* Columns Container */}
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: '2rem', flex: 3 }}>
+                        {/* Column 1 */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Platform</h4>
+                            <a href="#architecture" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Agentic RAG</a>
+                            <a href="#features" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Hybrid Search</a>
+                            <a href="#features" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Web Search Fallback</a>
+                            <a href="#features" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>PII Masking</a>
                         </div>
-                        <blockquote className="twitter-tweet" data-theme="dark" style={{ margin: 0 }}>
-                            <p lang="en" dir="ltr">Meet Ambuj-Tripathi-Indian-Legal-Llama-GGUF: a specialized AI model fine-tuned for Indian law. A game-changer for legal tech in India. <a href="https://t.co/SkLzeaDgpE">pic.twitter.com/SkLzeaDgpE</a></p>&mdash; Hugging Models (@HuggingModels) <a href="https://x.com/HuggingModels/status/2044027666324697451">April 14, 2026</a>
-                        </blockquote>
-                    </div>
 
-                </div>
-                
-                <div style={{ textAlign: 'center', marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#6b7280', fontSize: '0.9rem' }}>
-                    &copy; {new Date().getFullYear()} Ambuj Kumar Tripathi. All rights reserved.
+                        {/* Column 2 */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Solutions</h4>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Legal Firms</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Compliance Teams</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Law Students</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Enterprise Search</a>
+                        </div>
+
+                        {/* Column 3 */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Resources</h4>
+                            <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Creator Portfolio</a>
+                            <a href="https://github.com/Ambuj123-lab" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>GitHub Labs</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>System Documentation</a>
+                            <a href="https://huggingface.co/HuggingModels/Ambuj-Tripathi-Indian-Legal-Llama-GGUF" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Hugging Face Model</a>
+                        </div>
+
+                        {/* Column 4 */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Legal</h4>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Constitution Reference</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Privacy choices</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Terms of service</a>
+                        </div>
+                    </div>
                 </div>
             </footer>
-        </div>
+</div>
     );
 }
