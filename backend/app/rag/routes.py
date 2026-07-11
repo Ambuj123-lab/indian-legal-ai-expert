@@ -290,16 +290,16 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
     if (confidence < 45 or is_oos) and not is_web_search_active:
         async def fallback_stream():
             if is_oos:
-                msg = "This query appears to be outside my core legal expertise.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
+                msg = "[ACTION REQUIRED]\nThis query appears to be outside my core legal expertise.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
             else:
-                msg = "I couldn't find a highly confident match (Confidence < 45%) in my verified legal database for this specific query.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
+                msg = "[ACTION REQUIRED]\nI couldn't find a highly confident match (Confidence < 45%) in my verified legal database for this specific query.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
                 
             yield f"data: {json.dumps({'token': msg})}\n\n"
             yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': round(confidence, 1)})}\n\n"
             
         save_message(user_email, "user", safe_query, pii_masked=pii_found, pii_entities=pii_entities)
         
-        log_msg = "This query appears to be outside my core legal expertise." if is_oos else "I couldn't find a highly confident match (Confidence < 45%) in my verified legal database for this specific query."
+        log_msg = "[ACTION REQUIRED]\nThis query appears to be outside my core legal expertise." if is_oos else "[ACTION REQUIRED]\nI couldn't find a highly confident match (Confidence < 45%) in my verified legal database for this specific query."
         log_msg += "\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
         
         save_message(user_email, "assistant", log_msg, [])
