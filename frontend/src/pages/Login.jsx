@@ -435,35 +435,36 @@ export default function Login() {
                         </a>
                     </div>
                     
-                    {/* Trust Bar */}
-                    <div style={{ 
-                        display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', 
-                        margin: '3rem auto', maxWidth: '900px'
-                    }}>
-                        {['Hybrid Retrieval', 'Agentic Routing', 'Live Web Fallback', 'Microsoft Presidio', 'Google OAuth', 'Enterprise Logging'].map((feature, i) => (
-                            <span key={i} style={{ 
-                                display: 'flex', alignItems: 'center', gap: '8px',
-                                color: '#9ca3af', fontSize: '0.85rem', fontWeight: 500,
-                                padding: '0.6rem 1.2rem', background: 'rgba(255,255,255,0.02)', 
-                                borderRadius: '30px', border: '1px solid rgba(255,255,255,0.05)',
-                                transition: 'all 0.3s ease', cursor: 'default'
-                            }}
-                            onMouseOver={(e) => {
-                                e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.4)';
-                                e.currentTarget.style.background = 'rgba(251, 191, 36, 0.05)';
-                                e.currentTarget.style.color = '#fff';
-                                e.currentTarget.style.transform = 'translateY(-2px)';
-                            }}
-                            onMouseOut={(e) => {
-                                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
-                                e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
-                                e.currentTarget.style.color = '#9ca3af';
-                                e.currentTarget.style.transform = 'none';
-                            }}>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                {feature}
-                            </span>
-                        ))}
+                    {/* Trusted AI Pipeline Metrics */}
+                    <div style={{ marginTop: '4rem', marginBottom: '3rem' }}>
+                        <p style={{ fontSize: '0.85rem', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, marginBottom: '2rem' }}>Trusted AI Pipeline</p>
+                        <div style={{ 
+                            display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: isMobile ? '2rem' : '4rem', 
+                            maxWidth: '900px', margin: '0 auto'
+                        }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <span style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff' }}>31,500+</span>
+                                <span style={{ fontSize: '0.8rem', color: '#9ca3af', fontWeight: 500, marginTop: '4px' }}>Semantic Chunks</span>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <span style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff' }}>28K+</span>
+                                <span style={{ fontSize: '0.8rem', color: '#9ca3af', fontWeight: 500, marginTop: '4px' }}>MRL Vectors</span>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <span style={{ fontSize: '1.8rem', fontWeight: 800, color: '#10b981' }}>
+                                    {uptimeData ? (
+                                        <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" style={{ color: '#10b981', textDecoration: 'none' }} onMouseOver={e=>e.target.style.textDecoration='underline'} onMouseOut={e=>e.target.style.textDecoration='none'}>
+                                            {uptimeData.uptime}
+                                        </a>
+                                    ) : '--%'}
+                                </span>
+                                <span style={{ fontSize: '0.8rem', color: '#9ca3af', fontWeight: 500, marginTop: '4px' }}>API Uptime</span>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <span style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff' }}>4</span>
+                                <span style={{ fontSize: '0.8rem', color: '#9ca3af', fontWeight: 500, marginTop: '4px' }}>Live Systems</span>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Responsive Disclaimer */}
@@ -486,7 +487,8 @@ export default function Login() {
             </section>
 
             {/* Tech Stack Marquee */}
-            <div style={{ width: '100%', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.01)', padding: '1.5rem 0', display: 'flex', alignItems: 'center', zIndex: 5 }}>
+            <div style={{ width: '100%', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.01)', padding: '2rem 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', zIndex: 5 }}>
+                <p style={{ fontSize: '0.85rem', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, margin: 0 }}>Trusted Technologies</p>
                 <div style={{ flex: 1, overflow: 'hidden', maskImage: 'linear-gradient(90deg, transparent, black 10%, black 90%, transparent)' }}>
                     <div style={{ display: 'flex', animation: 'marquee 25s linear infinite', width: 'max-content' }}>
                         {[0, 1, 2].map((loop) => (
