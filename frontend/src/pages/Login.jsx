@@ -53,6 +53,8 @@ export default function Login() {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
 
     useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
@@ -98,6 +100,29 @@ export default function Login() {
         }
     };
 
+
+    const handleContactSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitSuccess(false);
+        
+        const formData = new FormData(e.target);
+        try {
+            const res = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+            });
+            if (res.ok) {
+                setSubmitSuccess(true);
+                e.target.reset();
+                setTimeout(() => setSubmitSuccess(false), 8000);
+            }
+        } catch (err) {
+            console.error("Failed to send message", err);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     const openModal = (src) => {
         setModalImageSrc(src);
@@ -228,6 +253,10 @@ export default function Login() {
                     0%, 100% { transform: translateY(0); }
                     50% { transform: translateY(-10px); }
                 }
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
                 .arch-diagram {
                     transition: transform 0.5s ease;
                 }
@@ -295,6 +324,7 @@ export default function Login() {
                         <a href="#features" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Features</a>
                         <a href="#architecture" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Architecture</a>
                         <a href="#about" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>About</a>
+                        <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#d4af37'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Creator Portfolio</a>
                     </div>
                 )}
                 <div>
@@ -667,7 +697,7 @@ export default function Login() {
                                     </div>
                                     
                                     <div style={{ background: 'rgba(255,255,255,0.02)', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                                        <form action="https://api.web3forms.com/submit" method="POST" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                        <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                             <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
                                             
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -685,7 +715,24 @@ export default function Login() {
                                                 <textarea name="message" placeholder="Please describe how we can assist you..." required rows="5" style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', resize: 'vertical', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'}></textarea>
                                             </div>
                                             
-                                            <button type="submit" style={{ padding: '1rem', marginTop: '1rem', borderRadius: '8px', background: '#d4af37', color: '#0b1120', fontWeight: 700, fontSize: '1rem', border: 'none', cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }} onMouseOver={e=>{e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow='0 4px 12px rgba(212,175,55,0.3)'}} onMouseOut={e=>{e.target.style.transform='none'; e.target.style.boxShadow='none'}}>Send Message</button>
+                                            <button type="submit" disabled={isSubmitting} style={{ padding: '1rem', marginTop: '1rem', borderRadius: '8px', background: isSubmitting ? '#9ca3af' : '#d4af37', color: '#0b1120', fontWeight: 700, fontSize: '1rem', border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', transition: 'transform 0.2s, box-shadow 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onMouseOver={e=>{if(!isSubmitting){e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow='0 4px 12px rgba(212,175,55,0.3)'}}} onMouseOut={e=>{if(!isSubmitting){e.target.style.transform='none'; e.target.style.boxShadow='none'}}}>
+                                                {isSubmitting ? (
+                                                    <>
+                                                        <svg style={{ width: '20px', height: '20px', color: '#0b1120', animation: 'spin 1s linear infinite' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" style={{ opacity: 0.25 }}></circle>
+                                                            <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" style={{ opacity: 0.75 }}></path>
+                                                        </svg>
+                                                        Sending...
+                                                    </>
+                                                ) : "Send Message"}
+                                            </button>
+                                            
+                                            {submitSuccess && (
+                                                <div style={{ padding: '1rem', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '8px', color: '#10b981', fontSize: '0.9rem', textAlign: 'center', marginTop: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                    Message sent successfully. Our team will reply within 24 hours.
+                                                </div>
+                                            )}
                                         </form>
                                     </div>
                                 </div>
