@@ -566,8 +566,8 @@ export default function Login() {
 
             {/* Legal Modals */}
             {legalModal && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', zIndex: 100000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backdropFilter: 'blur(5px)' }}>
-                    <div className="legal-modal-container" style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '0', width: '100%', maxWidth: '800px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', color: '#e5e7eb', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', zIndex: 100000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backdropFilter: 'blur(5px)' }} onClick={() => setLegalModal(null)}>
+                    <div className="legal-modal-container" style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '0', width: '100%', maxWidth: '800px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', color: '#e5e7eb', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }} onClick={(e) => e.stopPropagation()}>
                         
                         <div style={{ position: 'sticky', top: 0, right: 0, display: 'flex', justifyContent: 'flex-end', padding: '1rem', background: 'linear-gradient(to bottom, #0f172a 80%, transparent)', zIndex: 10 }}>
                             <button onClick={() => setLegalModal(null)} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#9ca3af', width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }} onMouseOver={e=>{e.target.style.background='rgba(255,255,255,0.1)'; e.target.style.color='#fff'}} onMouseOut={e=>{e.target.style.background='rgba(255,255,255,0.05)'; e.target.style.color='#9ca3af'}}>
@@ -751,7 +751,7 @@ export default function Login() {
 
             {/* Image Viewer Modal */}
             {isModalOpen && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.9)', zIndex: 1000000, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.9)', zIndex: 1000000, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }} onClick={() => setIsModalOpen(false)}>
                     
                     <div style={{ position: 'absolute', top: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 100000 }}>
                         <button onClick={() => setZoom(z => z + 0.2)} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem', transition: 'background 0.2s, transform 0.2s' }} onMouseOver={e=>{e.target.style.background='rgba(255,255,255,0.2)'; e.target.style.transform='scale(1.05)'}} onMouseOut={e=>{e.target.style.background='rgba(255,255,255,0.1)'; e.target.style.transform='scale(1)'}}>+</button>
@@ -769,8 +769,9 @@ export default function Login() {
                         onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
                         onTouchEnd={handleMouseUp}
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <img src={modalImageSrc} alt="Architecture Zoom" style={{ maxWidth: '90vw', maxHeight: '90vh', userSelect: 'none', pointerEvents: 'none' }} />
+                        <img src={modalImageSrc} alt="Architecture Zoom" style={{ width: '90vw', maxWidth: '1200px', height: 'auto', maxHeight: '90vh', userSelect: 'none', pointerEvents: 'none' }} />
                     </div>
                 </div>
             )}
