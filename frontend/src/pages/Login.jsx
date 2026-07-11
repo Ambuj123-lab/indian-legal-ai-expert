@@ -21,7 +21,7 @@ const techStack = [
 const features = [
     {
         title: "Agentic Classifier",
-        icon: <FaBrain size={24} color="#10B981" />,
+        icon: <FaBrain size={24} color="#d4af37" />,
         desc: "Intelligently classifies queries into strict legal intents, vague questions, or out-of-scope banter before triggering retrieval."
     },
     {
@@ -152,13 +152,13 @@ export default function Login() {
                     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
                 }
                 .btn-primary {
-                    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                    background: linear-gradient(135deg, #d4af37 0%, #b48600 100%);
                     color: white;
                     transition: all 0.3s ease;
                 }
                 .btn-primary:hover {
                     transform: translateY(-2px);
-                    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+                    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
                 }
                 .btn-secondary {
                     background: rgba(255, 255, 255, 0.05);
@@ -182,14 +182,14 @@ export default function Login() {
                     content: '';
                     position: absolute;
                     top: 0; left: 0; right: 0; height: 2px;
-                    background: linear-gradient(90deg, transparent, #10b981, transparent);
+                    background: linear-gradient(90deg, transparent, #d4af37, transparent);
                     opacity: 0;
                     transition: opacity 0.3s ease;
                 }
                 .feature-card:hover {
-                    border-color: rgba(16, 185, 129, 0.3);
+                    border-color: rgba(212, 175, 55, 0.3);
                     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-                    background: rgba(16, 185, 129, 0.05);
+                    background: rgba(212, 175, 55, 0.05);
                 }
                 .feature-card:hover::before { opacity: 1; }
                 .nav-uptime-badge {
@@ -209,7 +209,7 @@ export default function Login() {
                     transform: translateY(-1px);
                 }
                 .gradient-text {
-                    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+                    background: linear-gradient(135deg, #fbbf24 0%, #d4af37 100%);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                 }
@@ -217,7 +217,7 @@ export default function Login() {
                     position: absolute;
                     width: 600px;
                     height: 600px;
-                    background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, rgba(3,7,18,0) 70%);
+                    background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(3,7,18,0) 70%);
                     top: -200px;
                     left: 50%;
                     transform: translateX(-50%);
@@ -252,7 +252,7 @@ export default function Login() {
                 .status-badge {
                     display: inline-flex; align-items: center; gap: 6px;
                     padding: 4px 12px;
-                    background: #000000;
+                    background: #0b1120;
                     animation: red-heartbeat-glow 4s ease-in-out infinite;
                     border: 1px solid rgba(255, 255, 255, 0.1);
                     border-radius: 6px; text-decoration: none; color: #ffffff;
@@ -273,7 +273,7 @@ export default function Login() {
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <img src="/branding/logo.png" alt="Logo" style={{ height: '36px', borderRadius: '8px' }} />
-                    <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#10b981' }}>AI</span></span>
+                    <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#d4af37' }}>AI</span></span>
 
                                         {uptimeData && (
                         <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="nav-uptime-badge" style={{ marginLeft: '12px', fontSize: '0.85rem', padding: '0.5rem 0.9rem', display: 'inline-flex', alignItems: 'center', gap: '8px', letterSpacing: '0.5px' }}>
@@ -308,8 +308,8 @@ export default function Login() {
             <section style={{ position: 'relative', paddingTop: '160px', paddingBottom: '80px', textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem' }}>
                 <div className="hero-glow"></div>
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '800px', margin: '0 auto' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '20px', fontSize: '0.8rem', color: '#34d399', marginBottom: '2rem', fontWeight: 600 }}>
-                        <span style={{ width: '8px', height: '8px', background: '#10b981', borderRadius: '50%', boxShadow: '0 0 10px #10b981' }}></span>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(212, 175, 55, 0.1)', border: '1px solid rgba(212, 175, 55, 0.2)', borderRadius: '20px', fontSize: '0.8rem', color: '#fbbf24', marginBottom: '2rem', fontWeight: 600 }}>
+                        <span style={{ width: '8px', height: '8px', background: '#d4af37', borderRadius: '50%', boxShadow: '0 0 10px #d4af37' }}></span>
                         Agentic RAG v2.0 Live
                     </div>
                     
@@ -401,7 +401,7 @@ export default function Login() {
             </section>
 
             {/* Architecture Evolution Section */}
-            <section id="architecture" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 2rem', background: '#070b14', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <section id="architecture" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 2rem', background: '#0f172a', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                         <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>Continuous Evolution</h2>
@@ -410,12 +410,12 @@ export default function Login() {
 
                     <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '2rem', alignItems: 'center' }}>
                         {/* v1.0 Diagram */}
-                        <div style={{ flex: 1, background: '#0a0f1c', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ flex: 1, background: '#1e293b', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                 <h3 style={{ fontWeight: 600, color: '#9ca3af' }}>v1.0 Basic RAG</h3>
                                 <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px', color: '#9ca3af' }}>Archived</span>
                             </div>
-                            <div className="arch-diagram" style={{ background: '#05080f', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated.svg')}>
+                            <div className="arch-diagram" style={{ background: '#0f172a', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated.svg')}>
                                 <img src="/branding/architecture_animated.svg" alt="v1.0 Basic RAG" style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} />
                             </div>
                             <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#9ca3af', lineHeight: 1.5 }}>
@@ -423,18 +423,18 @@ export default function Login() {
                             </p>
                         </div>
 
-                        <FiArrowRight size={32} color="#34d399" style={{ transform: isMobile ? 'rotate(90deg)' : 'none', opacity: 0.5 }} />
+                        <FiArrowRight size={32} color="#fbbf24" style={{ transform: isMobile ? 'rotate(90deg)' : 'none', opacity: 0.5 }} />
 
                         {/* v2.0 Diagram */}
-                        <div style={{ flex: 1, background: 'rgba(16, 185, 129, 0.05)', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(16, 185, 129, 0.2)', boxShadow: '0 0 30px rgba(16,185,129,0.05)' }}>
+                        <div style={{ flex: 1, background: 'rgba(212, 175, 55, 0.05)', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(212, 175, 55, 0.2)', boxShadow: '0 0 30px rgba(212,175,55,0.05)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                                <h3 style={{ fontWeight: 600, color: '#34d399' }}>v2.0 Agentic RAG</h3>
-                                <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(16, 185, 129, 0.2)', borderRadius: '12px', color: '#10b981', fontWeight: 600 }}>Active</span>
+                                <h3 style={{ fontWeight: 600, color: '#fbbf24' }}>v2.0 Agentic RAG</h3>
+                                <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(212, 175, 55, 0.2)', borderRadius: '12px', color: '#d4af37', fontWeight: 600 }}>Active</span>
                             </div>
-                            <div className="arch-diagram" style={{ background: '#05080f', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated_v2.svg')}>
+                            <div className="arch-diagram" style={{ background: '#0f172a', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated_v2.svg')}>
                                 <img src="/branding/architecture_animated_v2.svg" alt="v2.0 Agentic RAG" style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} />
                             </div>
-                            <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#10b981', lineHeight: 1.5 }}>
+                            <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#d4af37', lineHeight: 1.5 }}>
                                 What improved? Added Agentic query routing, fallback web search via Tavily for out-of-DB queries, and strict constitutional adherence constraints.
                             </p>
                         </div>
@@ -443,7 +443,7 @@ export default function Login() {
             </section>
 
                         {/* Fat Footer (Anthropic Claude Style) */}
-            <footer id="about" style={{ padding: isMobile ? '4rem 1.5rem' : '5rem 4rem 3rem 4rem', background: '#000000', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#a1a1aa', fontSize: '0.9rem' }}>
+            <footer id="about" style={{ padding: isMobile ? '4rem 1.5rem' : '5rem 4rem 3rem 4rem', background: '#0b1120', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#a1a1aa', fontSize: '0.9rem' }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', gap: '3rem' }}>
                     
                     {/* Left Column: Logo & Copyright */}
@@ -451,7 +451,7 @@ export default function Login() {
                         <div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem' }}>
                                 <img src="/branding/logo.png" alt="Logo" style={{ height: '40px', borderRadius: '8px' }} />
-                                <span style={{ fontWeight: 700, fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#10b981' }}>AI</span></span>
+                                <span style={{ fontWeight: 700, fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#d4af37' }}>AI</span></span>
                             </div>
                         </div>
 
@@ -459,7 +459,7 @@ export default function Login() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '1rem', fontSize: '0.8rem', color: '#6b7280' }}>
                                 <span style={{ color: '#a1a1aa' }}>Version: <span style={{ color: '#fff' }}>v2.0</span></span>
                                 <span style={{ color: '#a1a1aa' }}>Deployment: <span style={{ color: '#fff' }}>Vercel / Render</span></span>
-                                <span style={{ color: '#a1a1aa' }}>API Uptime: <span style={{ color: '#10b981' }}>99.9%</span></span>
+                                <span style={{ color: '#a1a1aa' }}>API Uptime: <span style={{ color: '#d4af37' }}>99.9%</span></span>
                                 <span style={{ color: '#a1a1aa' }}>Last Updated: <span style={{ color: '#fff' }}>July 2026</span></span>
                             </div>
                             <p style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>&copy; {new Date().getFullYear()} Ambuj Kumar Tripathi.</p>
@@ -525,7 +525,7 @@ export default function Login() {
             {/* Legal Modals */}
             {legalModal && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backdropFilter: 'blur(5px)' }}>
-                    <div style={{ background: '#0a0f1c', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '2.5rem', width: '100%', maxWidth: '700px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', color: '#e5e7eb', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+                    <div style={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '2.5rem', width: '100%', maxWidth: '700px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', color: '#e5e7eb', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
                         
                         <button onClick={() => setLegalModal(null)} style={{ position: 'absolute', top: '1.2rem', right: '1.5rem', background: 'transparent', border: 'none', color: '#9ca3af', fontSize: '1.8rem', cursor: 'pointer', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>&times;</button>
                         
@@ -577,8 +577,8 @@ export default function Login() {
                                 
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
                                     <div>
-                                        <h3 style={{ color: '#10b981', fontWeight: 600, marginBottom: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px #10b981' }}></span> Allowed
+                                        <h3 style={{ color: '#d4af37', fontWeight: 600, marginBottom: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#d4af37', boxShadow: '0 0 10px #d4af37' }}></span> Allowed
                                         </h3>
                                         <ul style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingLeft: '1.5rem', color: '#d1d5db', listStyleType: 'circle', lineHeight: 1.5 }}>
                                             <li>Legal Research</li>
@@ -637,12 +637,12 @@ export default function Login() {
                     onClick={scrollToTop} 
                     style={{ 
                         position: 'fixed', bottom: '2rem', right: '2rem', 
-                        background: '#10b981', color: '#fff', 
+                        background: '#d4af37', color: '#fff', 
                         width: '45px', height: '45px', 
                         borderRadius: '50%', border: 'none', 
                         display: 'flex', alignItems: 'center', justifyContent: 'center', 
                         cursor: 'pointer', zIndex: 1000, 
-                        boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)',
+                        boxShadow: '0 4px 12px rgba(212, 175, 55, 0.4)',
                         transition: 'all 0.3s ease'
                     }}
                     onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
