@@ -346,7 +346,7 @@ export default function Login() {
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '800px', margin: '0 auto' }}>
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(251, 191, 36, 0.1)', border: '1px solid rgba(251, 191, 36, 0.2)', borderRadius: '20px', fontSize: '0.8rem', color: '#fbbf24', marginBottom: '2rem', fontWeight: 600 }}>
                         <span style={{ width: '8px', height: '8px', background: '#fbbf24', borderRadius: '50%', boxShadow: '0 0 10px #fbbf24' }}></span>
-                        ? Agentic RAG v2.0
+                        Agentic RAG v2.0
                     </div>
                     
                     <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '1.5rem', letterSpacing: '-1px' }}>
@@ -542,7 +542,7 @@ export default function Login() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '1rem', fontSize: '0.8rem', color: '#6b7280' }}>
                                 <span style={{ color: '#a1a1aa' }}>Version: <span style={{ color: '#fff' }}>v2.0</span></span>
                                 <span style={{ color: '#a1a1aa' }}>Deployment: <span style={{ color: '#fff' }}>Vercel / Render</span></span>
-                                <span style={{ color: '#a1a1aa' }}>API Uptime: <span style={{ color: '#fbbf24' }}>99.9%</span></span>
+                                <span style={{ color: '#a1a1aa' }}>API Uptime: <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" style={{ color: '#fbbf24', textDecoration: 'none' }} onMouseOver={e=>e.target.style.textDecoration='underline'} onMouseOut={e=>e.target.style.textDecoration='none'}>99.9%</a></span>
                                 <span style={{ color: '#a1a1aa' }}>Last Updated: <span style={{ color: '#fff' }}>July 2026</span></span>
                             </div>
                             <p style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>&copy; {new Date().getFullYear()} Ambuj Kumar Tripathi.</p>
