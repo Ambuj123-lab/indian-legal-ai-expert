@@ -331,8 +331,16 @@ export default function Chat({ sidebarOpen, setSidebarOpen, isMobile }) {
                                                     {msg.sources.map((src, i) => (
                                                         <div key={i} className="source-card">
                                                             <div className="source-header">
-                                                                <span className="source-file">{src.file}</span>
-                                                                <span className="source-page">Page {src.page}</span>
+                                                                <span className="source-file">
+                                                                    {src.file.startsWith('http') ? (
+                                                                        <a href={src.file} target="_blank" rel="noopener noreferrer" style={{ color: '#61DAFB', textDecoration: 'underline' }}>
+                                                                            {new URL(src.file).hostname}
+                                                                        </a>
+                                                                    ) : (
+                                                                        src.file
+                                                                    )}
+                                                                </span>
+                                                                {!src.file.startsWith('http') && <span className="source-page">Page {src.page}</span>}
                                                                 <span className="source-score">{(src.score * 100).toFixed(0)}%</span>
                                                             </div>
                                                             <p className="source-preview">{src.preview}</p>
