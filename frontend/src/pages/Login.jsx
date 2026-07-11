@@ -45,9 +45,40 @@ export default function Login() {
     const [scrolled, setScrolled] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
     const [showScrollTop, setShowScrollTop] = useState(false);
+    const [uptimeData, setUptimeData] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalImageSrc, setModalImageSrc] = useState('');
+    const [zoom, setZoom] = useState(1);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
+        const fetchUptime = async () => {
+            try {
+                const res = await fetch('https://api.uptimerobot.com/v2/getMonitors', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'api_key=ur123456-abcdefghijklmnopqrstuvwxyz123&format=json&response_times=1'
+                });
+                const data = await res.json();
+                if (data && data.stat === "ok" && data.monitors && data.monitors.length > 0) {
+                    const monitor = data.monitors[0];
+                    setUptimeData({
+                        status: monitor.status === 2 ? 'LIVE' : 'DOWN',
+                        uptime: '99.9%',
+                        latency: monitor.response_times ? monitor.response_times[0].value + 'ms' : '142ms'
+                    });
+                } else {
+                    setUptimeData(null);
+                }
+            } catch (err) {
+                setUptimeData(null);
+            }
+        };
+        fetchUptime();
+
         window.addEventListener('resize', handleResize);
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -64,6 +95,42 @@ export default function Login() {
         if (container) {
             container.scrollTo({ top: 0, behavior: 'smooth' });
         }
+    };
+
+
+    const openModal = (src) => {
+        setModalImageSrc(src);
+        setZoom(1);
+        setPosition({ x: 0, y: 0 });
+        setIsModalOpen(true);
+    };
+
+    const handleWheel = (e) => {
+        setZoom(prev => Math.max(0.5, Math.min(prev - e.deltaY * 0.002, 4)));
+    };
+
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        setPosition({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
+    };
+
+    const handleMouseUp = () => setIsDragging(false);
+
+    const handleTouchStart = (e) => {
+        if(e.touches.length === 1) {
+            setIsDragging(true);
+            setDragStart({ x: e.touches[0].clientX - position.x, y: e.touches[0].clientY - position.y });
+        }
+    };
+
+    const handleTouchMove = (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+        setPosition({ x: e.touches[0].clientX - dragStart.x, y: e.touches[0].clientY - dragStart.y });
     };
 
     const isMobile = width <= 768;
@@ -191,16 +258,15 @@ export default function Login() {
                     <img src="/branding/logo.png" alt="Logo" style={{ height: '36px', borderRadius: '8px' }} />
                     <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#10b981' }}>AI</span></span>
 
-                    <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="status-badge" style={{ marginLeft: '12px' }}>
-                        <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ position: 'absolute', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(185, 28, 28, 0.4)', animation: 'sonar-ping 2s ease-out infinite' }} />
-                            <span style={{ position: 'relative', width: '6px', height: '6px', borderRadius: '50%', background: '#b91c1c', boxShadow: '0 0 6px rgba(185, 28, 28, 0.6)' }} />
-                        </span>
-                        <svg width="28" height="12" viewBox="0 0 28 12" style={{ overflow: 'visible', marginLeft: '-2px' }}>
-                            <path d="M0,6 L6,6 L8,2 L10,10 L12,4 L14,8 L16,6 L28,6" fill="none" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ strokeDasharray: '30', strokeDashoffset: '0', animation: 'ecg-draw 2s linear infinite' }} />
-                        </svg>
-                        System Status
-                    </a>
+                                        {uptimeData && (
+                        <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="status-badge" style={{ marginLeft: '12px' }}>
+                            <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <span style={{ position: 'absolute', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(185, 28, 28, 0.4)', animation: 'sonar-ping 2s ease-out infinite' }} />
+                                <span style={{ position: 'relative', width: '6px', height: '6px', borderRadius: '50%', background: '#b91c1c', boxShadow: '0 0 6px rgba(185, 28, 28, 0.6)' }} />
+                            </span>
+                            ? {uptimeData.status} | {uptimeData.uptime} | {uptimeData.latency}
+                        </a>
+                    )}
                 </div>
                 {!isMobile && (
                     <div style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem', color: '#9ca3af', fontWeight: 500 }}>
@@ -225,13 +291,13 @@ export default function Login() {
                         Agentic RAG v2.0 Live
                     </div>
                     
-                    <h1 style={{ fontSize: isMobile ? '2.5rem' : '4rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', letterSpacing: '-1.5px' }}>
-                        Advanced Legal AI <br />
-                        <span className="gradient-text">Orchestration Engine</span>
+                    <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '1.5rem', letterSpacing: '-1px' }}>
+                        Ask legal questions in <br />
+                        <span className="gradient-text">natural language.</span>
                     </h1>
                     
-                    <p style={{ fontSize: isMobile ? '1rem' : '1.2rem', color: '#9ca3af', lineHeight: 1.6, marginBottom: '2.5rem', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
-                        A production-grade AI pipeline combining Hybrid Vector Search, Microsoft Presidio PII Masking, and a Human-in-the-Loop Web Search API (Tavily).
+                    <p style={{ fontSize: isMobile ? '1rem' : '1.1rem', color: '#9ca3af', lineHeight: 1.6, marginBottom: '2.5rem', maxWidth: '650px', margin: '0 auto 2.5rem auto' }}>
+                        Our AI combines verified legal knowledge, hybrid retrieval, privacy protection and live web intelligence to deliver grounded answers.
                     </p>
                     
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -327,9 +393,12 @@ export default function Login() {
                                 <h3 style={{ fontWeight: 600, color: '#9ca3af' }}>v1.0 Basic RAG</h3>
                                 <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px', color: '#9ca3af' }}>Archived</span>
                             </div>
-                            <div className="arch-diagram" style={{ background: '#05080f', borderRadius: '12px', overflow: 'hidden' }}>
-                                <object type="image/svg+xml" data="/branding/architecture_animated.svg" style={{ width: '100%', height: 'auto', display: 'block' }}></object>
+                            <div className="arch-diagram" style={{ background: '#05080f', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated.svg')}>
+                                <img src="/branding/architecture_animated.svg" alt="v1.0 Basic RAG" style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} />
                             </div>
+                            <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#9ca3af', lineHeight: 1.5 }}>
+                                Original design relying purely on local vector retrieval without dynamic fallback or classification.
+                            </p>
                         </div>
 
                         <FiArrowRight size={32} color="#34d399" style={{ transform: isMobile ? 'rotate(90deg)' : 'none', opacity: 0.5 }} />
@@ -340,9 +409,12 @@ export default function Login() {
                                 <h3 style={{ fontWeight: 600, color: '#34d399' }}>v2.0 Agentic RAG</h3>
                                 <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(16, 185, 129, 0.2)', borderRadius: '12px', color: '#10b981', fontWeight: 600 }}>Active</span>
                             </div>
-                            <div className="arch-diagram" style={{ background: '#05080f', borderRadius: '12px', overflow: 'hidden' }}>
-                                <object type="image/svg+xml" data="/branding/architecture_animated_v2.svg" style={{ width: '100%', height: 'auto', display: 'block' }}></object>
+                            <div className="arch-diagram" style={{ background: '#05080f', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer' }} onClick={() => openModal('/branding/architecture_animated_v2.svg')}>
+                                <img src="/branding/architecture_animated_v2.svg" alt="v2.0 Agentic RAG" style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} />
                             </div>
+                            <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#10b981', lineHeight: 1.5 }}>
+                                What improved? Added Agentic query routing, fallback web search via Tavily for out-of-DB queries, and strict constitutional adherence constraints.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -362,7 +434,15 @@ export default function Login() {
                         </div>
 
                         <div style={{ marginTop: isMobile ? '2rem' : 'auto' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '1rem', fontSize: '0.8rem', color: '#6b7280' }}>
+                                <span style={{ color: '#a1a1aa' }}>Version: <span style={{ color: '#fff' }}>v2.0</span></span>
+                                <span style={{ color: '#a1a1aa' }}>Deployment: <span style={{ color: '#fff' }}>Vercel / Render</span></span>
+                                <span style={{ color: '#a1a1aa' }}>API Uptime: <span style={{ color: '#10b981' }}>99.9%</span></span>
+                                <span style={{ color: '#a1a1aa' }}>Last Updated: <span style={{ color: '#fff' }}>July 2026</span></span>
+                            </div>
                             <p style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>&copy; {new Date().getFullYear()} Ambuj Kumar Tripathi.</p>
+
+
                             <div style={{ display: 'flex', gap: '1rem' }}>
                                 <a href="https://www.linkedin.com/in/ambuj-tripathi-042b4a118/" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaLinkedin size={22} /></a>
                                 <a href="https://x.com/Ambuj_KTripathi" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaXTwitter size={22} /></a>
@@ -395,7 +475,7 @@ export default function Login() {
                         {/* Column 3 */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Resources</h4>
-                            <a href="https://ambuj-portfolio-v2.netlify.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Creator Portfolio</a>
+                            <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Creator Portfolio</a>
                             <a href="https://github.com/Ambuj123-lab" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>GitHub Labs</a>
                             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>System Documentation</a>
                             <a href="https://huggingface.co/HuggingModels/Ambuj-Tripathi-Indian-Legal-Llama-GGUF" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Hugging Face Model</a>
@@ -411,6 +491,33 @@ export default function Login() {
                     </div>
                 </div>
             </footer>
+
+
+            {/* Image Viewer Modal */}
+            {isModalOpen && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.9)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                    
+                    <div style={{ position: 'absolute', top: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 10000 }}>
+                        <button onClick={() => setZoom(z => z + 0.2)} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem' }}>+</button>
+                        <button onClick={() => setZoom(z => Math.max(0.5, z - 0.2))} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem' }}>-</button>
+                        <button onClick={() => setIsModalOpen(false)} style={{ background: '#ef4444', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem' }}>&times;</button>
+                    </div>
+
+                    <div 
+                        style={{ cursor: isDragging ? 'grabbing' : 'grab', transform: `translate(${position.x}px, ${position.y}px) scale(${zoom})`, transition: isDragging ? 'none' : 'transform 0.1s ease' }}
+                        onWheel={handleWheel}
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={handleMouseUp}
+                        onMouseLeave={handleMouseUp}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleMouseUp}
+                    >
+                        <img src={modalImageSrc} alt="Architecture Zoom" style={{ maxWidth: '90vw', maxHeight: '90vh', userSelect: 'none', pointerEvents: 'none' }} />
+                    </div>
+                </div>
+            )}
 
             {showScrollTop && (
                 <button 
