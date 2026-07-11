@@ -158,26 +158,6 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
         except Exception as e:
             logger.error(f"❌ Redis active user tracking failed: {e}")
 
-    # Redis cache check — same question = instant answer
-    cache_key = f"stream:{user_email}:{question[:100]}"
-    if redis:
-        try:
-            cached = redis.get(cache_key)
-            if cached:
-                logger.info(f"⚡ Cache HIT for: {question[:50]}")
-                cached_data = json.loads(cached)
-                async def cached_stream():
-                    # Simulate streaming — send word by word (fast)
-                    words = cached_data['response'].split(' ')
-                    for i, word in enumerate(words):
-                        token = word if i == 0 else ' ' + word
-                        yield f"data: {json.dumps({'token': token})}\n\n"
-                        await asyncio.sleep(0.02)  # 20ms per word = fast but visible
-                    yield f"data: {json.dumps({'done': True, 'sources': cached_data.get('sources', []), 'confidence': cached_data.get('confidence', 0), 'pii_detected': cached_data.get('pii_detected', False), 'pii_entities': cached_data.get('pii_entities', [])})}\n\n"
-                return StreamingResponse(cached_stream(), media_type="text/event-stream")
-        except Exception as e:
-            logger.error(f"❌ Redis cache check failed: {e}")
-
     # 1. Get chat history EARLY (needed for classification & web search)
     history = get_chat_history(user_email, limit=6)
     history_text = "No previous history."
@@ -216,6 +196,26 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
                 return StreamingResponse(fallback_stream(), media_type="text/event-stream")
             else:
                 logger.info("Neither Yes nor No. Proceeding as new query.")
+
+    # 3. Redis cache check — same question = instant answer
+    cache_key = f"stream:{user_email}:{question[:100]}"
+    if redis:
+        try:
+            cached = redis.get(cache_key)
+            if cached:
+                logger.info(f"⚡ Cache HIT for: {question[:50]}")
+                cached_data = json.loads(cached)
+                async def cached_stream():
+                    # Simulate streaming — send word by word (fast)
+                    words = cached_data['response'].split(' ')
+                    for i, word in enumerate(words):
+                        token = word if i == 0 else ' ' + word
+                        yield f"data: {json.dumps({'token': token})}\n\n"
+                        await asyncio.sleep(0.02)  # 20ms per word = fast but visible
+                    yield f"data: {json.dumps({'done': True, 'sources': cached_data.get('sources', []), 'confidence': cached_data.get('confidence', 0), 'pii_detected': cached_data.get('pii_detected', False), 'pii_entities': cached_data.get('pii_entities', [])})}\n\n"
+                return StreamingResponse(cached_stream(), media_type="text/event-stream")
+        except Exception as e:
+            logger.error(f"❌ Redis cache check failed: {e}")
 
     # 3. Classify first
     if is_abusive(question):
