@@ -68,13 +68,13 @@ export default function Login() {
                     setUptimeData({
                         status: monitor.status === 2 ? 'LIVE' : 'DOWN',
                         uptime: '99.9%',
-                        latency: monitor.response_times ? monitor.response_times[0].value + 'ms' : '142ms'
+                        latency: monitor.response_times ? monitor.response_times[0].value + 'ms' : '--ms'
                     });
                 } else {
-                    setUptimeData({ status: 'LIVE', uptime: '99.9%', latency: '142ms' });
+                    setUptimeData({ status: 'LIVE', uptime: '--%', latency: '--ms' });
                 }
             } catch (err) {
-                setUptimeData({ status: 'LIVE', uptime: '99.9%', latency: '142ms' });
+                setUptimeData({ status: 'LIVE', uptime: '--%', latency: '--ms' });
             }
         };
         fetchUptime();
