@@ -1,4 +1,4 @@
-# ⚖️ Indian Legal AI Expert — Enterprise RAG Platform
+# ⚖️ Agentic Legal AI (Confidence-Gated HITL)
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org)
@@ -19,9 +19,8 @@
 ## 🏗️ Technical Architecture
 The system is built on a modular **Monolith-over-Microservices** architecture, leveraging **LangGraph** for deterministic state-controlled RAG orchestration.
 <p align="center">
-  <img src="architecture_animated.svg" width="100%" alt="Animated Architecture">
+  <img src="architecture_animated_v2.svg" width="100%" alt="Animated Architecture">
 </p>
-
 
 ---
 
@@ -30,9 +29,11 @@ The system is built on a modular **Monolith-over-Microservices** architecture, l
 ### 🧠 Robust RAG Orchestration
 - **LangGraph State Machine**: Deterministic flow control using a 4-node state graph (CLASSIFY → RETRIEVE → GENERATE → POST_PROCESS).
 - **Parent-Child Chunking**: Implemented recursive character splitting with Jina AI embeddings. Child chunks (small) optimize vector search retrieval, while parent chunks (contextual) provide the LLM with surrounding knowledge to mitigate hallucinations.
+- **Confidence-Gated HITL Fallback**: Dynamic thresholding (80% confidence cutoff). Automatically triggers an interactive Human-in-the-Loop Web Search via Tavily when the Vector DB similarity score is too low, effectively eliminating hallucination for out-of-database queries.
 - **Dual Search Strategy**: Hybrid retrieval combining semantic vector search with keyword-based expansion for specific legal terminology (e.g., FIR, BNS Sections).
 
 ### 🛡️ Privacy & Reliability
+- **Intent Classification Guardrails**: LangGraph nodes autonomously identify Prompt Injections, Time-Sensitive questions, and Out-of-Scope (OOS) queries before they reach the LLM, redirecting them to secure fallbacks.
 - **PII Masking Integration**: Leverages **Microsoft Presidio + spaCy** to detect and anonymize names, phone numbers, and identifying data before transmission to the LLM.
 - **Circuit Breaker Pattern**: Integrated `pybreaker` around external LLM calls (fail_max=10) to ensure system stability during upstream provider outages.
 - **Rate Limiting**: IP-based rate limiting (5 req/min) via SlowAPI to prevent API abuse and control operational costs.
@@ -53,7 +54,7 @@ The system is built on a modular **Monolith-over-Microservices** architecture, l
 
 - **Frontend**: React 18, Tailwind CSS (Glassmorphism UI), Lucide Icons
 - **Backend**: FastAPI, Uvicorn, LangChain, LangGraph, Pydantic
-- **AI Models**: Qwen 3 235B (via OpenRouter), Jina AI Embeddings v2
+- **AI Models**: Qwen 3 235B (via OpenRouter), Jina AI Embeddings v2, Tavily Search API
 - **Infrastructure**: Docker, Render (Compute), Qdrant Cloud (Vector Store), MongoDB Atlas (NoSQL), Supabase (Postgres + Object Storage), Upstash (Redis)
 
 ---
