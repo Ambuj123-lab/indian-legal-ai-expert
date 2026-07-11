@@ -19,7 +19,7 @@
 ## 🏗️ Technical Architecture
 The system is built on a modular **Monolith-over-Microservices** architecture, leveraging **LangGraph** for deterministic state-controlled RAG orchestration.
 <p align="center">
-  <img src="architecture_animated_v2.svg" width="100%" alt="Animated Architecture">
+  <img src="architecture_animated.svg" width="100%" alt="Animated Architecture">
 </p>
 
 ---
