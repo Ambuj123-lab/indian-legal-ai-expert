@@ -224,10 +224,22 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
             yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': 0})}\n\n"
         return StreamingResponse(abort_stream(), media_type="text/event-stream")
 
-    # 4. Check Out of Scope (OOS) - Skip if user just said 'yes' to a web search
+    # 4. Check Out of Scope (OOS) or Vague - Skip if user just said 'yes' to a web search
     is_oos = False
+    classification = {}
     if not is_web_search_reply:
         classification = agentic_classifier(question, history_text)
+        
+        # Handle Vague Queries
+        if classification.get("is_vague", False):
+            vague_msg = classification.get("clarifying_question", f"Hi {user_name}! Could you please provide a bit more detail about what legal information you're looking for?")
+            async def vague_stream():
+                yield f"data: {json.dumps({'token': vague_msg})}\n\n"
+                yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': 100})}\n\n"
+            save_message(user_email, "user", question)
+            save_message(user_email, "assistant", vague_msg)
+            return StreamingResponse(vague_stream(), media_type="text/event-stream")
+            
         if classification.get("is_out_of_scope", False):
             is_oos = True
 

@@ -1185,7 +1185,9 @@ User Query: {query}
 
 Return ONLY a valid JSON object:
 {{
-    "is_out_of_scope": boolean (true if totally unrelated to law/legal/finance/current affairs)
+    "is_out_of_scope": boolean (true if totally unrelated to law/legal/finance/current affairs),
+    "is_vague": boolean (true if the query is too short or lacks context to search legal documents properly, e.g., "tell me about act", "what is section"),
+    "clarifying_question": "string (If is_vague is true, ask the user what specific act or topic they mean. Else null.)"
 }}"""
     try:
         response = llm.invoke(prompt)
