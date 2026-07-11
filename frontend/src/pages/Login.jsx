@@ -131,6 +131,36 @@ export default function Login() {
                 .arch-diagram {
                     transition: transform 0.5s ease;
                 }
+                
+                @keyframes red-heartbeat-glow {
+                    0%   { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                    30%  { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                    40%  { box-shadow: 0 0 25px rgba(185, 28, 28, 0.8), inset 0 0 8px rgba(153, 27, 27, 0.4); border-color: rgba(185, 28, 28, 0.9); }
+                    45%  { box-shadow: 0 0 8px rgba(185, 28, 28, 0.3); border-color: rgba(185, 28, 28, 0.4); }
+                    55%  { box-shadow: 0 0 40px rgba(153, 27, 27, 1), inset 0 0 15px rgba(153, 27, 27, 0.8); border-color: #dc2626; }
+                    70%  { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                    100% { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                }
+                @keyframes sonar-ping {
+                    0% { transform: scale(1); opacity: 1; }
+                    100% { transform: scale(3); opacity: 0; }
+                }
+                @keyframes ecg-draw {
+                    from { stroke-dashoffset: 30; }
+                    to { stroke-dashoffset: 0; }
+                }
+                .status-badge {
+                    display: inline-flex; align-items: center; gap: 6px;
+                    padding: 4px 12px;
+                    background: #000000;
+                    animation: red-heartbeat-glow 4s ease-in-out infinite;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 6px; text-decoration: none; color: #ffffff;
+                    font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+                    cursor: pointer; white-space: nowrap;
+                    transition: border-color 0.3s;
+                }
+
                 .arch-diagram:hover {
                     transform: scale(1.02);
                 }
@@ -144,6 +174,17 @@ export default function Login() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <img src="/branding/logo.png" alt="Logo" style={{ height: '36px', borderRadius: '8px' }} />
                     <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#10b981' }}>AI</span></span>
+
+                    <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="status-badge" style={{ marginLeft: '12px' }}>
+                        <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <span style={{ position: 'absolute', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(185, 28, 28, 0.4)', animation: 'sonar-ping 2s ease-out infinite' }} />
+                            <span style={{ position: 'relative', width: '6px', height: '6px', borderRadius: '50%', background: '#b91c1c', boxShadow: '0 0 6px rgba(185, 28, 28, 0.6)' }} />
+                        </span>
+                        <svg width="28" height="12" viewBox="0 0 28 12" style={{ overflow: 'visible', marginLeft: '-2px' }}>
+                            <path d="M0,6 L6,6 L8,2 L10,10 L12,4 L14,8 L16,6 L28,6" fill="none" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ strokeDasharray: '30', strokeDashoffset: '0', animation: 'ecg-draw 2s linear infinite' }} />
+                        </svg>
+                        System Status
+                    </a>
                 </div>
                 {!isMobile && (
                     <div style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem', color: '#9ca3af', fontWeight: 500 }}>
