@@ -131,6 +131,23 @@ async def health_check():
         "timestamp": datetime.now().isoformat()
     }
 
+# --- Uptime Robot Proxy (Bypasses CORS) ---
+@app.get("/api/uptime")
+async def get_uptime():
+    import httpx
+    try:
+        async with httpx.AsyncClient() as client:
+            res = await client.post(
+                "https://api.uptimerobot.com/v2/getMonitors",
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+                data="api_key=ur3293690-5a09e92504e29189fadf3be2&format=json&response_times=1&custom_uptime_ratios=30",
+                timeout=10.0
+            )
+            return res.json()
+    except Exception as e:
+        logger.error(f"Uptime fetch failed: {e}")
+        return {"stat": "fail"}
+
 
 # --- Root ---
 @app.get("/")

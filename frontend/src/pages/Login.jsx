@@ -64,11 +64,7 @@ export default function Login() {
         const handleResize = () => setWidth(window.innerWidth);
         const fetchUptime = async () => {
             try {
-                const res = await fetch('https://api.uptimerobot.com/v2/getMonitors', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'api_key=ur3293690-5a09e92504e29189fadf3be2&format=json&response_times=1&custom_uptime_ratios=30'
-                });
+                const res = await fetch('/api/uptime');
                 const data = await res.json();
                 if (data && data.stat === "ok" && data.monitors && data.monitors.length > 0) {
                     const monitor = data.monitors[0];
