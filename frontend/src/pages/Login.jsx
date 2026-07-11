@@ -354,8 +354,11 @@ export default function Login() {
                         <span className="gradient-text">Secure Enterprise Retrieval</span>
                     </h1>
                     
-                    <p style={{ fontSize: isMobile ? '1rem' : '1.1rem', color: '#9ca3af', lineHeight: 1.6, marginBottom: '2.5rem', maxWidth: '650px', margin: '0 auto 2.5rem auto' }}>
+                    <p style={{ fontSize: isMobile ? '1rem' : '1.1rem', color: '#9ca3af', lineHeight: 1.6, marginBottom: '1.5rem', maxWidth: '650px', margin: '0 auto 1.5rem auto' }}>
                         IndianLegalAI combines verified legal knowledge, hybrid retrieval, privacy protection, and live web intelligence to deliver grounded, citation-aware responses.
+                    </p>
+                    <p style={{ fontSize: '0.85rem', color: '#fbbf24', fontWeight: 600, marginBottom: '3rem', letterSpacing: '0.5px' }}>
+                        Powered by LangGraph • FastAPI • Qdrant • Presidio • Tavily
                     </p>
                     
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -392,9 +395,27 @@ export default function Login() {
                         </a>
                     </div>
                     
-                    <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '1.5rem', fontStyle: 'italic' }}>
-                        *Disclaimer: Educational use only. <br/> Not a substitute for professional legal advice. <br/> Always consult a qualified legal practitioner.
-                    </p>
+                    {/* Trust Bar */}
+                    <div style={{ 
+                        display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: isMobile ? '1rem' : '2rem', 
+                        color: '#9ca3af', fontSize: '0.85rem', fontWeight: 500, margin: '3rem auto',
+                        padding: '1.2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)',
+                        maxWidth: '900px'
+                    }}>
+                        {['Hybrid Retrieval', 'Agentic Routing', 'Live Web Fallback', 'Microsoft Presidio', 'Google OAuth', 'Enterprise Logging'].map((feature, i) => (
+                            <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                {feature}
+                            </span>
+                        ))}
+                    </div>
+
+                    {/* Responsive Disclaimer */}
+                    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '1rem', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.1)', borderRadius: '12px' }}>
+                        <p style={{ fontSize: '0.8rem', color: '#9ca3af', lineHeight: 1.5, textAlign: 'center', margin: 0 }}>
+                            <strong style={{ color: '#ef4444' }}>*Disclaimer:</strong> Educational use only. Not a substitute for professional legal advice. Always consult a qualified legal practitioner.
+                        </p>
+                    </div>
                 </div>
             </section>
 
