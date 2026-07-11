@@ -319,18 +319,33 @@ export default function Login() {
                     <img src="/branding/logo.png" alt="Logo" style={{ height: isMobile ? '28px' : '36px', borderRadius: '8px' }} />
                     <span style={{ fontWeight: 700, fontSize: isMobile ? '1rem' : '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#fbbf24' }}>AI</span></span>
 
-                    {uptimeData && !isMobile && (
-                        <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="nav-uptime-badge" style={{ marginLeft: '12px', fontSize: '0.85rem', padding: '0.5rem 0.9rem', display: 'inline-flex', alignItems: 'center', gap: '8px', letterSpacing: '0.5px' }}>
+                    {uptimeData && (
+                        <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="nav-uptime-badge" style={{ 
+                            marginLeft: isMobile ? '6px' : '12px', 
+                            fontSize: isMobile ? '0.7rem' : '0.85rem', 
+                            padding: isMobile ? '0.3rem 0.6rem' : '0.5rem 0.9rem', 
+                            display: 'inline-flex', 
+                            alignItems: 'center', 
+                            gap: isMobile ? '4px' : '8px', 
+                            letterSpacing: '0.5px',
+                            background: isMobile ? 'rgba(16, 185, 129, 0.15)' : '',
+                            border: isMobile ? '1px solid rgba(16, 185, 129, 0.3)' : '',
+                            borderRadius: isMobile ? '20px' : ''
+                        }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <span style={{ position: 'absolute', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(185, 28, 28, 0.4)', animation: 'sonar-ping 2s ease-out infinite' }} />
-                                    <span style={{ position: 'relative', width: '6px', height: '6px', borderRadius: '50%', background: '#b91c1c', boxShadow: '0 0 6px rgba(185, 28, 28, 0.6)' }} />
+                                <span style={{ position: 'relative', width: isMobile ? '6px' : '8px', height: isMobile ? '6px' : '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <span style={{ position: 'absolute', width: isMobile ? '6px' : '8px', height: isMobile ? '6px' : '8px', borderRadius: '50%', background: 'rgba(185, 28, 28, 0.4)', animation: 'sonar-ping 2s ease-out infinite' }} />
+                                    <span style={{ position: 'relative', width: isMobile ? '4px' : '6px', height: isMobile ? '4px' : '6px', borderRadius: '50%', background: '#b91c1c', boxShadow: '0 0 6px rgba(185, 28, 28, 0.6)' }} />
                                 </span>
-                                <svg width="28" height="12" viewBox="0 0 28 12" style={{ overflow: 'visible', marginLeft: '-2px' }}>
-                                    <path d="M0,6 L6,6 L8,2 L10,10 L12,4 L14,8 L16,6 L28,6" fill="none" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ strokeDasharray: '30', strokeDashoffset: '0', animation: 'ecg-draw 2s linear infinite' }} />
-                                </svg>
+                                {!isMobile && (
+                                    <svg width="28" height="12" viewBox="0 0 28 12" style={{ overflow: 'visible', marginLeft: '-2px' }}>
+                                        <path d="M0,6 L6,6 L8,2 L10,10 L12,4 L14,8 L16,6 L28,6" fill="none" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ strokeDasharray: '30', strokeDashoffset: '0', animation: 'ecg-draw 2s linear infinite' }} />
+                                    </svg>
+                                )}
                             </div>
-                            <span style={{ fontWeight: 700 }}>{uptimeData.status} | {uptimeData.uptime} Uptime | Latency {uptimeData.latency}</span>
+                            <span style={{ fontWeight: 700, color: isMobile ? '#10b981' : 'inherit' }}>
+                                {isMobile ? uptimeData.uptime : `${uptimeData.status} | ${uptimeData.uptime} Uptime | Latency ${uptimeData.latency}`}
+                            </span>
                         </a>
                     )}
                 </div>
