@@ -446,7 +446,7 @@ export default function Login() {
 
                     <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '2rem', alignItems: 'center' }}>
                         {/* v1.0 Diagram */}
-                        <div style={{ flex: 1, background: '#334155', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ flex: 1, background: '#334155', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', transition: 'transform 0.2s', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} onClick={() => openModal('/branding/architecture_animated.svg')} onMouseOver={e=>e.currentTarget.style.transform='scale(1.02)'} onMouseOut={e=>e.currentTarget.style.transform='scale(1)'}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                 <h3 style={{ fontWeight: 600, color: '#9ca3af' }}>v1.0 Basic RAG</h3>
                                 <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px', color: '#9ca3af' }}>Archived</span>
@@ -462,7 +462,7 @@ export default function Login() {
                         <FiArrowRight size={32} color="#fbbf24" style={{ transform: isMobile ? 'rotate(90deg)' : 'none', opacity: 0.5 }} />
 
                         {/* v2.0 Diagram */}
-                        <div style={{ flex: 1, background: 'rgba(251, 191, 36, 0.05)', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(251, 191, 36, 0.2)', boxShadow: '0 0 30px rgba(251,191,36,0.05)' }}>
+                        <div style={{ flex: 1, background: 'rgba(251, 191, 36, 0.05)', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(251, 191, 36, 0.2)', boxShadow: '0 0 30px rgba(251,191,36,0.05)', cursor: 'pointer', transition: 'transform 0.2s' }} onClick={() => openModal('/branding/architecture_animated_v2.svg')} onMouseOver={e=>e.currentTarget.style.transform='scale(1.02)'} onMouseOut={e=>e.currentTarget.style.transform='scale(1)'}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                 <h3 style={{ fontWeight: 600, color: '#fbbf24' }}>v2.0 Agentic RAG</h3>
                                 <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(251, 191, 36, 0.2)', borderRadius: '12px', color: '#fbbf24', fontWeight: 600 }}>Active</span>
