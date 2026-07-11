@@ -315,11 +315,11 @@ export default function Login() {
                 position: 'fixed', top: 0, width: '100%', zIndex: 50, padding: '1rem 2rem',
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center'
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <img src="/branding/logo.png" alt="Logo" style={{ height: '36px', borderRadius: '8px' }} />
-                    <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#fbbf24' }}>AI</span></span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '6px' : '12px' }}>
+                    <img src="/branding/logo.png" alt="Logo" style={{ height: isMobile ? '28px' : '36px', borderRadius: '8px' }} />
+                    <span style={{ fontWeight: 700, fontSize: isMobile ? '1rem' : '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#fbbf24' }}>AI</span></span>
 
-                                        {uptimeData && !isMobile && (
+                    {uptimeData && !isMobile && (
                         <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="nav-uptime-badge" style={{ marginLeft: '12px', fontSize: '0.85rem', padding: '0.5rem 0.9rem', display: 'inline-flex', alignItems: 'center', gap: '8px', letterSpacing: '0.5px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                 <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -343,8 +343,8 @@ export default function Login() {
                     </div>
                 )}
                 <div>
-                    <a href={getLoginUrl()} className="btn-primary" style={{ padding: '0.6rem 1.2rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>
-                        Login / Access
+                    <a href={getLoginUrl()} className="btn-primary" style={{ padding: isMobile ? '0.4rem 0.8rem' : '0.6rem 1.2rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: isMobile ? '0.85rem' : '0.9rem', whiteSpace: 'nowrap' }}>
+                        {isMobile ? 'Login' : 'Login / Access'}
                     </a>
                 </div>
             </nav>
