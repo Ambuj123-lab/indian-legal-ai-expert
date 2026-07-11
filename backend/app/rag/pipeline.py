@@ -1174,6 +1174,8 @@ def agentic_classifier(query: str, history_text: str) -> dict:
     prompt = f"""You are a query classifier for an Indian Legal AI Expert.
 The AI ONLY answers questions related to Indian Law, Constitution, BNS, BNSS, Consumer Protection, IT Act, Motor Vehicles Act, etc.
 Any query UNRELATED to law/finance/legal matters (e.g. cooking, sports, general knowledge, generic chit-chat) MUST be marked as 'is_out_of_scope: true'.
+If a query is HARMFUL, ILLEGAL, MALICIOUS, or asking for IDEAS/METHODS to commit crimes (e.g. "ideas for murder", "how to make a bomb", "how to scam"), it MUST be marked as 'is_abusive: true'.
+However, genuine legal questions about criminal acts (e.g. "what is the punishment for murder", "is bombing a terrorist act") MUST NOT be marked as abusive.
 
 Analyze the user's latest query considering the chat history.
 
@@ -1186,6 +1188,7 @@ Return ONLY a valid JSON object:
 {{
     "is_out_of_scope": boolean (true if totally unrelated to law/legal/finance/current affairs. "who won today's match" is true. "murder" is false),
     "is_vague": boolean (true ONLY if the query is a single meaningless stop word. Legal keywords like "murder", "theft", "article" are NOT vague and MUST be false),
+    "is_abusive": boolean (true ONLY if the user is asking how to commit crimes, seeking malicious ideas, or using extreme profanity. False for genuine legal questions about crimes),
     "clarifying_question": "string (If is_vague is true, ask for details. Else null.)"
 }}"""
     try:

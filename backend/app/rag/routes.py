@@ -242,6 +242,14 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
             
         if classification.get("is_out_of_scope", False):
             is_oos = True
+            
+        if classification.get("is_abusive", False):
+            async def abort_stream_intent():
+                yield f"data: {json.dumps({'token': 'I am a Legal AI Assistant. I cannot help with generating ideas for illegal acts or answering malicious queries.'})}\n\n"
+                yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': 0})}\n\n"
+            save_message(user_email, "user", question)
+            save_message(user_email, "assistant", "I am a Legal AI Assistant. I cannot help with generating ideas for illegal acts or answering malicious queries.")
+            return StreamingResponse(abort_stream_intent(), media_type="text/event-stream")
 
     # 5. PII mask
     safe_query, pii_found, pii_entities = mask_pii(question)
