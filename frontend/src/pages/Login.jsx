@@ -397,13 +397,29 @@ export default function Login() {
                     
                     {/* Trust Bar */}
                     <div style={{ 
-                        display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: isMobile ? '1rem' : '2rem', 
-                        color: '#9ca3af', fontSize: '0.85rem', fontWeight: 500, margin: '3rem auto',
-                        padding: '1.2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)',
-                        maxWidth: '900px'
+                        display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', 
+                        margin: '3rem auto', maxWidth: '900px'
                     }}>
                         {['Hybrid Retrieval', 'Agentic Routing', 'Live Web Fallback', 'Microsoft Presidio', 'Google OAuth', 'Enterprise Logging'].map((feature, i) => (
-                            <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <span key={i} style={{ 
+                                display: 'flex', alignItems: 'center', gap: '8px',
+                                color: '#9ca3af', fontSize: '0.85rem', fontWeight: 500,
+                                padding: '0.6rem 1.2rem', background: 'rgba(255,255,255,0.02)', 
+                                borderRadius: '30px', border: '1px solid rgba(255,255,255,0.05)',
+                                transition: 'all 0.3s ease', cursor: 'default'
+                            }}
+                            onMouseOver={(e) => {
+                                e.currentTarget.style.borderColor = 'rgba(251, 191, 36, 0.4)';
+                                e.currentTarget.style.background = 'rgba(251, 191, 36, 0.05)';
+                                e.currentTarget.style.color = '#fff';
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                            }}
+                            onMouseOut={(e) => {
+                                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
+                                e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
+                                e.currentTarget.style.color = '#9ca3af';
+                                e.currentTarget.style.transform = 'none';
+                            }}>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 {feature}
                             </span>
@@ -411,7 +427,17 @@ export default function Login() {
                     </div>
 
                     {/* Responsive Disclaimer */}
-                    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '1rem', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.1)', borderRadius: '12px' }}>
+                    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '1rem', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.1)', borderRadius: '12px', transition: 'all 0.3s ease' }}
+                         onMouseOver={(e) => {
+                             e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                             e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                             e.currentTarget.style.boxShadow = '0 0 20px rgba(239, 68, 68, 0.15)';
+                         }}
+                         onMouseOut={(e) => {
+                             e.currentTarget.style.background = 'rgba(239, 68, 68, 0.05)';
+                             e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.1)';
+                             e.currentTarget.style.boxShadow = 'none';
+                         }}>
                         <p style={{ fontSize: '0.8rem', color: '#9ca3af', lineHeight: 1.5, textAlign: 'center', margin: 0 }}>
                             <strong style={{ color: '#ef4444' }}>*Disclaimer:</strong> Educational use only. Not a substitute for professional legal advice. Always consult a qualified legal practitioner.
                         </p>
