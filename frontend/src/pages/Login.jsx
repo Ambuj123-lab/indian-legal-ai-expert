@@ -671,20 +671,22 @@ export default function Login() {
                                             <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
                                             
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                                <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Email Address</label>
+                                                <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Full Name</label>
+                                                <input type="text" name="name" placeholder="John Doe" required style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'} />
+                                            </div>
+
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                                <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Email Address (So we can reply to you)</label>
                                                 <input type="email" name="email" placeholder="you@company.com" required style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'} />
                                             </div>
                                             
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                                 <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Message</label>
-                                                <textarea name="message" placeholder="How can we help you?" required rows="5" style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', resize: 'vertical', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'}></textarea>
+                                                <textarea name="message" placeholder="Please describe how we can assist you..." required rows="5" style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', resize: 'vertical', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'}></textarea>
                                             </div>
                                             
                                             <button type="submit" style={{ padding: '1rem', marginTop: '1rem', borderRadius: '8px', background: '#d4af37', color: '#0b1120', fontWeight: 700, fontSize: '1rem', border: 'none', cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }} onMouseOver={e=>{e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow='0 4px 12px rgba(212,175,55,0.3)'}} onMouseOut={e=>{e.target.style.transform='none'; e.target.style.boxShadow='none'}}>Send Message</button>
                                         </form>
-                                    </div>
-                                    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                                        <p style={{ color: '#6b7280', fontSize: '0.85rem' }}>Or email us directly at <a href="mailto:ambujonly761@gmail.com" style={{ color: '#d4af37', textDecoration: 'none' }}>ambujonly761@gmail.com</a></p>
                                     </div>
                                 </div>
                             )}
