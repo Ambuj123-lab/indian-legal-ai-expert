@@ -6,21 +6,21 @@
 
 /* === CSS Variables === */
 :root {
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
-  --bg-tertiary: #141414;
-  --bg-card: #111111;
+  --bg-primary: #030712;
+  --bg-secondary: #0f172a;
+  --bg-tertiary: #1e293b;
+  --bg-card: #0f172a;
   --bg-glass: rgba(255, 255, 255, 0.05);
 
   --text-primary: #ededed;
   --text-secondary: #a1a1aa;
   --text-muted: #6b6b6b;
 
-  --accent-primary: #10b981;
-  --accent-secondary: #34d399;
-  --accent-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --accent-primary: #fbbf24;
+  --accent-secondary: #fcd34d;
+  --accent-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
 
-  --green: #10b981;
+  --green: #fbbf24;
   --yellow: #f59e0b;
   --red: #ef4444;
   --blue: #065f46; /* Deep Teal/Emerald for internal blue/indigo mapping */
@@ -412,7 +412,7 @@ body {
 .pulse-dot {
   width: 8px;
   height: 8px;
-  background-color: #10b981;
+  background-color: #fbbf24;
   border-radius: 50%;
   display: inline-block;
   box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
@@ -422,7 +422,7 @@ body {
 .status-text {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #10b981;
+  color: #fbbf24;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -457,7 +457,7 @@ body {
   height: 36px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid #10b981; /* Highlight current active user */
+  border: 1px solid #fbbf24; /* Highlight current active user */
   background: #111;
   display: flex;
   align-items: center;
@@ -697,7 +697,7 @@ body {
 .markdown-body h2 {
   font-size: 1.12rem;
   font-weight: 600;
-  color: #10b981; /* Emerald */
+  color: #fbbf24; /* Emerald */
   margin: 1rem 0 0.5rem 0;
 }
 
@@ -734,12 +734,12 @@ body {
 }
 
 .markdown-body strong {
-  color: #34d399; /* Mint / Light Emerald Accent */
+  color: #fcd34d; /* Mint / Light Emerald Accent */
   font-weight: 700;
 }
 
 .article-ref {
-  color: #34d399; /* Emerald Article numbers */
+  color: #fcd34d; /* Emerald Article numbers */
   font-weight: 600;
 }
 
@@ -749,15 +749,15 @@ body {
 }
 
 .markdown-body a {
-  color: #10b981;
+  color: #fbbf24;
   text-decoration: none;
   border-bottom: 1px dotted rgba(16, 185, 129, 0.4);
   transition: var(--transition);
 }
 
 .markdown-body a:hover {
-  color: #34d399;
-  border-bottom-color: #34d399;
+  color: #fcd34d;
+  border-bottom-color: #fcd34d;
 }
 
 .markdown-body hr {
@@ -819,7 +819,7 @@ body {
 .markdown-body th {
   background: #0a0a0a;
   font-weight: 600;
-  color: #10b981;
+  color: #fbbf24;
   text-transform: uppercase;
   font-size: 0.78rem;
   letter-spacing: 0.5px;
@@ -896,7 +896,7 @@ body {
 }
 
 .active-up {
-  color: #10b981 !important;
+  color: #fbbf24 !important;
   background: rgba(16, 185, 129, 0.1) !important;
   border-color: rgba(16, 185, 129, 0.2) !important;
 }
@@ -908,7 +908,7 @@ body {
 }
 
 .copy-btn:hover {
-  color: #10b981 !important;
+  color: #fbbf24 !important;
 }
 
 .confidence-badge {
@@ -1052,7 +1052,7 @@ body {
 .source-file {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #10b981; /* Explicit Enterprise Emerald */
+  color: #fbbf24; /* Explicit Enterprise Emerald */
 }
 
 .source-page {
