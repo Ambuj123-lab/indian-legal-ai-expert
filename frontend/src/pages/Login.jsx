@@ -44,9 +44,13 @@ const features = [
 export default function Login() {
     const [scrolled, setScrolled] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
+    const [showScrollTop, setShowScrollTop] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 50);
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+            setShowScrollTop(window.scrollY > 300);
+        };
         const handleResize = () => setWidth(window.innerWidth);
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
@@ -55,6 +59,10 @@ export default function Login() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     const isMobile = width <= 768;
 
@@ -396,6 +404,26 @@ export default function Login() {
                     </div>
                 </div>
             </footer>
-</div>
+
+            {showScrollTop && (
+                <button 
+                    onClick={scrollToTop} 
+                    style={{ 
+                        position: 'fixed', bottom: '2rem', right: '2rem', 
+                        background: '#10b981', color: '#fff', 
+                        width: '45px', height: '45px', 
+                        borderRadius: '50%', border: 'none', 
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                        cursor: 'pointer', zIndex: 1000, 
+                        boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)',
+                        transition: 'all 0.3s ease'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                >
+                    <FiArrowUp size={24} />
+                </button>
+            )}
+        </div>
     );
 }
