@@ -279,14 +279,22 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
     context = "\n\n---\n\n".join([r["parent_text"] for r in results]) if results else ""
 
     # 8. Low confidence or OOS fallback -> triggers HITL Web Search
-    if ((confidence < 15 and confidence > 0) or is_oos) and not is_web_search_active:
+    if (confidence < 45 or is_oos) and not is_web_search_active:
         async def fallback_stream():
-            msg = "I couldn't find specific legal sections for this in my verified database.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
+            if is_oos:
+                msg = "This query appears to be outside my core legal expertise.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
+            else:
+                msg = "I couldn't find a highly confident match (Confidence < 45%) in my verified legal database for this specific query.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
+                
             yield f"data: {json.dumps({'token': msg})}\n\n"
             yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': round(confidence, 1)})}\n\n"
             
         save_message(user_email, "user", safe_query, pii_masked=pii_found, pii_entities=pii_entities)
-        save_message(user_email, "assistant", "I couldn't find specific legal sections for this in my verified database.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)", [])
+        
+        log_msg = "This query appears to be outside my core legal expertise." if is_oos else "I couldn't find a highly confident match (Confidence < 45%) in my verified legal database for this specific query."
+        log_msg += "\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
+        
+        save_message(user_email, "assistant", log_msg, [])
         return StreamingResponse(fallback_stream(), media_type="text/event-stream")
 
     # Stream LLM response
