@@ -240,8 +240,16 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
             save_message(user_email, "assistant", vague_msg)
             return StreamingResponse(vague_stream(), media_type="text/event-stream")
             
-        if classification.get("is_out_of_scope", False):
+        if classification.get("is_out_of_scope", False) or classification.get("is_time_sensitive", False):
             is_oos = True
+            
+        if classification.get("is_prompt_injection", False):
+            async def abort_stream_injection():
+                yield f"data: {json.dumps({'token': 'I am a highly secure Indian Legal AI. I cannot comply with requests that attempt to override my core instructions, bypass constraints, or reveal system prompts.'})}\n\n"
+                yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': 0})}\n\n"
+            save_message(user_email, "user", question)
+            save_message(user_email, "assistant", "Blocked due to prompt injection attempt.")
+            return StreamingResponse(abort_stream_injection(), media_type="text/event-stream")
             
         if classification.get("is_abusive", False):
             async def abort_stream_intent():
