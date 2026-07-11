@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaReact, FaPython, FaDatabase, FaShieldAlt, FaSearch, FaBrain, FaGavel, FaCogs } from 'react-icons/fa';
-import { FaLinkedin, FaXTwitter, FaYoutube, FaGithub } from 'react-icons/fa6';
+import { FaLinkedin, FaXTwitter, FaMedium, FaGithub } from 'react-icons/fa6';
 import { SiFastapi, SiMongodb, SiSupabase, SiVite } from 'react-icons/si';
 import { FiActivity, FiCpu, FiArrowRight } from 'react-icons/fi';
 import { getLoginUrl } from '../api';
@@ -352,6 +352,7 @@ export default function Login() {
                                 <a href="https://www.linkedin.com/in/ambuj-tripathi-042b4a118/" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaLinkedin size={22} /></a>
                                 <a href="https://x.com/Ambuj_KTripathi" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaXTwitter size={22} /></a>
                                 <a href="https://github.com/Ambuj123-lab" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaGithub size={22} /></a>
+                                <a href="https://medium.com/@ambuj_tripathi" target="_blank" rel="noreferrer" style={{ color: '#a1a1aa', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}><FaMedium size={22} /></a>
                             </div>
                         </div>
                     </div>
