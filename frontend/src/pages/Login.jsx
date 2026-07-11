@@ -67,7 +67,7 @@ export default function Login() {
                 const res = await fetch('https://api.uptimerobot.com/v2/getMonitors', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'api_key=ur123456-abcdefghijklmnopqrstuvwxyz123&format=json&response_times=1'
+                    body: 'api_key=ur3293690-5a09e92504e29189fadf3be2&format=json&response_times=1'
                 });
                 const data = await res.json();
                 if (data && data.stat === "ok" && data.monitors && data.monitors.length > 0) {
@@ -560,7 +560,7 @@ export default function Login() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '1rem', fontSize: '0.8rem', color: '#6b7280' }}>
                                 <span style={{ color: '#a1a1aa' }}>Version: <span style={{ color: '#fff' }}>v2.0</span></span>
                                 <span style={{ color: '#a1a1aa' }}>Deployment: <span style={{ color: '#fff' }}>Vercel / Render</span></span>
-                                <span style={{ color: '#a1a1aa' }}>API Uptime: <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" style={{ color: '#fbbf24', textDecoration: 'none' }} onMouseOver={e=>e.target.style.textDecoration='underline'} onMouseOut={e=>e.target.style.textDecoration='none'}>99.9%</a></span>
+                                <span style={{ color: '#a1a1aa' }}>API Uptime: <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" style={{ color: '#fbbf24', textDecoration: 'none' }} onMouseOver={e=>e.target.style.textDecoration='underline'} onMouseOut={e=>e.target.style.textDecoration='none'}>{uptimeData.uptime || '99.9%'}</a></span>
                                 <span style={{ color: '#a1a1aa' }}>Last Updated: <span style={{ color: '#fff' }}>July 2026</span></span>
                             </div>
                             <p style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>&copy; {new Date().getFullYear()} Ambuj Kumar Tripathi.</p>
@@ -769,7 +769,7 @@ export default function Login() {
                                     
                                     <div style={{ background: 'rgba(255,255,255,0.02)', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
                                         <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+                                            <input type="hidden" name="access_key" value="3917a39f-bf82-4aba-a8bc-5211595f1159" />
                                             
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                                 <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Full Name</label>
