@@ -346,7 +346,7 @@ export default function Login() {
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '800px', margin: '0 auto' }}>
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(251, 191, 36, 0.1)', border: '1px solid rgba(251, 191, 36, 0.2)', borderRadius: '20px', fontSize: '0.8rem', color: '#fbbf24', marginBottom: '2rem', fontWeight: 600 }}>
                         <span style={{ width: '8px', height: '8px', background: '#fbbf24', borderRadius: '50%', boxShadow: '0 0 10px #fbbf24' }}></span>
-                        Agentic RAG v2.0 Live
+                        ? Agentic RAG v2.0
                     </div>
                     
                     <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '1.5rem', letterSpacing: '-1px' }}>
@@ -355,7 +355,7 @@ export default function Login() {
                     </h1>
                     
                     <p style={{ fontSize: isMobile ? '1rem' : '1.1rem', color: '#9ca3af', lineHeight: 1.6, marginBottom: '2.5rem', maxWidth: '650px', margin: '0 auto 2.5rem auto' }}>
-                        Our AI combines verified legal knowledge, hybrid retrieval, privacy protection and live web intelligence to deliver grounded answers.
+                        IndianLegalAI combines verified legal knowledge, hybrid retrieval, privacy protection, and live web intelligence to deliver grounded, citation-aware responses.
                     </p>
                     
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -388,12 +388,12 @@ export default function Login() {
                             Sign in with Google
                         </a>
                         <a href="#features" className="btn-secondary" style={{ padding: '0.75rem 1.8rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '0.95rem' }}>
-                            Explore Features
+                            Explore Features &rarr;
                         </a>
                     </div>
                     
                     <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '1.5rem', fontStyle: 'italic' }}>
-                        *Disclaimer: This is an AI-powered assistant for educational purposes. It does not provide certified legal advice. Always consult a qualified legal professional.
+                        *Disclaimer: Educational use only. <br/> Not a substitute for professional legal advice. <br/> Always consult a qualified legal practitioner.
                     </p>
                 </div>
             </section>
