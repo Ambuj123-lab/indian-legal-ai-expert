@@ -74,7 +74,7 @@ body {
 
 /* === Scrollbar === */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -82,7 +82,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 3px;
 }
 
@@ -778,7 +778,7 @@ body {
 }
 
 .markdown-body code {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.3);
   color: #ececec;
   padding: 0.15rem 0.45rem;
   border-radius: 4px;
@@ -2577,7 +2577,7 @@ body {
   to { opacity: 1; }
 }
 .action-btn {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
     padding: 6px 12px;

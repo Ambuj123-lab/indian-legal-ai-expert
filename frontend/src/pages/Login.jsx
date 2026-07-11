@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaReact, FaPython, FaDatabase, FaShieldAlt, FaSearch, FaBrain, FaGavel, FaCogs } from 'react-icons/fa';
 import { FaLinkedin, FaXTwitter, FaMedium, FaGithub } from 'react-icons/fa6';
 import { SiFastapi, SiMongodb, SiSupabase, SiVite } from 'react-icons/si';
-import { FiActivity, FiCpu, FiArrowRight } from 'react-icons/fi';
+import { FiActivity, FiCpu, FiArrowRight, FiArrowUp } from 'react-icons/fi';
 import { getLoginUrl } from '../api';
 
 const techStack = [
