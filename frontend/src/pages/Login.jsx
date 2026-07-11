@@ -216,7 +216,7 @@ export default function Login() {
                     </h1>
                     
                     <p style={{ fontSize: isMobile ? '1rem' : '1.2rem', color: '#9ca3af', lineHeight: 1.6, marginBottom: '2.5rem', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
-                        A production-grade AI pipeline combining Hybrid Vector Search, Microsoft Presidio PII Masking, and Human-in-the-Loop Web Search.
+                        A production-grade AI pipeline combining Hybrid Vector Search, Microsoft Presidio PII Masking, and a Human-in-the-Loop Web Search API (Tavily).
                     </p>
                     
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
