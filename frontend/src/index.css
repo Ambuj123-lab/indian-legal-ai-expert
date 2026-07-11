@@ -2576,3 +2576,36 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+.action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-right: 8px;
+    margin-top: 8px;
+    transition: all 0.2s;
+    display: inline-block;
+}
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+.action-btn.action-yes {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
+}
+.action-btn.action-yes:hover {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: rgba(74, 222, 128, 0.5);
+}
+.action-btn.action-no {
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.3);
+}
+.action-btn.action-no:hover {
+    background: rgba(248, 113, 113, 0.1);
+    border-color: rgba(248, 113, 113, 0.5);
+}

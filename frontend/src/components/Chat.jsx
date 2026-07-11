@@ -43,9 +43,9 @@ export default function Chat({ sidebarOpen, setSidebarOpen, isMobile }) {
         } catch { }
     }
 
-    async function handleSend(e) {
-        e?.preventDefault();
-        const question = input.trim();
+    async function handleSend(e, customText = null) {
+        if (e) e.preventDefault();
+        const question = customText || input.trim();
         if (!question || isStreaming) return;
 
         const userMsg = { id: Date.now(), role: 'user', content: question, timestamp: new Date().toISOString() };
@@ -237,7 +237,25 @@ export default function Chat({ sidebarOpen, setSidebarOpen, isMobile }) {
                             {msg.role === 'assistant' ? (
                                 <>
                                     <div className="message-content markdown-body">
-                                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                        <ReactMarkdown 
+                                            remarkPlugins={[remarkGfm]}
+                                            components={{
+                                                a: ({node, ...props}) => {
+                                                    if (props.href && props.href.startsWith('#action:')) {
+                                                        const action = props.href.split(':')[1]; // e.g. "yes" or "no"
+                                                        return (
+                                                            <button 
+                                                                className={`action-btn action-${action}`}
+                                                                onClick={(e) => handleSend(null, action.toUpperCase())}
+                                                            >
+                                                                {props.children}
+                                                            </button>
+                                                        );
+                                                    }
+                                                    return <a {...props} target="_blank" rel="noopener noreferrer" />;
+                                                }
+                                            }}
+                                        >
                                             {msg.content || (msg.streaming ? '' : 'No response')}
                                         </ReactMarkdown>
                                         {msg.streaming && <span className="typing-cursor">▊</span>}
