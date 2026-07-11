@@ -44,6 +44,7 @@ const features = [
 export default function Login() {
     const [scrolled, setScrolled] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
+    const [legalModal, setLegalModal] = useState(null);
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [uptimeData, setUptimeData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -491,28 +492,120 @@ export default function Login() {
                             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Compliance Teams</a>
                             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Law Students</a>
                             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Enterprise Search</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Corporate Legal Teams</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Government Research</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Legal Education</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Document Intelligence</a>
                         </div>
 
                         {/* Column 3 */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Resources</h4>
                             <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Creator Portfolio</a>
-                            <a href="https://github.com/Ambuj123-lab" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>GitHub Labs</a>
-                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>System Documentation</a>
-                            <a href="https://huggingface.co/HuggingModels/Ambuj-Tripathi-Indian-Legal-Llama-GGUF" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Hugging Face Model</a>
+                            <a href="https://github.com/Ambuj123-lab" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>GitHub</a>
+                            <a href="https://ambuj-rag-docs.netlify.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Documentation</a>
+                            <a href="#architecture" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Architecture</a>
+                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>API Reference</a>
+                            <a href="https://huggingface.co/invincibleambuj" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Hugging Face Models</a>
                         </div>
 
                         {/* Column 4 */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Legal</h4>
-                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Constitution Reference</a>
-                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Privacy choices</a>
-                            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Terms of service</a>
+                            <a href="#legal" onClick={(e) => { e.preventDefault(); setLegalModal('PRIVACY'); }} style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Privacy Policy</a>
+                            <a href="#legal" onClick={(e) => { e.preventDefault(); setLegalModal('TOS'); }} style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Terms of Service</a>
+                            <a href="#legal" onClick={(e) => { e.preventDefault(); setLegalModal('DISCLAIMER'); }} style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Disclaimer</a>
+                            <a href="#legal" onClick={(e) => { e.preventDefault(); setLegalModal('AIPOLICY'); }} style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>AI Usage Policy</a>
                         </div>
                     </div>
                 </div>
             </footer>
 
+
+
+            {/* Legal Modals */}
+            {legalModal && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backdropFilter: 'blur(5px)' }}>
+                    <div style={{ background: '#0a0f1c', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '2.5rem', width: '100%', maxWidth: '700px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', color: '#e5e7eb', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+                        
+                        <button onClick={() => setLegalModal(null)} style={{ position: 'absolute', top: '1.2rem', right: '1.5rem', background: 'transparent', border: 'none', color: '#9ca3af', fontSize: '1.8rem', cursor: 'pointer', transition: 'color 0.2s' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>&times;</button>
+                        
+                        {legalModal === 'TOS' && (
+                            <div>
+                                <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff', marginBottom: '1rem', letterSpacing: '-0.5px' }}>IndianLegalAI Terms of Service</h2>
+                                <p style={{ color: '#9ca3af', fontSize: '0.9rem', marginBottom: '2rem' }}>Last Updated: July 2026</p>
+                                <ol style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', paddingLeft: '1.2rem', lineHeight: 1.6 }}>
+                                    <li>This platform is provided for educational and research purposes.</li>
+                                    <li>Responses generated by AI should not be considered legal advice.</li>
+                                    <li>Users remain responsible for verifying all legal information.</li>
+                                    <li>The platform may retrieve publicly available legal information through external search providers.</li>
+                                    <li>Misuse, automated abuse, or attempts to compromise the system are prohibited.</li>
+                                    <li>We reserve the right to suspend access for abusive behavior.</li>
+                                    <li>By using this service you agree to these terms.</li>
+                                </ol>
+                            </div>
+                        )}
+                        
+                        {legalModal === 'PRIVACY' && (
+                            <div>
+                                <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', letterSpacing: '-0.5px' }}>Privacy Policy</h2>
+                                <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', paddingLeft: '1.2rem', lineHeight: 1.6, listStyleType: 'disc' }}>
+                                    <li>We do not sell personal data.</li>
+                                    <li>Google OAuth is used only for authentication.</li>
+                                    <li>Conversation history may be temporarily stored to improve user experience as per the GDPR compliance Time To Leave (TTL).</li>
+                                    <li>Sensitive information is masked using Microsoft Presidio whenever applicable.</li>
+                                    <li>Users may request deletion of stored conversations.</li>
+                                </ul>
+                            </div>
+                        )}
+                        
+                        {legalModal === 'DISCLAIMER' && (
+                            <div>
+                                <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#ef4444', marginBottom: '2rem', letterSpacing: '-0.5px' }}>Disclaimer</h2>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', lineHeight: 1.6, background: 'rgba(239, 68, 68, 0.05)', padding: '2rem', borderRadius: '12px', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                                    <p style={{ color: '#fca5a5', fontSize: '1.1rem' }}><strong>IndianLegalAI does not replace a qualified advocate.</strong></p>
+                                    <p>Responses are generated using AI and may contain inaccuracies.</p>
+                                    <p>Always verify information with official legal sources.</p>
+                                    <p>For legal representation consult a licensed legal professional.</p>
+                                    <p style={{ marginTop: '0.5rem', color: '#9ca3af', fontStyle: 'italic', fontSize: '0.9rem' }}>This system is built as part of learning and development under a safe harbor structure.</p>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {legalModal === 'AIPOLICY' && (
+                            <div>
+                                <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff', marginBottom: '2.5rem', letterSpacing: '-0.5px' }}>AI Usage Policy</h2>
+                                
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+                                    <div>
+                                        <h3 style={{ color: '#10b981', fontWeight: 600, marginBottom: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px #10b981' }}></span> Allowed
+                                        </h3>
+                                        <ul style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingLeft: '1.5rem', color: '#d1d5db', listStyleType: 'circle', lineHeight: 1.5 }}>
+                                            <li>Legal Research</li>
+                                            <li>Educational Use</li>
+                                            <li>Act Reference</li>
+                                            <li>Case Understanding</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div>
+                                        <h3 style={{ color: '#ef4444', fontWeight: 600, marginBottom: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444', boxShadow: '0 0 10px #ef4444' }}></span> Not Allowed
+                                        </h3>
+                                        <ul style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', paddingLeft: '1.5rem', color: '#d1d5db', listStyleType: 'circle', lineHeight: 1.5 }}>
+                                            <li>Generating fraudulent documents</li>
+                                            <li>Impersonation</li>
+                                            <li>Illegal advice</li>
+                                            <li>Malicious activity</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
 
             {/* Image Viewer Modal */}
             {isModalOpen && (
