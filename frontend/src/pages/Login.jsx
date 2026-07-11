@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { FaReact, FaPython, FaDatabase, FaShieldAlt } from 'react-icons/fa';
+import { FaReact, FaPython, FaDatabase, FaShieldAlt, FaSearch, FaBrain, FaGavel, FaGithub } from 'react-icons/fa';
 import { SiFastapi, SiMongodb, SiSupabase, SiVite } from 'react-icons/si';
-import { FiActivity, FiCpu } from 'react-icons/fi';
+import { FiActivity, FiCpu, FiArrowRight } from 'react-icons/fi';
 import { getLoginUrl } from '../api';
 
 const techStack = [
@@ -17,288 +17,191 @@ const techStack = [
     { icon: <FiActivity />, name: "Langfuse", color: "#F59E0B" },
 ];
 
+const features = [
+    {
+        title: "Agentic Classifier",
+        icon: <FaBrain size={24} color="#10B981" />,
+        desc: "Intelligently classifies queries into strict legal intents, vague questions, or out-of-scope banter before triggering retrieval."
+    },
+    {
+        title: "Autonomous Web Search",
+        icon: <FaSearch size={24} color="#3B82F6" />,
+        desc: "Fallback Human-in-the-Loop (HITL) system connects to Tavily Search API for real-time web facts when local DB lacks confidence."
+    },
+    {
+        title: "Constitutional Guardrails",
+        icon: <FaGavel size={24} color="#F59E0B" />,
+        desc: "Strict adherence to 6 core Indian Acts. Graceful degradation for unrelated queries ensures professional legal boundaries."
+    },
+    {
+        title: "PII Masking & Privacy",
+        icon: <FaShieldAlt size={24} color="#EF4444" />,
+        desc: "Enterprise-grade data protection using Microsoft Presidio to detect and redact Personally Identifiable Information instantly."
+    }
+];
+
 export default function Login() {
+    const [scrolled, setScrolled] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
 
     useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 50);
         const handleResize = () => setWidth(window.innerWidth);
+        window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     const isMobile = width <= 768;
-    const isSmallMobile = width <= 480;
 
     return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            height: '100vh',
-            overflowY: isMobile ? 'auto' : 'hidden',
-            overflowX: 'hidden',
-            background: '#000000'
-        }}>
+        <div className="landing-page" style={{ background: '#030712', color: '#f9fafb', minHeight: '100vh', overflowX: 'hidden', fontFamily: '"Inter", sans-serif' }}>
             <style>{`
-                @keyframes red-heartbeat-glow {
-                    0%   { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
-                    30%  { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
-                    40%  { box-shadow: 0 0 25px rgba(185, 28, 28, 0.8), inset 0 0 8px rgba(153, 27, 27, 0.4); border-color: rgba(185, 28, 28, 0.9); }
-                    45%  { box-shadow: 0 0 8px rgba(185, 28, 28, 0.3); border-color: rgba(185, 28, 28, 0.4); }
-                    55%  { box-shadow: 0 0 40px rgba(153, 27, 27, 1), inset 0 0 15px rgba(153, 27, 27, 0.8); border-color: #dc2626; }
-                    70%  { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
-                    100% { box-shadow: 0 0 0px rgba(185, 28, 28, 0); border-color: rgba(255, 255, 255, 0.1); }
+                html { scroll-behavior: smooth; }
+                .landing-page * { box-sizing: border-box; }
+                .glass-nav {
+                    backdrop-filter: blur(12px);
+                    background: rgba(3, 7, 18, 0.7);
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
                 }
-                .status-badge {
-                    display: inline-flex; align-items: center; gap: 6px;
-                    padding: 4px 12px;
-                    background: #000000;
-                    animation: red-heartbeat-glow 4s ease-in-out infinite;
+                .btn-primary {
+                    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                    color: white;
+                    transition: all 0.3s ease;
+                }
+                .btn-primary:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+                }
+                .btn-secondary {
+                    background: rgba(255, 255, 255, 0.05);
                     border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 6px; text-decoration: none; color: #ffffff;
-                    font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
-                    cursor: pointer; white-space: nowrap;
-                    transition: border-color 0.3s;
+                    color: white;
+                    transition: all 0.3s ease;
+                }
+                .btn-secondary:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    border-color: rgba(255, 255, 255, 0.2);
+                }
+                .feature-card {
+                    background: rgba(17, 24, 39, 0.5);
+                    border: 1px solid rgba(255, 255, 255, 0.05);
+                    border-radius: 16px;
+                    transition: all 0.3s ease;
+                    position: relative;
+                    overflow: hidden;
+                }
+                .feature-card::before {
+                    content: '';
+                    position: absolute;
+                    top: 0; left: 0; right: 0; height: 2px;
+                    background: linear-gradient(90deg, transparent, #10b981, transparent);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+                .feature-card:hover {
+                    transform: translateY(-5px);
+                    border-color: rgba(16, 185, 129, 0.3);
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                }
+                .feature-card:hover::before { opacity: 1; }
+                .gradient-text {
+                    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                .hero-glow {
+                    position: absolute;
+                    width: 600px;
+                    height: 600px;
+                    background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, rgba(3,7,18,0) 70%);
+                    top: -200px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 0;
+                    pointer-events: none;
+                }
+                @keyframes float {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-10px); }
+                }
+                .arch-diagram {
+                    transition: transform 0.5s ease;
+                }
+                .arch-diagram:hover {
+                    transform: scale(1.02);
                 }
             `}</style>
-            {/* ============ TOP AREA: LEFT + RIGHT ============ */}
-            <div style={{
-                display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row',
-                flex: 1,
-                overflow: isMobile ? 'visible' : 'hidden',
-                minHeight: isMobile ? 'auto' : 0
+
+            {/* Navbar */}
+            <nav className={`glass-nav ${scrolled ? 'scrolled' : ''}`} style={{
+                position: 'fixed', top: 0, width: '100%', zIndex: 50, padding: '1rem 2rem',
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center'
             }}>
-                {/* ============ LEFT SIDE ============ */}
-                <div style={{
-                    width: isMobile ? '100%' : '420px',
-                    minWidth: isMobile ? 'auto' : '420px',
-                    background: '#0a0a0a',
-                    borderRight: isMobile ? 'none' : '1px solid rgba(255,255,255,0.06)',
-                    borderBottom: isMobile ? '1px solid rgba(255,255,255,0.06)' : 'none',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    padding: isSmallMobile ? '1.5rem' : isMobile ? '2rem' : '2.5rem',
-                    position: 'relative',
-                    zIndex: 2,
-                    overflowY: 'auto'
-                }}>
-                    {/* Logo & Status Badge */}
-                    <div style={{ marginBottom: isMobile ? '1rem' : '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                            <img
-                                src="/branding/logo.png"
-                                alt="Logo"
-                                style={{
-                                    width: isSmallMobile ? '44px' : '60px',
-                                    height: isSmallMobile ? '44px' : '60px',
-                                    objectFit: 'contain',
-                                    borderRadius: '8px'
-                                }}
-                                onError={(e) => { e.target.style.display = 'none' }}
-                            />
-                        </div>
-                        <a href="https://stats.uptimerobot.com/4tYmSQnuBE" target="_blank" rel="noreferrer" className="status-badge">
-                            <span style={{ position: 'relative', width: '8px', height: '8px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <span style={{ position: 'absolute', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(185, 28, 28, 0.4)', animation: 'sonar-ping 2s ease-out infinite' }} />
-                                <span style={{ position: 'relative', width: '6px', height: '6px', borderRadius: '50%', background: '#b91c1c', boxShadow: '0 0 6px rgba(185, 28, 28, 0.6)' }} />
-                            </span>
-                            <svg width="28" height="12" viewBox="0 0 28 12" style={{ overflow: 'visible', marginLeft: '-2px' }}>
-                                <path d="M0,6 L6,6 L8,2 L10,10 L12,4 L14,8 L16,6 L28,6" fill="none" stroke="#dc2626" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ strokeDasharray: '30', strokeDashoffset: '0', animation: 'ecg-draw 2s linear infinite' }} />
-                            </svg>
-                            System Status
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <img src="/branding/logo.png" alt="Logo" style={{ height: '36px', borderRadius: '8px' }} />
+                    <span style={{ fontWeight: 700, fontSize: '1.2rem', letterSpacing: '-0.5px' }}>IndianLegal<span style={{ color: '#10b981' }}>AI</span></span>
+                </div>
+                {!isMobile && (
+                    <div style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem', color: '#9ca3af', fontWeight: 500 }}>
+                        <a href="#features" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Features</a>
+                        <a href="#architecture" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Architecture</a>
+                        <a href="#about" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#9ca3af'}>About</a>
+                    </div>
+                )}
+                <div>
+                    <a href={getLoginUrl()} className="btn-primary" style={{ padding: '0.6rem 1.2rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>
+                        Login / Access
+                    </a>
+                </div>
+            </nav>
+
+            {/* Hero Section */}
+            <section style={{ position: 'relative', paddingTop: '160px', paddingBottom: '80px', textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem' }}>
+                <div className="hero-glow"></div>
+                <div style={{ position: 'relative', zIndex: 10, maxWidth: '800px', margin: '0 auto' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '20px', fontSize: '0.8rem', color: '#34d399', marginBottom: '2rem', fontWeight: 600 }}>
+                        <span style={{ width: '8px', height: '8px', background: '#10b981', borderRadius: '50%', boxShadow: '0 0 10px #10b981' }}></span>
+                        Agentic RAG v2.0 Live
+                    </div>
+                    
+                    <h1 style={{ fontSize: isMobile ? '2.5rem' : '4rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '1.5rem', letterSpacing: '-1.5px' }}>
+                        Advanced Legal AI <br />
+                        <span className="gradient-text">Orchestration Engine</span>
+                    </h1>
+                    
+                    <p style={{ fontSize: isMobile ? '1rem' : '1.2rem', color: '#9ca3af', lineHeight: 1.6, marginBottom: '2.5rem', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
+                        A production-grade AI pipeline combining Hybrid Vector Search, Microsoft Presidio PII Masking, and Human-in-the-Loop Web Search.
+                    </p>
+                    
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <a href={getLoginUrl()} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0.8rem 1.8rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '1rem' }}>
+                            Sign in with Google <FiArrowRight />
+                        </a>
+                        <a href="#features" className="btn-secondary" style={{ padding: '0.8rem 1.8rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: '1rem' }}>
+                            Explore Features
                         </a>
                     </div>
-
-                    {/* Title & Content */}
-                    <div style={{ flex: isMobile ? 'none' : 1, display: 'flex', flexDirection: 'column', justifyContent: isMobile ? 'flex-start' : 'center' }}>
-                        <h1 style={{
-                            fontSize: isSmallMobile ? '1.5rem' : isMobile ? '1.75rem' : '2rem',
-                            fontWeight: 700, lineHeight: 1.1,
-                            marginBottom: '0.8rem', letterSpacing: '-0.8px', color: '#e4e5eb'
-                        }}>
-                            Advanced RAG <br />
-                            <span style={{
-                                background: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent'
-                            }}>Recursive Retrieval</span>
-                        </h1>
-                        <p style={{
-                            color: '#8b8fa3',
-                            fontSize: isSmallMobile ? '0.8rem' : '0.9rem',
-                            marginBottom: isMobile ? '1.5rem' : '2rem',
-                            lineHeight: 1.5
-                        }}>
-                            Production-grade RAG pipeline with Parent-Child chunking,
-                            Hybrid Vector Search, PII Masking &amp; LangGraph orchestration.
-                        </p>
-
-                        {/* Google Button */}
-                        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: isMobile ? '1.5rem' : '2.5rem' }}>
-                            <a href={getLoginUrl()} 
-                                style={{
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    gap: '0.8rem',
-                                    padding: isSmallMobile ? '0.7rem 1.2rem' : '0.75rem 1.8rem',
-                                    background: '#ffffff', color: '#3c4043', fontWeight: 500, borderRadius: '8px',
-                                    textDecoration: 'none',
-                                    fontSize: '0.9rem', fontFamily: '"Google Sans", Roboto, Arial, sans-serif',
-                                    boxShadow: '0 1px 3px rgba(60,64,67,0.15)', border: '1px solid #dadce0',
-                                    flex: 1,
-                                    transition: 'all 0.2s ease-in-out'
-                                }}
-                                onMouseOver={(e) => {
-                                    e.currentTarget.style.background = '#f8f9fa';
-                                    e.currentTarget.style.boxShadow = '0 1px 3px rgba(60,64,67,0.3)';
-                                }}
-                                onMouseOut={(e) => {
-                                    e.currentTarget.style.background = '#ffffff';
-                                    e.currentTarget.style.boxShadow = '0 1px 3px rgba(60,64,67,0.15)';
-                                }}
-                            >
-                                <svg viewBox="0 0 24 24" width="18" height="18">
-                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
-                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                                </svg>
-                                Sign in with Google
-                            </a>
-
-                            <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" 
-                                style={{
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    gap: '0.8rem',
-                                    padding: isSmallMobile ? '0.7rem 1.2rem' : '0.75rem 1.8rem',
-                                    background: 'rgba(255,255,255,0.05)', color: '#fff', fontWeight: 500, borderRadius: '8px',
-                                    textDecoration: 'none',
-                                    fontSize: '0.9rem',
-                                    boxShadow: '0 1px 4px rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)',
-                                    flex: 1,
-                                    transition: 'all 0.3s ease',
-                                    backdropFilter: 'blur(10px)'
-                                }}
-                                onMouseOver={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-                                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
-                                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(255,255,255,0.1)';
-                                    e.currentTarget.style.transform = 'translateY(-1px)';
-                                }}
-                                onMouseOut={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
-                                    e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.2)';
-                                    e.currentTarget.style.transform = 'translateY(0)';
-                                }}
-                            >
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                                </svg>
-                                View Portfolio
-                            </a>
-                        </div>
-
-                        {/* Creator */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <img
-                                src="/branding/qr.png"
-                                alt="Portfolio QR"
-                                style={{
-                                    width: isSmallMobile ? '60px' : '80px',
-                                    height: isSmallMobile ? '60px' : '80px',
-                                    borderRadius: '10px',
-                                    border: '1px solid rgba(255,255,255,0.1)'
-                                }}
-                                onError={(e) => { e.target.style.display = 'none' }}
-                            />
-                            <div>
-                                <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '1.5px', color: '#5a5e72', marginBottom: '0.2rem' }}>Created by</p>
-                                <h3 style={{ fontWeight: 600, fontSize: isSmallMobile ? '0.85rem' : '0.95rem', color: '#ededed' }}>Ambuj Kumar Tripathi</h3>
-                                <p style={{ fontSize: '0.75rem', color: '#10b981' }}>AI Engineer &amp; RAG Specialist</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style={{ marginTop: '24px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '24px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                            <span style={{ fontSize: '18px' }}>🐦</span>
-                            <h3 style={{ color: '#fff', fontSize: '14px', fontWeight: '600', letterSpacing: '1px' }}>Recognized by Hugging Face</h3>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                            <blockquote className="twitter-tweet" data-theme="dark">
-                                <p lang="en" dir="ltr">Meet Ambuj-Tripathi-Indian-Legal-Llama-GGUF: a specialized AI model fine-tuned for Indian law. This isn&#39;t just another chatbot. It&#39;s a legal assistant trained to understand the nuances of Indian statutes, case law, and legal language. A game-changer for legal tech in India. <a href="https://t.co/SkLzeaDgpE">pic.twitter.com/SkLzeaDgpE</a></p>&mdash; Hugging Models (@HuggingModels) <a href="https://x.com/HuggingModels/status/2044027666324697451?ref_src=twsrc%5Etfw">April 14, 2026</a>
-                            </blockquote>
-                        </div>
-                    </div>
+                    
+                    <p style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '1.5rem', fontStyle: 'italic' }}>
+                        *Disclaimer: This is an AI-powered assistant for educational purposes. It does not provide certified legal advice. Always consult a qualified legal professional.
+                    </p>
                 </div>
+            </section>
 
-                {/* ============ RIGHT SIDE — Architecture ============ */}
-                <div style={{
-                    flex: 1,
-                    background: '#050505',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    minHeight: isMobile ? '300px' : 'auto',
-                    padding: isMobile ? '1.5rem' : 0
-                }}>
-                    {/* Grid pattern background */}
-                    <div style={{
-                        position: 'absolute',
-                        top: 0, left: 0, right: 0, bottom: 0,
-                        backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-                        backgroundSize: '30px 30px',
-                        opacity: 0.4,
-                        pointerEvents: 'none',
-                        zIndex: 1
-                    }} />
-
-                    {/* Architecture Animated SVG */}
-                    <object
-                        type="image/svg+xml"
-                        data="/branding/architecture_animated.svg"
-                        aria-label="RAG Architecture"
-                        style={{
-                            position: 'relative',
-                            zIndex: 2,
-                            width: isMobile ? '95%' : '90%',
-                            maxHeight: isMobile ? '280px' : '90%',
-                            borderRadius: '12px',
-                            filter: 'drop-shadow(0 8px 40px rgba(0,0,0,0.6))',
-                            pointerEvents: 'none'
-                        }}
-                    >
-                        Architecture Diagram
-                    </object>
-                </div>
-            </div>
-
-            {/* ============ BOTTOM — Full-width Tech Stack Marquee ============ */}
-            <div style={{
-                width: '100%',
-                borderTop: '1px solid rgba(255,255,255,0.06)',
-                background: '#0a0a0a',
-                padding: isSmallMobile ? '0.6rem 1rem' : '0.8rem 2rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: isSmallMobile ? '0.75rem' : '1.5rem',
-                zIndex: 5,
-                flexShrink: 0
-            }}>
-                <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '2px', color: '#5a5e72', whiteSpace: 'nowrap', flexShrink: 0 }}>TECH STACK</p>
-                <div style={{ flex: 1, overflow: 'hidden', maskImage: 'linear-gradient(90deg, transparent, black 3%, black 97%, transparent)' }}>
-                    <div style={{ display: 'flex', animation: 'marquee 20s linear infinite', width: 'max-content' }}>
-                        {[0, 1].map((loop) => (
-                            <div key={loop} style={{ display: 'flex', gap: isSmallMobile ? '1rem' : '2rem', paddingRight: isSmallMobile ? '1rem' : '2rem' }}>
+            {/* Tech Stack Marquee */}
+            <div style={{ width: '100%', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.01)', padding: '1.5rem 0', display: 'flex', alignItems: 'center', zIndex: 5 }}>
+                <div style={{ flex: 1, overflow: 'hidden', maskImage: 'linear-gradient(90deg, transparent, black 10%, black 90%, transparent)' }}>
+                    <div style={{ display: 'flex', animation: 'marquee 25s linear infinite', width: 'max-content' }}>
+                        {[0, 1, 2].map((loop) => (
+                            <div key={loop} style={{ display: 'flex', gap: '3rem', paddingRight: '3rem' }}>
                                 {techStack.map((tech, i) => (
-                                    <span key={`${loop}-${i}`} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: isSmallMobile ? '0.7rem' : '0.8rem', whiteSpace: 'nowrap' }} title={tech.name}>
-                                        <span style={{ color: tech.color, fontSize: isSmallMobile ? '0.85rem' : '1rem' }}>{tech.icon}</span>
-                                        <span style={{ color: tech.color, fontWeight: 500 }}>{tech.name}</span>
+                                    <span key={`${loop}-${i}`} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '1rem', color: '#9ca3af', fontWeight: 500 }}>
+                                        <span style={{ color: tech.color, fontSize: '1.2rem' }}>{tech.icon}</span>
+                                        {tech.name}
                                     </span>
                                 ))}
                             </div>
@@ -306,6 +209,106 @@ export default function Login() {
                     </div>
                 </div>
             </div>
+
+            {/* Features Section */}
+            <section id="features" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
+                <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                    <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>Enterprise-Grade Features</h2>
+                    <p style={{ color: '#9ca3af', maxWidth: '500px', margin: '0 auto' }}>Built with security, accuracy, and legal compliance at the core.</p>
+                </div>
+                
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '1.5rem' }}>
+                    {features.map((feature, idx) => (
+                        <div key={idx} className="feature-card" style={{ padding: '2rem' }}>
+                            <div style={{ width: '50px', height: '50px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                                {feature.icon}
+                            </div>
+                            <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.8rem', color: '#fff' }}>{feature.title}</h3>
+                            <p style={{ color: '#9ca3af', lineHeight: 1.6, fontSize: '0.95rem' }}>{feature.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Architecture Evolution Section */}
+            <section id="architecture" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 2rem', background: '#070b14', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                        <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '1rem' }}>Continuous Evolution</h2>
+                        <p style={{ color: '#9ca3af', maxWidth: '600px', margin: '0 auto' }}>From a basic Hybrid Search to a fully autonomous Agentic workflow.</p>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '2rem', alignItems: 'center' }}>
+                        {/* v1.0 Diagram */}
+                        <div style={{ flex: 1, background: '#0a0f1c', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                                <h3 style={{ fontWeight: 600, color: '#9ca3af' }}>v1.0 Basic RAG</h3>
+                                <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(255,255,255,0.1)', borderRadius: '12px', color: '#9ca3af' }}>Archived</span>
+                            </div>
+                            <div className="arch-diagram" style={{ background: '#05080f', borderRadius: '12px', overflow: 'hidden' }}>
+                                <object type="image/svg+xml" data="/branding/architecture_animated.svg" style={{ width: '100%', height: 'auto', display: 'block' }}></object>
+                            </div>
+                        </div>
+
+                        <FiArrowRight size={32} color="#34d399" style={{ transform: isMobile ? 'rotate(90deg)' : 'none', opacity: 0.5 }} />
+
+                        {/* v2.0 Diagram */}
+                        <div style={{ flex: 1, background: 'rgba(16, 185, 129, 0.05)', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(16, 185, 129, 0.2)', boxShadow: '0 0 30px rgba(16,185,129,0.05)' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                                <h3 style={{ fontWeight: 600, color: '#34d399' }}>v2.0 Agentic RAG</h3>
+                                <span style={{ fontSize: '0.8rem', padding: '4px 10px', background: 'rgba(16, 185, 129, 0.2)', borderRadius: '12px', color: '#10b981', fontWeight: 600 }}>Active</span>
+                            </div>
+                            <div className="arch-diagram" style={{ background: '#05080f', borderRadius: '12px', overflow: 'hidden' }}>
+                                <object type="image/svg+xml" data="/branding/architecture_animated_v2.svg" style={{ width: '100%', height: 'auto', display: 'block' }}></object>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* About / Footer Section */}
+            <footer id="about" style={{ padding: isMobile ? '3rem 1.5rem' : '4rem 2rem', background: '#020408', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+                    
+                    {/* Creator Info */}
+                    <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
+                            <img src="/branding/qr.png" alt="QR" style={{ width: '80px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }} />
+                            <div>
+                                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.2rem' }}>Ambuj Kumar Tripathi</h3>
+                                <p style={{ color: '#10b981', fontWeight: 500 }}>AI Engineer & RAG Specialist</p>
+                            </div>
+                        </div>
+                        <p style={{ color: '#9ca3af', lineHeight: 1.6, marginBottom: '2rem' }}>
+                            Engineered for high accuracy and compliance. This system utilizes cutting-edge orchestration, semantic vector search, and strict constitutional guardrails.
+                        </p>
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                            <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" className="btn-secondary" style={{ padding: '0.6rem 1.2rem', borderRadius: '8px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                                View Portfolio <FiArrowRight />
+                            </a>
+                            <a href="https://github.com/Ambuj123-lab" target="_blank" rel="noreferrer" style={{ padding: '0.6rem 1.2rem', borderRadius: '8px', textDecoration: 'none', color: '#fff', display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#111827' }}>
+                                <FaGithub /> GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* HuggingFace Tweet */}
+                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                            <span style={{ fontSize: '20px' }}>??</span>
+                            <h4 style={{ fontWeight: 600, color: '#e5e7eb' }}>Recognized by Hugging Face</h4>
+                        </div>
+                        <blockquote className="twitter-tweet" data-theme="dark" style={{ margin: 0 }}>
+                            <p lang="en" dir="ltr">Meet Ambuj-Tripathi-Indian-Legal-Llama-GGUF: a specialized AI model fine-tuned for Indian law. A game-changer for legal tech in India. <a href="https://t.co/SkLzeaDgpE">pic.twitter.com/SkLzeaDgpE</a></p>&mdash; Hugging Models (@HuggingModels) <a href="https://x.com/HuggingModels/status/2044027666324697451">April 14, 2026</a>
+                        </blockquote>
+                    </div>
+
+                </div>
+                
+                <div style={{ textAlign: 'center', marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#6b7280', fontSize: '0.9rem' }}>
+                    &copy; {new Date().getFullYear()} Ambuj Kumar Tripathi. All rights reserved.
+                </div>
+            </footer>
         </div>
     );
 }
