@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaReact, FaPython, FaDatabase, FaShieldAlt, FaSearch, FaBrain, FaGavel, FaCogs } from 'react-icons/fa';
 import { FaLinkedin, FaXTwitter, FaMedium, FaGithub } from 'react-icons/fa6';
 import { SiFastapi, SiMongodb, SiSupabase, SiVite } from 'react-icons/si';
-import { FiActivity, FiCpu, FiArrowRight, FiArrowUp } from 'react-icons/fi';
+import { FiActivity, FiCpu, FiArrowRight, FiArrowUp, FiMenu, FiX } from 'react-icons/fi';
 import { getLoginUrl } from '../api';
 
 const techStack = [
@@ -59,6 +59,7 @@ export default function Login() {
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
 
     useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
@@ -357,12 +358,27 @@ export default function Login() {
                         <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }} onMouseOver={e=>e.target.style.color='#fbbf24'} onMouseOut={e=>e.target.style.color='#9ca3af'}>Creator Portfolio</a>
                     </div>
                 )}
-                <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <a href={getLoginUrl()} className="btn-primary" style={{ padding: isMobile ? '0.4rem 0.8rem' : '0.6rem 1.2rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, fontSize: isMobile ? '0.85rem' : '0.9rem', whiteSpace: 'nowrap' }}>
                         {isMobile ? 'Login' : 'Login / Access'}
                     </a>
+                    {isMobile && (
+                        <button onClick={() => setShowMobileMenu(!showMobileMenu)} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '4px' }}>
+                            {showMobileMenu ? <FiX size={24} color="#fff" /> : <FiMenu size={24} color="#fff" />}
+                        </button>
+                    )}
                 </div>
             </nav>
+
+            {/* Mobile Dropdown Menu */}
+            {isMobile && showMobileMenu && (
+                <div style={{ position: 'fixed', top: '70px', left: 0, width: '100%', background: 'rgba(15, 23, 42, 0.98)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', zIndex: 49, fontSize: '1rem', fontWeight: 500, boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
+                    <a href="#features" onClick={() => setShowMobileMenu(false)} style={{ color: '#fff', textDecoration: 'none' }}>Features</a>
+                    <a href="#architecture" onClick={() => setShowMobileMenu(false)} style={{ color: '#fff', textDecoration: 'none' }}>Architecture</a>
+                    <a href="#about" onClick={() => setShowMobileMenu(false)} style={{ color: '#fff', textDecoration: 'none' }}>About</a>
+                    <a href="https://ambuj-ai-portfolio.vercel.app/" target="_blank" rel="noreferrer" onClick={() => setShowMobileMenu(false)} style={{ color: '#fbbf24', textDecoration: 'none' }}>Creator Portfolio</a>
+                </div>
+            )}
 
             {/* Hero Section */}
             <section style={{ position: 'relative', paddingTop: '160px', paddingBottom: '80px', textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem' }}>
