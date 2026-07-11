@@ -292,8 +292,8 @@ export default function Login() {
                     </div>
                     
                     <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '1.5rem', letterSpacing: '-1px' }}>
-                        Ask legal questions in <br />
-                        <span className="gradient-text">natural language.</span>
+                        Agentic Legal AI for <br />
+                        <span className="gradient-text">Secure Enterprise Retrieval</span>
                     </h1>
                     
                     <p style={{ fontSize: isMobile ? '1rem' : '1.1rem', color: '#9ca3af', lineHeight: 1.6, marginBottom: '2.5rem', maxWidth: '650px', margin: '0 auto 2.5rem auto' }}>
