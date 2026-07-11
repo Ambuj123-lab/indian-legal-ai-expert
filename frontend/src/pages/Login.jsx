@@ -475,7 +475,7 @@ export default function Login() {
                     </div>
 
                     {/* Columns Container */}
-                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: '2rem', flex: 3 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)', gap: '2rem', flex: 3 }}>
                         {/* Column 1 */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Platform</h4>
@@ -516,6 +516,12 @@ export default function Login() {
                             <a href="#legal" onClick={(e) => { e.preventDefault(); setLegalModal('DISCLAIMER'); }} style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Disclaimer</a>
                             <a href="#legal" onClick={(e) => { e.preventDefault(); setLegalModal('AIPOLICY'); }} style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>AI Usage Policy</a>
                         </div>
+
+                        {/* Column 5 */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.5rem', fontSize: '0.95rem' }}>Support</h4>
+                            <a href="#contact" onClick={(e) => { e.preventDefault(); setLegalModal('CONTACT'); }} style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }} onMouseOver={e=>e.target.style.color='#fff'} onMouseOut={e=>e.target.style.color='#a1a1aa'}>Contact Us</a>
+                        </div>
                     </div>
                 </div>
             </footer>
@@ -524,7 +530,7 @@ export default function Login() {
 
             {/* Legal Modals */}
             {legalModal && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backdropFilter: 'blur(5px)' }}>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', zIndex: 100000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backdropFilter: 'blur(5px)' }}>
                     <div className="legal-modal-container" style={{ background: '#0b1120', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '0', width: '100%', maxWidth: '800px', maxHeight: '85vh', overflowY: 'auto', position: 'relative', color: '#e5e7eb', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
                         
                         <div style={{ position: 'sticky', top: 0, right: 0, display: 'flex', justifyContent: 'flex-end', padding: '1rem', background: 'linear-gradient(to bottom, #0b1120 80%, transparent)', zIndex: 10 }}>
@@ -651,22 +657,38 @@ export default function Login() {
                                 </div>
                             )}
 
-                            {/* Contact Form Bottom Section */}
-                            <div style={{ marginTop: '4rem', paddingTop: '2.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                                <h3 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#fff', marginBottom: '0.5rem' }}>Questions?</h3>
-                                <p style={{ color: '#9ca3af', fontSize: '0.95rem', marginBottom: '1.5rem' }}>Reach out to us directly or email <a href="mailto:ambujonly761@gmail.com" style={{ color: '#d4af37', textDecoration: 'none' }}>ambujonly761@gmail.com</a>.</p>
-                                
-                                <form action="https://api.web3forms.com/submit" method="POST" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                    {/* Web3Forms Access Key */}
-                                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
-                                    
-                                    <input type="email" name="email" placeholder="Your Email Address" required style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'} />
-                                    <textarea name="message" placeholder="How can we help you?" required rows="4" style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', resize: 'vertical', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'}></textarea>
-                                    
-                                    <button type="submit" style={{ padding: '1rem', marginTop: '0.5rem', borderRadius: '8px', background: '#d4af37', color: '#0b1120', fontWeight: 700, fontSize: '1rem', border: 'none', cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }} onMouseOver={e=>{e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow='0 4px 12px rgba(212,175,55,0.3)'}} onMouseOut={e=>{e.target.style.transform='none'; e.target.style.boxShadow='none'}}>Send Message</button>
-                                </form>
-                            </div>
                             
+                            {legalModal === 'CONTACT' && (
+                                <div>
+                                    <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                                        <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>??</div>
+                                        <h2 style={{ fontSize: '2rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem', letterSpacing: '-0.5px' }}>Contact Support</h2>
+                                        <p style={{ color: '#9ca3af', fontSize: '1rem' }}>We're here to help. Send us a message.</p>
+                                    </div>
+                                    
+                                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                        <form action="https://api.web3forms.com/submit" method="POST" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+                                            
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                                <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Email Address</label>
+                                                <input type="email" name="email" placeholder="you@company.com" required style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'} />
+                                            </div>
+                                            
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                                <label style={{ color: '#9ca3af', fontSize: '0.9rem' }}>Message</label>
+                                                <textarea name="message" placeholder="How can we help you?" required rows="5" style={{ padding: '1rem 1.2rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: '#0f172a', color: '#fff', fontSize: '0.95rem', outline: 'none', resize: 'vertical', transition: 'border-color 0.2s' }} onFocus={e=>e.target.style.borderColor='#d4af37'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.1)'}></textarea>
+                                            </div>
+                                            
+                                            <button type="submit" style={{ padding: '1rem', marginTop: '1rem', borderRadius: '8px', background: '#d4af37', color: '#0b1120', fontWeight: 700, fontSize: '1rem', border: 'none', cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }} onMouseOver={e=>{e.target.style.transform='translateY(-2px)'; e.target.style.boxShadow='0 4px 12px rgba(212,175,55,0.3)'}} onMouseOut={e=>{e.target.style.transform='none'; e.target.style.boxShadow='none'}}>Send Message</button>
+                                        </form>
+                                    </div>
+                                    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                                        <p style={{ color: '#6b7280', fontSize: '0.85rem' }}>Or email us directly at <a href="mailto:ambujonly761@gmail.com" style={{ color: '#d4af37', textDecoration: 'none' }}>ambujonly761@gmail.com</a></p>
+                                    </div>
+                                </div>
+                            )}
+
                         </div>
                     </div>
                 </div>
@@ -674,9 +696,9 @@ export default function Login() {
 
             {/* Image Viewer Modal */}
             {isModalOpen && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.9)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.9)', zIndex: 1000000, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                     
-                    <div style={{ position: 'absolute', top: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 10000 }}>
+                    <div style={{ position: 'absolute', top: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 100000 }}>
                         <button onClick={() => setZoom(z => z + 0.2)} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem' }}>+</button>
                         <button onClick={() => setZoom(z => Math.max(0.5, z - 0.2))} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem' }}>-</button>
                         <button onClick={() => setIsModalOpen(false)} style={{ background: '#ef4444', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem' }}>&times;</button>
