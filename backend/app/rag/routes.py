@@ -278,15 +278,15 @@ async def chat_stream(request: Request, body: ChatRequest = Body(...), user: dic
 
     context = "\n\n---\n\n".join([r["parent_text"] for r in results]) if results else ""
 
-    # 8. Low confidence or OOS fallback -> triggers HITL
-    if (confidence < 40 or is_oos) and not is_web_search_active:
+    # 8. Low confidence or OOS fallback -> triggers HITL Web Search
+    if ((confidence < 15 and confidence > 0) or is_oos) and not is_web_search_active:
         async def fallback_stream():
-            msg = "⚠️ **OUT OF SCOPE / LOW CONFIDENCE ALERT**\nI couldn't find an exact match in my verified legal documents for this query.\n\n> ──────────────────────────────────────────\n> **ACTION REQUIRED:**\n> I am strictly built to provide legal suggestions based on verified documents, but as part of your learning and development, would you like me to switch to **Autonomous Web Search** to fetch real-time information for you?\n> \n> 🟢 **[YES](#action:yes)** (Proceed to Web Search) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)\n> \n> *(Please type your choice below)*"
+            msg = "I couldn't find specific legal sections for this in my verified database.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)"
             yield f"data: {json.dumps({'token': msg})}\n\n"
             yield f"data: {json.dumps({'done': True, 'sources': [], 'confidence': round(confidence, 1)})}\n\n"
             
         save_message(user_email, "user", safe_query, pii_masked=pii_found, pii_entities=pii_entities)
-        save_message(user_email, "assistant", "⚠️ **OUT OF SCOPE / LOW CONFIDENCE ALERT**\nI couldn't find an exact match in my verified legal documents for this query.\n\n> ──────────────────────────────────────────\n> **ACTION REQUIRED:**\n> I am strictly built to provide legal suggestions based on verified documents, but as part of your learning and development, would you like me to switch to **Autonomous Web Search** to fetch real-time information for you?\n> \n> 🟢 **[YES](#action:yes)** (Proceed to Web Search) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)\n> \n> *(Please type your choice below)*", [])
+        save_message(user_email, "assistant", "I couldn't find specific legal sections for this in my verified database.\n\nWould you like me to run a **Live Web Search** to find the most up-to-date information for you?\n\n> 🟢 **[YES](#action:yes)** (Search Web) &nbsp; &nbsp; &nbsp; 🔴 **[NO](#action:no)** (Cancel)", [])
         return StreamingResponse(fallback_stream(), media_type="text/event-stream")
 
     # Stream LLM response
