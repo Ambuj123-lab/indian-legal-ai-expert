@@ -2609,3 +2609,10 @@ body {
     background: rgba(248, 113, 113, 0.1);
     border-color: rgba(248, 113, 113, 0.5);
 }
+
+/* Fat Footer Mobile Fix */
+@media (max-width: 768px) {
+  footer#about {
+    padding: 3rem 1.5rem 2rem 1.5rem !important;
+  }
+}
