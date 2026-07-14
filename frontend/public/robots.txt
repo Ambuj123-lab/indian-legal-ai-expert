@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://indian-legal-ai-expert.onrender.com/sitemap.xml
